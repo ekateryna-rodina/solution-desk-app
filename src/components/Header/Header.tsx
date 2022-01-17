@@ -1,20 +1,9 @@
-import Image from "next/image";
+import { useAppSelector } from "../../app/hooks";
 
 const Header = () => {
+  const { isNavigating } = useAppSelector((state) => state.layout);
   return (
-    <header className="h-1/8 px-4 py-4 flex justify-between items-center">
-      <div className="flex justify-between items-center">
-        <Image
-          className="mr-8"
-          alt=""
-          src="/assets/logo.svg"
-          width={30}
-          height={30}
-        ></Image>
-        <h1 className="ml-2 text-slate-800 hidden sm:block md:block lg:block">
-          SolutionDesk
-        </h1>
-      </div>
+    <header className="h-1/8 px-4 py-4 sm:px-8 md:px-8 lg:px-8 flex justify-end items-center">
       <input
         type="text"
         placeholder="Search..."
