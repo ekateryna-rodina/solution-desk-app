@@ -1,16 +1,15 @@
 import { GetServerSidePropsResult } from "next";
 import clientPromise from "../lib/mongodb";
+import { Layout } from "../src/components/Layout";
 
 interface HomeProps {
   isConnected: boolean;
 }
 const Home = ({ isConnected }: any) => {
   return (
-    <div className="bg-red w-6 h-14 ">
-      <h1 className="text-center my-24 font-black tracking-tight text-6xl  text-slate-500">
-        Our homepage
-      </h1>
-    </div>
+    <>
+      <Layout></Layout>
+    </>
   );
 };
 
