@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Header = () => {
   return (
-    <header className="flex justify-between items-center px-4 py-8">
+    <header className="h-1/8 px-4 py-4 flex justify-between items-center">
       <div className="flex justify-between items-center">
         <Image
           className="mr-8"
@@ -11,7 +11,7 @@ const Header = () => {
           width={30}
           height={30}
         ></Image>
-        <h1 className="ml-2 text-red-800 hidden sm:block md:block lg:block">
+        <h1 className="ml-2 text-slate-800 hidden sm:block md:block lg:block">
           SolutionDesk
         </h1>
       </div>
