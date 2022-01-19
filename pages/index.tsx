@@ -1,6 +1,7 @@
 import { GetServerSidePropsResult } from "next";
 import clientPromise from "../lib/mongodb";
 import { Layout } from "../src/components/Layout";
+import { SearchUsers } from "../src/components/SearchUsers";
 
 interface HomeProps {
   isConnected: boolean;
@@ -8,7 +9,9 @@ interface HomeProps {
 const Home = ({ isConnected }: any) => {
   return (
     <>
-      <Layout></Layout>
+      <Layout>
+        <SearchUsers />
+      </Layout>
     </>
   );
 };
