@@ -19,7 +19,7 @@ const responsiveColsMap = {
   4: "hidden lg:table-cell",
   5: "",
   6: "",
-  7: "hidden xl:table-cell",
+  7: "hidden 2xl:table-cell",
   8: "hidden xl:table-cell",
   9: "hidden xl:table-cell",
 };
@@ -30,7 +30,6 @@ const UsersTable = ({ paginatedData }: UsersTableProps) => {
       (c) => !fieldsToIgnore.has(c)
     );
     result.splice(0, 0, "name");
-    console.log(result);
     return result;
   };
   const getUsers = () => {
@@ -43,7 +42,6 @@ const UsersTable = ({ paginatedData }: UsersTableProps) => {
           return Object.assign(ur, { [key]: user[key] });
         }, {});
     });
-    console.log(newUsers);
     return newUsers;
   };
   if (!paginatedData || !paginatedData.data)
@@ -51,7 +49,7 @@ const UsersTable = ({ paginatedData }: UsersTableProps) => {
   return (
     <div>
       <table className="table-auto w-[calc(100%-4rem)] mx-8 bg-white shadow">
-        <thead>
+        <thead className="text-slate-500 bg-slate-200 font-semibold">
           <tr>
             {getColumnNames()?.map((c, i) => {
               return (
@@ -62,7 +60,7 @@ const UsersTable = ({ paginatedData }: UsersTableProps) => {
             })}
           </tr>
         </thead>
-        <tbody>
+        <tbody className=" divide-y divide-slate-300">
           {getUsers()!.map((user, i) => (
             <tr key={user.name}>
               {Object.values(user).map((c, i) => (

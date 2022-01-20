@@ -12,7 +12,7 @@ const ToggleButton = () => {
   return (
     <button
       onClick={onToggleHandler}
-      className={`w-8 h-8 bg-opacity-40 flex justify-center align-center ${
+      className={`w-8 h-8 bg-opacity-40 flex justify-center items-center ${
         isNavigating ? "bg-white" : "bg-blueExtend"
       }`}
     >
