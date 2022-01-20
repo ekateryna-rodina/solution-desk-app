@@ -39,11 +39,13 @@ const UsersTable = ({ paginatedData }: UsersTableProps) => {
     return <h1>Placehholer for no results</h1>;
   return (
     <div>
-      <table className="table-auto bg-white shadow">
+      <table className="table-auto mx-8 bg-white shadow">
         <thead>
-          <tr key={"header_key"}>
+          <tr>
             {getColumnNames()?.map((c) => (
-              <td key={c}>{c}</td>
+              <td className="p-4" key={c}>
+                {c}
+              </td>
             ))}
           </tr>
         </thead>
@@ -51,7 +53,9 @@ const UsersTable = ({ paginatedData }: UsersTableProps) => {
           {getUsers()!.map((user, i) => (
             <tr key={user.name}>
               {Object.values(user).map((c) => (
-                <td key={c.toString()}>{c.toString()}</td>
+                <td className="p-4" key={c.toString()}>
+                  {c.toString()}
+                </td>
               ))}
             </tr>
           ))}
