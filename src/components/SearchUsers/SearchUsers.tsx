@@ -1,10 +1,15 @@
 import React from "react";
+import { IPaginatedResult } from "../../../pages/types";
 import { UsersTable } from "../UsersTable";
 
-const SearchUsers = () => {
+type SearchUsersProps = {
+  paginatedData: IPaginatedResult;
+};
+
+const SearchUsers = ({ paginatedData }: SearchUsersProps) => {
   return (
     <div>
-      <UsersTable />
+      <UsersTable paginatedData={paginatedData} />
     </div>
   );
 };

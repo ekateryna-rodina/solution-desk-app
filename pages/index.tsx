@@ -4,16 +4,16 @@ import { Layout } from "../src/components/Layout";
 import { SearchUsers } from "../src/components/SearchUsers";
 
 const Home = ({ initialReduxState }: any) => {
-  const result = solutionDeskApi.endpoints.getAllUsers.select({
+  const cached = solutionDeskApi.endpoints.getAllUsers.select({
     page: "1",
     limit: "3",
   })(initialReduxState); // access the cache
-  const { data, status, error } = result;
-  console.log(data);
+  const { data: result, status, error } = cached;
+
   return (
     <>
       <Layout>
-        <SearchUsers />
+        <SearchUsers paginatedData={result} />
       </Layout>
     </>
   );
