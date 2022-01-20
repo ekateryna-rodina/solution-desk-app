@@ -4,15 +4,26 @@ import { IPaginatedResult } from "../../../pages/types";
 type UsersTableProps = {
   paginatedData: IPaginatedResult;
 };
-
+const fieldsToIgnore = new Set([
+  "avatar",
+  "id",
+  "_id",
+  "first_name",
+  "last_name",
+]);
+const responsiveColsMap = {
+  0: "",
+  1: "",
+  2: "hidden lg:table-cell",
+  3: "hidden lg:table-cell",
+  4: "hidden lg:table-cell",
+  5: "",
+  6: "",
+  7: "hidden xl:table-cell",
+  8: "hidden xl:table-cell",
+  9: "hidden xl:table-cell",
+};
 const UsersTable = ({ paginatedData }: UsersTableProps) => {
-  const fieldsToIgnore = new Set([
-    "avatar",
-    "id",
-    "_id",
-    "first_name",
-    "last_name",
-  ]);
   const getColumnNames = () => {
     if (!paginatedData || !paginatedData.data) return;
     const result = Object.keys(paginatedData.data![0]).filter(
@@ -39,21 +50,26 @@ const UsersTable = ({ paginatedData }: UsersTableProps) => {
     return <h1>Placehholer for no results</h1>;
   return (
     <div>
-      <table className="table-auto mx-8 bg-white shadow">
+      <table className="table-auto w-[calc(100%-4rem)] mx-8 bg-white shadow">
         <thead>
           <tr>
-            {getColumnNames()?.map((c) => (
-              <td className="p-4" key={c}>
-                {c}
-              </td>
-            ))}
+            {getColumnNames()?.map((c, i) => {
+              return (
+                <td className={`p-4 ${responsiveColsMap[i]}`} key={c}>
+                  {c}
+                </td>
+              );
+            })}
           </tr>
         </thead>
         <tbody>
           {getUsers()!.map((user, i) => (
             <tr key={user.name}>
-              {Object.values(user).map((c) => (
-                <td className="p-4" key={c.toString()}>
+              {Object.values(user).map((c, i) => (
+                <td
+                  className={`p-4 ${responsiveColsMap[i]}`}
+                  key={c.toString()}
+                >
                   {c.toString()}
                 </td>
               ))}
