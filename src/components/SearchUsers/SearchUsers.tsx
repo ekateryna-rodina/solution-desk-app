@@ -15,7 +15,7 @@ const SearchUsers = ({ paginatedData }: SearchUsersProps) => {
 
       <div
         className={`absolute inset-0 bg-slate-400 transition ease-in-out ${
-          isNavigating ? "opacity-50 z-10" : "opacity-0 -z-10"
+          isNavigating ? "opacity-50 z-0" : "opacity-0 -z-10"
         }`}
       ></div>
     </div>
