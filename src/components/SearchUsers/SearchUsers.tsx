@@ -1,17 +1,12 @@
 import React from "react";
-import { IPaginatedResult } from "../../../pages/types";
 import { useAppSelector } from "../../app/hooks";
 import { UsersTable } from "../UsersTable";
 
-type SearchUsersProps = {
-  paginatedData: IPaginatedResult;
-};
-
-const SearchUsers = ({ paginatedData }: SearchUsersProps) => {
+const SearchUsers = () => {
   const { isNavigating } = useAppSelector((state) => state.layout);
   return (
     <div className="relative w-full h-full">
-      <UsersTable paginatedData={paginatedData} />
+      <UsersTable />
 
       <div
         className={`absolute inset-0 bg-slate-400 transition ease-in-out ${

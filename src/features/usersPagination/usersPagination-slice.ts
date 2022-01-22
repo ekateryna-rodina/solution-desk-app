@@ -7,7 +7,7 @@ interface UsersPaginationState {
 
 const initialState: UsersPaginationState = {
   page: 1,
-  limit: 3,
+  limit: 10,
 };
 
 const usersPaginationSlice = createSlice({

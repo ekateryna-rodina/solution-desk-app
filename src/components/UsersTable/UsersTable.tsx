@@ -1,10 +1,7 @@
-import React from "react";
-import { IPaginatedResult } from "../../../pages/types";
+import React, { useEffect, useState } from "react";
+import { getAllUsers } from "../../app/solutionDeskApi";
 import { Paginator } from "../Paginator";
 
-type UsersTableProps = {
-  paginatedData: IPaginatedResult;
-};
 const fieldsToIgnore = new Set([
   "avatar",
   "id",
@@ -24,18 +21,29 @@ const responsiveColsMap = {
   8: "hidden xl:table-cell",
   9: "hidden xl:table-cell",
 };
-const UsersTable = ({ paginatedData }: UsersTableProps) => {
+const UsersTable = () => {
+  const {
+    currentData: { data },
+  } = getAllUsers.useQueryState({
+    page: "1",
+    limit: "10",
+  });
+  // console.log(paginatedData);
+  console.log(data);
+  const [noResults, setNoResults] = useState(false);
   const getColumnNames = () => {
-    if (!paginatedData || !paginatedData.data) return;
-    const result = Object.keys(paginatedData.data![0]).filter(
+    if (!data) return;
+    const paginatedData = data;
+    const result = Object.keys(paginatedData[0]).filter(
       (c) => !fieldsToIgnore.has(c)
     );
     result.splice(0, 0, "name");
     return result;
   };
   const getUsers = () => {
-    if (!paginatedData || !paginatedData.data) return;
-    const newUsers = paginatedData.data.map((user) => {
+    if (!data) return;
+    const paginatedData = data;
+    const newUsers = paginatedData.map((user) => {
       return Object.keys(user)
         .filter((c) => !fieldsToIgnore.has(c))
         .reduce((ur, key) => {
@@ -45,8 +53,14 @@ const UsersTable = ({ paginatedData }: UsersTableProps) => {
     });
     return newUsers;
   };
-  if (!paginatedData || !paginatedData.data)
-    return <h1>Placehholer for no results</h1>;
+
+  useEffect(() => {
+    if (!data || !data.data) return;
+    console.log("data");
+    setNoResults(data && !data.length);
+  }, [data]);
+  if (false) return <>Loading</>;
+  if (noResults) return <h1>Placehholer for no results</h1>;
   return (
     <div className="relative mx-8">
       <table className="table-auto w-full bg-white shadow">
@@ -62,7 +76,7 @@ const UsersTable = ({ paginatedData }: UsersTableProps) => {
           </tr>
         </thead>
         <tbody className=" divide-y divide-slate-300">
-          {getUsers()!.map((user, i) => (
+          {getUsers()?.map((user, i) => (
             <tr key={user.name}>
               {Object.values(user).map((c, i) => (
                 <td

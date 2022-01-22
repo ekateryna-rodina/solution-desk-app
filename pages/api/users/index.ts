@@ -7,7 +7,9 @@ function handler(
   req: NextApiRequest,
   res: NextApiResponseWithPagination<IUser>
 ) {
-  res.status(200).json({ ...res.paginatedResult });
+  const result = { ...res.paginatedResult };
+  console.log(result);
+  res.status(200).json(result);
 }
 
 export default paginated<IUser>(handler, "users");
