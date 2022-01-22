@@ -12,9 +12,10 @@ const SearchUsers = ({ paginatedData }: SearchUsersProps) => {
   return (
     <div className="relative w-full h-full">
       <UsersTable paginatedData={paginatedData} />
+
       <div
         className={`absolute inset-0 bg-slate-400 transition ease-in-out ${
-          isNavigating ? "opacity-50" : "opacity-0"
+          isNavigating ? "opacity-50 z-10" : "opacity-0 -z-10"
         }`}
       ></div>
     </div>

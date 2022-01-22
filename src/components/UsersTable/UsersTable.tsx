@@ -1,5 +1,6 @@
 import React from "react";
 import { IPaginatedResult } from "../../../pages/types";
+import { Paginator } from "../Paginator";
 
 type UsersTableProps = {
   paginatedData: IPaginatedResult;
@@ -47,8 +48,8 @@ const UsersTable = ({ paginatedData }: UsersTableProps) => {
   if (!paginatedData || !paginatedData.data)
     return <h1>Placehholer for no results</h1>;
   return (
-    <div>
-      <table className="table-auto w-[calc(100%-4rem)] mx-8 bg-white shadow">
+    <div className="relative mx-8">
+      <table className="table-auto w-full bg-white shadow">
         <thead className="text-slate-500 bg-slate-200 font-semibold">
           <tr>
             {getColumnNames()?.map((c, i) => {
@@ -75,6 +76,7 @@ const UsersTable = ({ paginatedData }: UsersTableProps) => {
           ))}
         </tbody>
       </table>
+      <Paginator />
     </div>
   );
 };
