@@ -7,6 +7,7 @@ import {
   ThunkAction,
 } from "@reduxjs/toolkit";
 import { createWrapper, HYDRATE } from "next-redux-wrapper";
+import filterReducer from "../features/filter/filter-slice";
 import layoutReducer from "../features/layout/layout-slice";
 import usersPaginationReducer from "../features/usersPagination/usersPagination-slice";
 import { solutionDeskApi } from "./solutionDeskApi";
@@ -15,6 +16,7 @@ let store: CombinedState<any>;
 const combinedReducer = combineReducers({
   layout: layoutReducer,
   usersPagination: usersPaginationReducer,
+  filter: filterReducer,
   [solutionDeskApi.reducerPath]: solutionDeskApi.reducer,
 });
 

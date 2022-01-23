@@ -9,8 +9,6 @@ const paginated = <T>(handler: any, collectionName: string) => {
     const db = await client.db();
 
     const startIndex = (+page - 1) * +limit;
-    let totalPages;
-    const endIndex = +page * +limit;
     try {
       const users = await db.collection(collectionName).find({});
       const total = await users.count();

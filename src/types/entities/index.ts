@@ -1,3 +1,5 @@
+import { CustomerService, ResponseRate } from "../../constants";
+
 export interface IUser {
   id: number;
   first_name: string;
@@ -13,3 +15,11 @@ export interface IUser {
   city: string;
   country: string;
 }
+
+export type IFilter = {
+  gender: [];
+  city: [];
+  country: [];
+  responseRate: Array<keyof typeof ResponseRate>;
+  customerService: Array<keyof typeof CustomerService>;
+};

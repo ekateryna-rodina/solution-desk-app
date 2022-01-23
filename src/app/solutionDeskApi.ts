@@ -18,6 +18,9 @@ export const solutionDeskApi = createApi({
     getAllUsers: builder.query<any, { page: string; limit: string }>({
       query: ({ page, limit }) => `users?page=${page}&limit=${limit}`,
     }),
+    getFilters: builder.query({
+      query: () => `filters`,
+    }),
   }),
 });
 
@@ -29,4 +32,5 @@ export const {
 } = solutionDeskApi;
 
 // export endpoints for use in SSR
-export const { getUserById, getAllUsers } = solutionDeskApi.endpoints;
+export const { getUserById, getAllUsers, getFilters } =
+  solutionDeskApi.endpoints;
