@@ -1,6 +1,5 @@
 import { NextApiRequest } from "next";
 import clientPromise from "../../lib/mongodb";
-import { IUser } from "../../src/types";
 import { IPaginatedResult, NextApiResponseWithPagination } from "../types";
 
 const paginated = <T>(handler: any, collectionName: string) => {
@@ -8,20 +7,23 @@ const paginated = <T>(handler: any, collectionName: string) => {
     let { page, limit } = req.query as { page: string; limit: string };
     const client = await clientPromise;
     const db = await client.db();
-    let users: IUser[] = [];
+
     const startIndex = (+page - 1) * +limit;
+    let totalPages;
     const endIndex = +page * +limit;
     try {
-      users = await db
-        .collection(collectionName)
-        .find({})
+      const users = await db.collection(collectionName).find({});
+      const total = await users.count();
+      const current = await users
         .skip(startIndex)
         .limit(+limit)
         .toArray();
+
       const paginatedResult: IPaginatedResult = {
-        data: users,
+        data: current,
         page,
         limit,
+        totalPages: Math.ceil(total / +limit).toString(),
       };
       res.paginatedResult = paginatedResult;
       return handler(req, res);

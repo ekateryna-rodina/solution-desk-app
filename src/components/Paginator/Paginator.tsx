@@ -5,9 +5,10 @@ import { setPage } from "../../features/usersPagination/usersPagination-slice";
 import styled from "./Paginator.module.css";
 
 const Paginator = () => {
-  const { page, limit } = useAppSelector((state) => state.usersPagination);
+  const { page, limit, totalPages } = useAppSelector(
+    (state) => state.usersPagination
+  );
   const dispath = useAppDispatch();
-  const totalPages = 10;
   function handlePageClick({ selected: selectedPage }) {
     dispath(setPage({ page: selectedPage + 1, limit }));
   }
