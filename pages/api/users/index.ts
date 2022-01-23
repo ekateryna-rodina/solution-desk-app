@@ -8,7 +8,6 @@ function handler(
   res: NextApiResponseWithPagination<IUser>
 ) {
   const result = { ...res.paginatedResult };
-  console.log(result);
   res.status(200).json(result);
 }
 

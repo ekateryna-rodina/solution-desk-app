@@ -1,0 +1,15 @@
+.pagination{
+    @apply bg-slate-50 flex gap-4 mt-4 max-w-max p-1 
+}
+.paginationLink{
+    @apply p-1 hover:bg-blueExtend hover:opacity-50 hover:text-white
+}
+.paginationLinkDisabled{
+    @apply text-slate-300
+}
+.paginationLinkActive{
+    @apply bg-blueExtend/50 text-slate-100
+}
+.pageClassName{
+    @apply px-2 
+}

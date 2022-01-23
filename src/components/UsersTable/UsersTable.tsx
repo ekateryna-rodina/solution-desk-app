@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getAllUsers } from "../../app/solutionDeskApi";
+import { useAppSelector } from "../../app/hooks";
+import { useGetAllUsersQuery } from "../../app/solutionDeskApi";
 import { Paginator } from "../Paginator";
 
 const fieldsToIgnore = new Set([
@@ -22,27 +23,26 @@ const responsiveColsMap = {
   9: "hidden xl:table-cell",
 };
 const UsersTable = () => {
-  const {
-    currentData: { data },
-  } = getAllUsers.useQueryState({
-    page: "1",
-    limit: "10",
+  const { page, limit } = useAppSelector((state) => state.usersPagination);
+  console.log(page, limit);
+  const { data, isLoading } = useGetAllUsersQuery({
+    page: page.toString(),
+    limit: limit.toString(),
   });
-  // console.log(paginatedData);
-  console.log(data);
+
   const [noResults, setNoResults] = useState(false);
-  const getColumnNames = () => {
+  const getColumnNames = React.useMemo(() => {
     if (!data) return;
-    const paginatedData = data;
+    const paginatedData = data.data;
     const result = Object.keys(paginatedData[0]).filter(
       (c) => !fieldsToIgnore.has(c)
     );
     result.splice(0, 0, "name");
     return result;
-  };
-  const getUsers = () => {
+  }, [data]);
+  const getUsers = React.useMemo(() => {
     if (!data) return;
-    const paginatedData = data;
+    const paginatedData = data.data;
     const newUsers = paginatedData.map((user) => {
       return Object.keys(user)
         .filter((c) => !fieldsToIgnore.has(c))
@@ -52,21 +52,21 @@ const UsersTable = () => {
         }, {});
     });
     return newUsers;
-  };
+  }, [data]);
 
   useEffect(() => {
+    console.log(data);
     if (!data || !data.data) return;
-    console.log("data");
-    setNoResults(data && !data.length);
+    setNoResults(!data.data.length);
   }, [data]);
-  if (false) return <>Loading</>;
+  if (isLoading) return <>Loading</>;
   if (noResults) return <h1>Placehholer for no results</h1>;
   return (
     <div className="relative mx-8">
       <table className="table-auto w-full bg-white shadow">
         <thead className="text-slate-500 bg-slate-200 font-semibold">
           <tr>
-            {getColumnNames()?.map((c, i) => {
+            {getColumnNames?.map((c, i) => {
               return (
                 <td className={`p-4 ${responsiveColsMap[i]}`} key={c}>
                   {c}
@@ -76,7 +76,7 @@ const UsersTable = () => {
           </tr>
         </thead>
         <tbody className=" divide-y divide-slate-300">
-          {getUsers()?.map((user, i) => (
+          {getUsers.map((user, i) => (
             <tr key={user.name}>
               {Object.values(user).map((c, i) => (
                 <td

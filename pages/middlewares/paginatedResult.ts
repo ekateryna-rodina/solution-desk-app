@@ -12,8 +12,6 @@ const paginated = <T>(handler: any, collectionName: string) => {
     const startIndex = (+page - 1) * +limit;
     const endIndex = +page * +limit;
     try {
-      console.log("yes");
-      console.log(page, limit);
       users = await db
         .collection(collectionName)
         .find({})
