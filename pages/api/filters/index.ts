@@ -16,12 +16,12 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     ]);
     const filterOptions: IFilter = {
       gender,
-      responseRate: Object.values(ResponseRate) as Array<
-        keyof typeof ResponseRate
-      >,
-      customerService: Object.values(CustomerService) as Array<
-        keyof typeof CustomerService
-      >,
+      responseRate: Object.values(ResponseRate).filter(
+        (v) => !isNaN(ResponseRate[v])
+      ) as Array<keyof typeof ResponseRate>,
+      customerService: Object.values(CustomerService).filter(
+        (v) => !isNaN(CustomerService[v])
+      ) as Array<keyof typeof CustomerService>,
       city: cities,
       country: countries,
     };
