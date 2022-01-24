@@ -24,7 +24,7 @@ const responsiveColsMap = {
 };
 const UsersTable = () => {
   const { page, limit } = useAppSelector((state) => state.usersPagination);
-  console.log(page, limit);
+
   const { data, isLoading } = useGetAllUsersQuery({
     page: page.toString(),
     limit: limit.toString(),
@@ -55,7 +55,6 @@ const UsersTable = () => {
   }, [data]);
 
   useEffect(() => {
-    console.log(data);
     if (!data || !data.data) return;
     setNoResults(!data.data.length);
   }, [data]);

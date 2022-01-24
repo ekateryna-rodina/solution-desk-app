@@ -1,4 +1,8 @@
-import { getAllUsers, solutionDeskApi } from "../src/app/solutionDeskApi";
+import {
+  getAllUsers,
+  getFilters,
+  solutionDeskApi,
+} from "../src/app/solutionDeskApi";
 import { wrapper } from "../src/app/store";
 import { Layout } from "../src/components/Layout";
 import { SearchUsers } from "../src/components/SearchUsers";
@@ -15,9 +19,9 @@ const Home = ({ initialReduxState }: any) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async () => {
-    await store.dispatch(getAllUsers.initiate({ page: "1", limit: "10" }));
+    await store.dispatch(getAllUsers.initiate({ page: "1", limit: "7" }));
+    await store.dispatch(getFilters.initiate({}));
     await Promise.all(solutionDeskApi.util.getRunningOperationPromises());
-
     return {
       props: {
         initialReduxState: store.getState(),

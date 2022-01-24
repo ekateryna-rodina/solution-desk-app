@@ -8,11 +8,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const db = await client.db();
 
   try {
-    const users = await db.collection("users").find({});
-    const cities = await users.distinct("city");
-    const countries = await users.distinct("country");
+    const users = await db.collection("users");
+    const [gender, countries, cities] = await Promise.all([
+      users.distinct("gender"),
+      users.distinct("country"),
+      users.distinct("city"),
+    ]);
     const filterOptions: IFilter = {
-      gender: [],
+      gender,
       responseRate: Object.values(ResponseRate) as Array<
         keyof typeof ResponseRate
       >,
@@ -22,6 +25,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       city: cities,
       country: countries,
     };
+
     res.status(200).json(filterOptions);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
