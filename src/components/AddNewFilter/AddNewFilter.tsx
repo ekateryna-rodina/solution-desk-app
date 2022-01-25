@@ -1,24 +1,27 @@
 import React, { useState } from "react";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { setIsShown } from "../../features/filter/filter-slice";
+import CaretDown from "../icons/CaretDown";
+import CaretUp from "../icons/CaretUp";
 import { WordSearchFilter } from "../WordSearchFilter";
 
 const AddNewFilter = () => {
-  const [toggle, setToggle] = useState(true);
-  const { options } = useAppSelector((state) => state.filter);
+  const { options, isShown } = useAppSelector((state) => state.filter);
   const [filterByName, setFilterName] = useState<keyof typeof options | null>(
     null
   );
+  const dispatch = useAppDispatch();
   const renderFilterNames = () => {
     return Object.keys(options).map((f) => (
       <li
         role="presentation"
         key={f}
         onMouseEnter={() => setFilterName(f)}
-        className="relative px-4 py-2 hover:bg-blueExtend/50 hover:text-white cursor-pointer"
+        className="relative px-4 py-2 hover:bg-blueExtend/50 text-sm text-slate-600 hover:text-white cursor-pointer"
       >
-        <span>{f}</span>
+        {f}
         <div
-          className={`absolute -top-2 bg-white shadow transition ease-in-out p-4 ${
+          className={`absolute -top-2 bg-white shadow transition ease-in-out p-4 rounded ${
             filterByName === f
               ? "opacity-100 -translate-x-[11.55rem]"
               : "opacity-0 -translate-x-[11rem] pointer-events-none"
@@ -33,16 +36,32 @@ const AddNewFilter = () => {
       </li>
     ));
   };
+  const onShowFilterHandler = () => {
+    dispatch(setIsShown(!isShown));
+  };
   return (
     <div className="relative">
-      <div className="bg-white p-2">
-        <span>Add Filter</span>
-      </div>
-      <div className="absolute z-10 right-0 top-12 bg-white shadow rounded">
-        <ul
-          role="tablist"
-          className={`py-2 ${toggle ? "opacity-100" : "opacity-0"}`}
-        >
+      <button
+        onClick={onShowFilterHandler}
+        className={`bg-white p-2 flex flex-row justify-between items-center hover:shadow-md ${
+          isShown ? "shadow-md" : ""
+        }`}
+      >
+        <span className="text-slate-600 text-sm font-medium mr-2">
+          Add Filter
+        </span>
+        {isShown ? (
+          <CaretUp fill="fill-slate-600" />
+        ) : (
+          <CaretDown fill="fill-slate-600" />
+        )}
+      </button>
+      <div
+        className={`absolute z-10 right-0 top-12 bg-white shadow rounded ${
+          isShown ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        <ul role="tablist" className="py-2">
           {renderFilterNames()}
         </ul>
       </div>

@@ -1,24 +1,31 @@
 import React, { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { setCurrentTerm } from "../../features/filter/filter-slice";
 
 type AutocompleteProps = {
   data: string[];
   tabindex: string | number;
 };
 const Autocomplete = ({ data, tabindex }: AutocompleteProps) => {
-  const [input, setInput] = useState<string>("");
+  const {
+    current: { term },
+  } = useAppSelector((state) => state.filter);
   const [suggestion, setSuggestion] = useState<typeof data[number] | null>(
     null
   );
-
+  const dispatch = useAppDispatch();
+  const onInputHandler = (term) => {
+    dispatch(setCurrentTerm(term));
+  };
   const autocomplete = () => {
-    if (!input.length) {
+    if (!term.length) {
       setSuggestion(null);
       return;
     }
     const relevantKeys = data.filter(
       (k) =>
-        k.startsWith(input) ||
-        k.startsWith(input[0].toUpperCase() + input.substring(1))
+        k.startsWith(term) ||
+        k.startsWith(term[0].toUpperCase() + term.substring(1))
     );
     if (!relevantKeys.length) {
       setSuggestion(null);
@@ -29,12 +36,12 @@ const Autocomplete = ({ data, tabindex }: AutocompleteProps) => {
   const handleTab = (e: any) => {
     if (suggestion && e.key === "Tab") {
       e.preventDefault();
-      setInput(suggestion);
+      onInputHandler(suggestion);
       setSuggestion(null);
     }
   };
   const handleEnter = (e: any) => {
-    if (e.key === "Enter" && input.length) {
+    if (e.key === "Enter" && term.length) {
       e.preventDefault();
     }
   };
@@ -46,15 +53,15 @@ const Autocomplete = ({ data, tabindex }: AutocompleteProps) => {
   useEffect(() => {
     autocomplete();
     // eslint-disable-next-line
-  }, [input]);
+  }, [term]);
 
   return (
     <div className="relative block w-32 z-100" tabIndex={+tabindex} role="tab">
       <input
         type="text"
-        value={input}
+        value={term}
         onChange={(e: React.FormEvent<HTMLInputElement>) =>
-          setInput(e.currentTarget.value)
+          onInputHandler(e.currentTarget.value)
         }
         onKeyDown={confirmSuggestionHandler}
         className="absolute border-[1px] border-blueExtend/50  focus:outline-blueExtend rounded w-full pl-2 h-8 text-sm text-slate-800 tracking-wider"
@@ -62,7 +69,7 @@ const Autocomplete = ({ data, tabindex }: AutocompleteProps) => {
       {/* virtual wrapper */}
       <div className="absolute w-auto h-8 pl-2 pointer-events-none truncate flex items-center max-w-[7.5rem]">
         {/* hidden */}
-        <div className="invisible w-auto">{input}</div>
+        <div className="invisible w-auto">{term}</div>
         {/* autocomplete */}
         <div
           className={`bg-transparent text-slate-400 w-auto text-sm ${
@@ -70,7 +77,7 @@ const Autocomplete = ({ data, tabindex }: AutocompleteProps) => {
           }`}
           onTouchStart={confirmSuggestionHandler}
         >
-          {suggestion ? suggestion.substring(input.length) : ""}
+          {suggestion ? suggestion.substring(term.length) : ""}
         </div>
       </div>
     </div>

@@ -1,0 +1,10 @@
+.btn{
+@apply  px-2 py-1 border-[1px] border-blueExtend text-sm rounded text-blueExtend 
+focus:shadow-lg focus:outline-none focus:shadow-blueExtend/20
+}
+.btn.primary{
+    @apply bg-blueExtend text-white
+}
+.btn.disabled{
+    @apply pointer-events-none bg-slate-600
+}

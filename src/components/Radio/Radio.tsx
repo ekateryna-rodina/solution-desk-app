@@ -16,7 +16,6 @@ const Radio = ({
   value,
   onCheckedHandler,
 }: RadioProps) => {
-  console.log(checked);
   return (
     <label
       className={styled.container}

@@ -1,22 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { FilterRadioType } from "../../constants";
+import { setCurrentFilterType } from "../../features/filter/filter-slice";
 import { Radio } from "../Radio";
 
 const FilterRadio = ({ group }: { group: string }) => {
-  const [checkedRadio, setCheckedRadio] = useState(FilterRadioType.Is);
+  const {
+    current: { filterType },
+  } = useAppSelector((state) => state.filter);
+  const dispatch = useAppDispatch();
+  const onFilterTypeRadioChecked = (filterType: FilterRadioType) => {
+    dispatch(setCurrentFilterType(filterType));
+  };
   return (
     <div className="mt-[2.5rem]">
       {Object.keys(FilterRadioType)
         .filter((type) => isNaN(FilterRadioType[type]))
         .map((radio, i) => (
           <Radio
+            key={radio}
             checked={
-              FilterRadioType[checkedRadio].toString() == FilterRadioType[radio]
+              FilterRadioType[filterType].toString() == FilterRadioType[radio]
             }
             name={FilterRadioType[radio]}
             value={FilterRadioType[radio]}
             groupName={`filterRadioType_${group}`}
-            onCheckedHandler={setCheckedRadio}
+            onCheckedHandler={onFilterTypeRadioChecked}
           />
         ))}
     </div>

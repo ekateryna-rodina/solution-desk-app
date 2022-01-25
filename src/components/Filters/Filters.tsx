@@ -5,7 +5,6 @@ import { AppliedFilters } from "../AppliedFilters";
 
 const Filters = () => {
   const { data } = useAppSelector((state) => state.filter);
-  console.log(data);
   return (
     <div className="flex justify-end mx-8 mb-4">
       <AppliedFilters />

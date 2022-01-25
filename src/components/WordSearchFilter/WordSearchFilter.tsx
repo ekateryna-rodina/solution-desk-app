@@ -1,6 +1,7 @@
 import React from "react";
 import { Autocomplete } from "../Autocomplete";
 import { FilterRadio } from "../FilterRadio";
+import styles from "./WordSearchFilter.module.css";
 
 type WordSearchFilterProps = {
   data: string[];
@@ -11,11 +12,10 @@ const WordSearchFilter = ({ tabindex, data, group }: WordSearchFilterProps) => {
   return (
     <>
       <Autocomplete data={data} tabindex={+tabindex} />
-
       <FilterRadio group={group} />
-      <div>
-        {/* <button>Cancel</button> */}
-        {/* <input type="button" value="Apply Filter" /> */}
+      <div className="flex justify-between items-center mt-4">
+        <button className={styles.btn}>Cancel</button>
+        <button className={`${styles.btn} ${styles.primary}`}>Apply</button>
       </div>
     </>
   );
