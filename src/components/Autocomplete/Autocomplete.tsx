@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 
 type AutocompleteProps = {
   data: string[];
+  tabindex: string | number;
 };
-const Autocomplete = ({ data }: AutocompleteProps) => {
+const Autocomplete = ({ data, tabindex }: AutocompleteProps) => {
   const [input, setInput] = useState<string>("");
   const [suggestion, setSuggestion] = useState<typeof data[number] | null>(
     null
@@ -48,7 +49,7 @@ const Autocomplete = ({ data }: AutocompleteProps) => {
   }, [input]);
 
   return (
-    <div className="relative z-100 w-32">
+    <div className="relative block w-32 z-100" tabIndex={+tabindex} role="tab">
       <input
         type="text"
         value={input}

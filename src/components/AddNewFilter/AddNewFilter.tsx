@@ -11,6 +11,7 @@ const AddNewFilter = () => {
   const renderFilterNames = () => {
     return Object.keys(options).map((f) => (
       <li
+        role="presentation"
         key={f}
         onMouseEnter={() => setFilterName(f)}
         className="relative px-4 py-2 hover:bg-blueExtend/50 hover:text-white cursor-pointer"
@@ -23,7 +24,11 @@ const AddNewFilter = () => {
               : "opacity-0 -translate-x-[11rem] pointer-events-none"
           }`}
         >
-          <WordSearchFilter group={f} data={options[f]} />
+          <WordSearchFilter
+            tabindex={`${filterByName === f ? "0" : "-1"}`}
+            group={f}
+            data={options[f]}
+          />
         </div>
       </li>
     ));
@@ -34,7 +39,10 @@ const AddNewFilter = () => {
         <span>Add Filter</span>
       </div>
       <div className="absolute z-10 right-0 top-12 bg-white shadow rounded">
-        <ul className={`py-2 ${toggle ? "opacity-100" : "opacity-0"}`}>
+        <ul
+          role="tablist"
+          className={`py-2 ${toggle ? "opacity-100" : "opacity-0"}`}
+        >
           {renderFilterNames()}
         </ul>
       </div>

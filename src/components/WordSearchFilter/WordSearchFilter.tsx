@@ -5,12 +5,13 @@ import { FilterRadio } from "../FilterRadio";
 type WordSearchFilterProps = {
   data: string[];
   group: string;
+  tabindex: string | number;
 };
-const WordSearchFilter = ({ data, group }: WordSearchFilterProps) => {
-  console.log(data);
+const WordSearchFilter = ({ tabindex, data, group }: WordSearchFilterProps) => {
   return (
     <>
-      <Autocomplete data={data} />
+      <Autocomplete data={data} tabindex={+tabindex} />
+
       <FilterRadio group={group} />
       <div>
         {/* <button>Cancel</button> */}
@@ -19,5 +20,4 @@ const WordSearchFilter = ({ data, group }: WordSearchFilterProps) => {
     </>
   );
 };
-
-export default WordSearchFilter;
+export default React.memo(WordSearchFilter);
