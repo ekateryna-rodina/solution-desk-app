@@ -25,7 +25,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       city: cities,
       country: countries,
     };
-
+    console.log(filterOptions);
     res.status(200).json(filterOptions);
   } catch (error: any) {
     res.status(500).json({ message: error.message });

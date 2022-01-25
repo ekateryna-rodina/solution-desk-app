@@ -1,0 +1,6 @@
+.inputRow{
+    @apply flex items-center
+}
+.label{
+    @apply text-slate-800 text-sm ml-2
+}

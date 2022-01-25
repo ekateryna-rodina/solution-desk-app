@@ -8,3 +8,9 @@ export enum CustomerService {
   Medium,
   High,
 }
+
+export enum FilterRadioType {
+  Is,
+  Not,
+  Contains,
+}
