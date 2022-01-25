@@ -1,0 +1,25 @@
+.container{
+    @apply relative cursor-pointer appearance-none flex flex-row justify-start items-center
+}
+.container:hover input ~ .checkmark{
+    @apply bg-blueExtend/50
+}
+.container input[aria-checked="true"] ~ .checkmark{
+    @apply bg-blueExtend after:block
+}
+/* hide browser's default radio */
+.container input{
+    @apply absolute opacity-0 cursor-pointer
+}
+/* custom radio button */
+.checkmark{
+ @apply absolute h-2
+ w-2 bg-slate-300 rounded-full 
+ after:content-[''] after:absolute after:hidden 
+ after:inset-y-2/4 after:inset-x-2/4 after:-translate-y-2/4  
+ after:-translate-x-2/4 after:w-1 
+ after:h-1 after:bg-white after:rounded-full
+}
+.label{
+    @apply ml-4 text-sm text-slate-800 
+}

@@ -23,7 +23,7 @@ const AddNewFilter = () => {
               : "opacity-0 -translate-x-[11rem] pointer-events-none"
           }`}
         >
-          <WordSearchFilter data={options[f]} />
+          <WordSearchFilter group={f} data={options[f]} />
         </div>
       </li>
     ));

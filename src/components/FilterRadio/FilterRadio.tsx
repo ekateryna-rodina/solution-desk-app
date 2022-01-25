@@ -1,45 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { FilterRadioType } from "../../constants";
-import styles from "./FilterRadio.module.css";
+import { Radio } from "../Radio";
 
-const FilterRadio = () => {
+const FilterRadio = ({ group }: { group: string }) => {
+  const [checkedRadio, setCheckedRadio] = useState(FilterRadioType.Is);
   return (
-    <>
-      <div className={`mt-[2.5rem] ${styles.inputRow}`}>
-        <input
-          type="radio"
-          id="is"
-          value={FilterRadioType.Is}
-          name="filterRadioType"
-        />
-
-        <label className={styles.label} htmlFor="is">
-          Is
-        </label>
-      </div>
-      <div className={styles.inputRow}>
-        <input
-          type="radio"
-          id="contains"
-          value={FilterRadioType.Contains}
-          name="filterRadioType"
-        />
-        <label className={styles.label} htmlFor="contains">
-          Contains
-        </label>
-      </div>
-      <div className={styles.inputRow}>
-        <input
-          type="radio"
-          id="not"
-          value={FilterRadioType.Not}
-          name="filterRadioType"
-        />
-        <label className={styles.label} htmlFor="not">
-          Not
-        </label>
-      </div>
-    </>
+    <div className="mt-[2.5rem]">
+      {Object.keys(FilterRadioType)
+        .filter((type) => isNaN(FilterRadioType[type]))
+        .map((radio, i) => (
+          <Radio
+            checked={
+              FilterRadioType[checkedRadio].toString() == FilterRadioType[radio]
+            }
+            name={FilterRadioType[radio]}
+            value={FilterRadioType[radio]}
+            groupName={`filterRadioType_${group}`}
+            onCheckedHandler={setCheckedRadio}
+          />
+        ))}
+    </div>
   );
 };
 

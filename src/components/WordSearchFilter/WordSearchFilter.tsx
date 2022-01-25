@@ -4,13 +4,14 @@ import { FilterRadio } from "../FilterRadio";
 
 type WordSearchFilterProps = {
   data: string[];
+  group: string;
 };
-const WordSearchFilter = ({ data }: WordSearchFilterProps) => {
+const WordSearchFilter = ({ data, group }: WordSearchFilterProps) => {
   console.log(data);
   return (
     <>
       <Autocomplete data={data} />
-      <FilterRadio />
+      <FilterRadio group={group} />
       <div>
         {/* <button>Cancel</button> */}
         {/* <input type="button" value="Apply Filter" /> */}
