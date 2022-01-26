@@ -56,7 +56,7 @@ const Autocomplete = ({ data, tabindex }: AutocompleteProps) => {
   }, [term]);
 
   return (
-    <div className="relative block w-32 z-100" tabIndex={+tabindex} role="tab">
+    <div className="relative w-32 z-100" tabIndex={+tabindex} role="tab">
       <input
         type="text"
         value={term}
@@ -64,15 +64,15 @@ const Autocomplete = ({ data, tabindex }: AutocompleteProps) => {
           onInputHandler(e.currentTarget.value)
         }
         onKeyDown={confirmSuggestionHandler}
-        className="absolute border-[1px] border-blueExtend/50  focus:outline-blueExtend rounded w-full pl-2 h-8 text-sm text-slate-800 tracking-wider"
+        className="absolute border-[1px] border-blueExtend/50  focus:outline-blueExtend rounded w-full pl-2 h-8 text-sm text-slate-800 tracking-wide"
       />
       {/* virtual wrapper */}
-      <div className="absolute w-auto h-8 pl-2 pointer-events-none truncate flex items-center max-w-[7.5rem]">
+      <div className="absolute w-auto h-8 pl-3 pointer-events-none truncate flex items-center max-w-[7.5rem]">
         {/* hidden */}
         <div className="invisible w-auto">{term}</div>
         {/* autocomplete */}
         <div
-          className={`bg-transparent text-slate-400 w-auto text-sm ${
+          className={`bg-transparent text-slate-400 w-auto text-sm tracking-wide ${
             Boolean(suggestion) ? "visible" : "invisible"
           }`}
           onTouchStart={confirmSuggestionHandler}

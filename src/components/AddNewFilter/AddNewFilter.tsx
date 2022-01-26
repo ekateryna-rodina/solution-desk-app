@@ -23,7 +23,7 @@ const AddNewFilter = () => {
         <div
           className={`absolute -top-2 bg-white shadow transition ease-in-out p-4 rounded ${
             filterByName === f
-              ? "opacity-100 -translate-x-[11.55rem]"
+              ? "opacity-100 -translate-x-[11.75rem]"
               : "opacity-0 -translate-x-[11rem] pointer-events-none"
           }`}
         >
@@ -43,7 +43,7 @@ const AddNewFilter = () => {
     <div className="relative">
       <button
         onClick={onShowFilterHandler}
-        className={`bg-white p-2 flex flex-row justify-between items-center hover:shadow-md ${
+        className={`bg-white p-2 flex flex-row justify-between items-center rounded  hover:shadow-md ${
           isShown ? "shadow-md" : ""
         }`}
       >
