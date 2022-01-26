@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getFilters } from "../../app/solutionDeskApi";
-import { FilterRadioType } from "../../constants";
+import { TermSearchFilterType } from "../../constants";
 import { IFilterApplied, IFilterOptions } from "../../types/index";
 
 interface FilterState {
@@ -14,7 +14,7 @@ const initialState: FilterState = {
   isShown: false,
   current: {
     term: "",
-    filterType: FilterRadioType.Is,
+    termSearchFilterType: TermSearchFilterType.Is,
     option: "city",
   },
   options: {
@@ -34,8 +34,11 @@ const filterSlice = createSlice({
     setIsShown(state, action: PayloadAction<boolean>) {
       state.isShown = action.payload;
     },
-    setCurrentFilterType(state, action: PayloadAction<FilterRadioType>) {
-      state.current.filterType = action.payload;
+    setCurrentTermSearchFilterType(
+      state,
+      action: PayloadAction<TermSearchFilterType>
+    ) {
+      state.current.termSearchFilterType = action.payload;
     },
     setCurrentTerm(state, action: PayloadAction<string>) {
       state.current.term = action.payload;
@@ -54,6 +57,10 @@ const filterSlice = createSlice({
     });
   },
 });
-export const { setIsShown, setCurrentFilterType, setCurrentTerm, applyFilter } =
-  filterSlice.actions;
+export const {
+  setIsShown,
+  setCurrentTermSearchFilterType,
+  setCurrentTerm,
+  applyFilter,
+} = filterSlice.actions;
 export default filterSlice.reducer;

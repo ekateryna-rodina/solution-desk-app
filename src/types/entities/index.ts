@@ -1,7 +1,7 @@
 import {
   CustomerService,
-  FilterRadioType,
   ResponseRate,
+  TermSearchFilterType,
 } from "../../constants";
 
 export interface IUser {
@@ -31,6 +31,6 @@ export type IFilterOptions = {
 export interface IFilterApplied {
   option: keyof IFilterOptions;
   term?: string;
-  filterType?: FilterRadioType;
+  termSearchFilterType?: TermSearchFilterType;
   level?: CustomerService | ResponseRate;
 }

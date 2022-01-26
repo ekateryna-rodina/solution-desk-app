@@ -9,7 +9,7 @@ export enum CustomerService {
   High,
 }
 
-export enum FilterRadioType {
+export enum TermSearchFilterType {
   Is,
   Not,
   Contains,

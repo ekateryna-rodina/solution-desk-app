@@ -12,11 +12,11 @@ type WordSearchFilterProps = {
 };
 const WordSearchFilter = ({ tabindex, data, group }: WordSearchFilterProps) => {
   const {
-    current: { term, filterType, option },
+    current: { term, termSearchFilterType, option },
   } = useAppSelector((state) => state.filter);
   const dispatch = useAppDispatch();
   const onApplyHandler = () => {
-    dispatch(applyFilter({ option, term, filterType }));
+    dispatch(applyFilter({ option, term, termSearchFilterType }));
   };
   return (
     <>

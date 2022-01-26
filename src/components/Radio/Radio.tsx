@@ -1,5 +1,5 @@
 import React from "react";
-import { FilterRadioType } from "../../constants";
+import { TermSearchFilterType } from "../../constants";
 import styled from "./Radio.module.css";
 
 type RadioProps = {
@@ -19,7 +19,7 @@ const Radio = ({
   return (
     <label
       className={styled.container}
-      onClick={() => onCheckedHandler(FilterRadioType[name])}
+      onClick={() => onCheckedHandler(TermSearchFilterType[name])}
     >
       <input
         type="radio"

@@ -1,31 +1,32 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { FilterRadioType } from "../../constants";
-import { setCurrentFilterType } from "../../features/filter/filter-slice";
+import { TermSearchFilterType } from "../../constants";
+import { setCurrentTermSearchFilterType } from "../../features/filter/filter-slice";
 import { Radio } from "../Radio";
 
 const FilterRadio = ({ group }: { group: string }) => {
   const {
-    current: { filterType },
+    current: { termSearchFilterType },
   } = useAppSelector((state) => state.filter);
   const dispatch = useAppDispatch();
-  const onFilterTypeRadioChecked = (filterType: FilterRadioType) => {
-    dispatch(setCurrentFilterType(filterType));
+  const onTermSearchFilterTypeRadioChecked = (type: TermSearchFilterType) => {
+    dispatch(setCurrentTermSearchFilterType(type));
   };
   return (
     <div className="mt-[2.5rem]">
-      {Object.keys(FilterRadioType)
-        .filter((type) => isNaN(FilterRadioType[type]))
+      {Object.keys(TermSearchFilterType)
+        .filter((type) => isNaN(TermSearchFilterType[type]))
         .map((radio, i) => (
           <Radio
             key={radio}
             checked={
-              FilterRadioType[filterType].toString() == FilterRadioType[radio]
+              TermSearchFilterType[termSearchFilterType].toString() ==
+              TermSearchFilterType[radio]
             }
-            name={FilterRadioType[radio]}
-            value={FilterRadioType[radio]}
+            name={TermSearchFilterType[radio]}
+            value={TermSearchFilterType[radio]}
             groupName={`filterRadioType_${group}`}
-            onCheckedHandler={onFilterTypeRadioChecked}
+            onCheckedHandler={onTermSearchFilterTypeRadioChecked}
           />
         ))}
     </div>
