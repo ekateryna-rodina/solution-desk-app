@@ -16,7 +16,7 @@ const AddNewFilter = () => {
       <li
         role="presentation"
         key={f}
-        onMouseEnter={() => setFilterName(f)}
+        onClick={() => setFilterName(f)}
         className="relative px-4 py-2 hover:bg-blueExtend/50 text-sm text-slate-600 hover:text-white cursor-pointer"
       >
         {f}
