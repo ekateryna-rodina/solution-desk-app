@@ -2,7 +2,7 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { applyFilter } from "../../features/filter/filter-slice";
 import { Autocomplete } from "../Autocomplete";
-import { FilterRadio } from "../FilterRadio";
+import { TermSearchFilter } from "../TermSearchFilter";
 import styles from "./WordSearchFilter.module.css";
 
 type WordSearchFilterProps = {
@@ -21,7 +21,7 @@ const WordSearchFilter = ({ tabindex, data, group }: WordSearchFilterProps) => {
   return (
     <>
       <Autocomplete data={data} tabindex={+tabindex} />
-      <FilterRadio group={group} />
+      <TermSearchFilter group={group} />
       <div className="flex justify-between items-center mt-4">
         <button className={styles.btn}>Cancel</button>
         <button

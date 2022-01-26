@@ -4,7 +4,7 @@ import { TermSearchFilterType } from "../../constants";
 import { setCurrentTermSearchFilterType } from "../../features/filter/filter-slice";
 import { Radio } from "../Radio";
 
-const FilterRadio = ({ group }: { group: string }) => {
+const TermSearchFilter = ({ group }: { group: string }) => {
   const {
     current: { termSearchFilterType },
   } = useAppSelector((state) => state.filter);
@@ -33,4 +33,4 @@ const FilterRadio = ({ group }: { group: string }) => {
   );
 };
 
-export default FilterRadio;
+export default TermSearchFilter;
