@@ -1,34 +1,48 @@
-import React, { useState } from "react";
+import React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { setIsShown } from "../../features/filter/filter-slice";
+import {
+  setCurrentFilterProperty,
+  setIsShown,
+} from "../../features/filter/filter-slice";
+import { IFilterProperties } from "../../types";
 import CaretDown from "../icons/CaretDown";
 import CaretUp from "../icons/CaretUp";
 import { WordSearchFilter } from "../WordSearchFilter";
 
 const AddNewFilter = () => {
-  const { properties, isShown } = useAppSelector((state) => state.filter);
-  const [filterByName, setFilterName] = useState<
-    keyof typeof properties | null
-  >(null);
+  const {
+    properties,
+    isShown,
+    current: { property },
+  } = useAppSelector((state) => state.filter);
   const dispatch = useAppDispatch();
+  const onSelectCurrentPropertyFilter = (current: keyof IFilterProperties) => {
+    dispatch(setCurrentFilterProperty(current));
+  };
+
   const renderFilterNames = () => {
     return Object.keys(properties).map((f) => (
       <li
         role="presentation"
         key={f}
-        onClick={() => setFilterName(f)}
-        className="relative px-4 py-2 hover:bg-blueExtend/50 text-sm text-slate-600 hover:text-white cursor-pointer"
+        onClick={() =>
+          onSelectCurrentPropertyFilter(f as keyof IFilterProperties)
+        }
+        className={`relative px-4 py-2 hover:bg-blueExtend/50 
+        text-sm text-slate-600 hover:text-white cursor-pointer ${
+          property === f ? "bg-blueExtend  text-white hover:bg-blueExtend " : ""
+        }`}
       >
         {f}
         <div
           className={`absolute -top-2 bg-white shadow-md transition ease-in-out p-4 rounded ${
-            filterByName === f
+            property === f
               ? "opacity-100 -translate-x-[11.75rem]"
               : "opacity-0 -translate-x-[11rem] pointer-events-none"
           }`}
         >
           <WordSearchFilter
-            tabindex={`${filterByName === f ? "0" : "-1"}`}
+            tabindex={`${property === f ? "0" : "-1"}`}
             group={f}
             data={properties[f]}
           />

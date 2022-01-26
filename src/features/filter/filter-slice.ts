@@ -6,7 +6,9 @@ import { IFilterApplied, IFilterProperties } from "../../types/index";
 interface FilterState {
   isShown: boolean;
   properties: IFilterProperties;
-  current: IFilterApplied;
+  current: Omit<IFilterApplied, "property"> & {
+    property: keyof IFilterProperties | null;
+  };
   applied: Array<IFilterApplied>;
 }
 
@@ -15,7 +17,7 @@ const initialState: FilterState = {
   current: {
     term: "",
     termSearchFilterType: TermSearchFilterType.Is,
-    property: "city",
+    property: null,
   },
   properties: {
     gender: [],
@@ -45,12 +47,17 @@ const filterSlice = createSlice({
     },
     setCurrentFilterProperty(
       state,
-      action: PayloadAction<keyof IFilterProperties>
+      action: PayloadAction<keyof IFilterProperties | null>
     ) {
       state.current.property = action.payload;
     },
     applyFilter(state, action: PayloadAction<IFilterApplied>) {
       state.applied.push(action.payload);
+    },
+    clearCurrentFilter(state) {
+      state.current.term = "";
+      state.current.termSearchFilterType = TermSearchFilterType.Is;
+      state.current.property = null;
     },
   },
   extraReducers: (builder) => {
@@ -68,5 +75,7 @@ export const {
   setCurrentTermSearchFilterType,
   setCurrentTerm,
   applyFilter,
+  setCurrentFilterProperty,
+  clearCurrentFilter,
 } = filterSlice.actions;
 export default filterSlice.reducer;

@@ -1,6 +1,10 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { applyFilter } from "../../features/filter/filter-slice";
+import {
+  applyFilter,
+  clearCurrentFilter,
+  setCurrentFilterProperty,
+} from "../../features/filter/filter-slice";
 import { Autocomplete } from "../Autocomplete";
 import { TermSearchFilter } from "../TermSearchFilter";
 import styles from "./WordSearchFilter.module.css";
@@ -15,15 +19,26 @@ const WordSearchFilter = ({ tabindex, data, group }: WordSearchFilterProps) => {
     current: { term, termSearchFilterType, property },
   } = useAppSelector((state) => state.filter);
   const dispatch = useAppDispatch();
-  const onApplyHandler = () => {
+  const onApplyHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     dispatch(applyFilter({ property, term, termSearchFilterType }));
+    dispatch(clearCurrentFilter());
+  };
+  const onCloseCurrentFilterHandler = (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.stopPropagation();
+    dispatch(clearCurrentFilter());
+    dispatch(setCurrentFilterProperty(null));
   };
   return (
     <>
       <Autocomplete data={data} tabindex={+tabindex} />
       <TermSearchFilter group={group} />
       <div className="flex justify-between items-center mt-4">
-        <button className={styles.btn}>Cancel</button>
+        <button onClick={onCloseCurrentFilterHandler} className={styles.btn}>
+          Cancel
+        </button>
         <button
           onClick={onApplyHandler}
           className={`${styles.btn} ${styles.primary} ${
