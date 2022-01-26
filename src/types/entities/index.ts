@@ -1,4 +1,8 @@
-import { CustomerService, ResponseRate } from "../../constants";
+import {
+  CustomerService,
+  FilterRadioType,
+  ResponseRate,
+} from "../../constants";
 
 export interface IUser {
   id: number;
@@ -16,10 +20,17 @@ export interface IUser {
   country: string;
 }
 
-export type IFilter = {
+export type IFilterOptions = {
   gender: [];
   city: [];
   country: [];
   responseRate: Array<keyof typeof ResponseRate>;
   customerService: Array<keyof typeof CustomerService>;
 };
+
+export interface IFilterApplied {
+  option: keyof IFilterOptions;
+  term?: string;
+  filterType?: FilterRadioType;
+  level?: CustomerService | ResponseRate;
+}

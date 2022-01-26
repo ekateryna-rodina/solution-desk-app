@@ -1,15 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getFilters } from "../../app/solutionDeskApi";
 import { FilterRadioType } from "../../constants";
-import { IFilter } from "../../types/index";
+import { IFilterApplied, IFilterOptions } from "../../types/index";
 
 interface FilterState {
   isShown: boolean;
-  options: IFilter;
+  options: IFilterOptions;
   current: {
     term: string;
     filterType: FilterRadioType;
   };
+  applied: Array<IFilterApplied>;
 }
 
 const initialState: FilterState = {
@@ -25,6 +26,7 @@ const initialState: FilterState = {
     responseRate: [],
     customerService: [],
   },
+  applied: [],
 };
 
 const filterSlice = createSlice({
@@ -39,6 +41,9 @@ const filterSlice = createSlice({
     },
     setCurrentTerm(state, action: PayloadAction<string>) {
       state.current.term = action.payload;
+    },
+    applyFilter(state, action: PayloadAction<IFilterApplied>) {
+      state.applied.push(action.payload);
     },
   },
   extraReducers: (builder) => {

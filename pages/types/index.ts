@@ -1,12 +1,12 @@
 import { NextApiResponse } from "next";
-import { IFilter } from "../../src/types";
+import { IFilterOptions } from "../../src/types";
 
 export type IPaginatedResult = {
   data?: {}[] | null;
   page?: string;
   limit?: string;
   totalPages: string;
-  appliedFilters?: IFilter | null;
+  appliedFilters?: IFilterOptions | null;
 };
 
 export interface NextApiResponseWithPagination<T> extends NextApiResponse {
