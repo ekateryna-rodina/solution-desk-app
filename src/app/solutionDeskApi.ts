@@ -15,8 +15,12 @@ export const solutionDeskApi = createApi({
     getUserById: builder.query<any, string>({
       query: (id) => `users/${id}`,
     }),
-    getAllUsers: builder.query<any, { page: string; limit: string }>({
-      query: ({ page, limit }) => `users?page=${page}&limit=${limit}`,
+    getAllUsers: builder.query<
+      any,
+      { page: string; limit: string; filter: string }
+    >({
+      query: ({ page, limit, filter }) =>
+        `users?page=${page}&limit=${limit}&filter=${filter}`,
     }),
     getFilters: builder.query({
       query: () => `filters`,

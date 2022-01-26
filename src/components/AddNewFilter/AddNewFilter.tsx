@@ -21,7 +21,7 @@ const AddNewFilter = () => {
       >
         {f}
         <div
-          className={`absolute -top-2 bg-white shadow transition ease-in-out p-4 rounded ${
+          className={`absolute -top-2 bg-white shadow-md transition ease-in-out p-4 rounded ${
             filterByName === f
               ? "opacity-100 -translate-x-[11.75rem]"
               : "opacity-0 -translate-x-[11rem] pointer-events-none"
@@ -57,7 +57,7 @@ const AddNewFilter = () => {
         )}
       </button>
       <div
-        className={`absolute z-10 right-0 top-12 bg-white shadow rounded ${
+        className={`absolute z-10 right-0 top-12 bg-white shadow-md rounded ${
           isShown ? "opacity-100" : "opacity-0"
         }`}
       >

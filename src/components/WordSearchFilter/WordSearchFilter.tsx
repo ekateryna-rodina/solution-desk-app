@@ -1,5 +1,6 @@
 import React from "react";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { applyFilter } from "../../features/filter/filter-slice";
 import { Autocomplete } from "../Autocomplete";
 import { FilterRadio } from "../FilterRadio";
 import styles from "./WordSearchFilter.module.css";
@@ -11,8 +12,12 @@ type WordSearchFilterProps = {
 };
 const WordSearchFilter = ({ tabindex, data, group }: WordSearchFilterProps) => {
   const {
-    current: { term },
+    current: { term, filterType, option },
   } = useAppSelector((state) => state.filter);
+  const dispatch = useAppDispatch();
+  const onApplyHandler = () => {
+    dispatch(applyFilter({ option, term, filterType }));
+  };
   return (
     <>
       <Autocomplete data={data} tabindex={+tabindex} />
@@ -20,6 +25,7 @@ const WordSearchFilter = ({ tabindex, data, group }: WordSearchFilterProps) => {
       <div className="flex justify-between items-center mt-4">
         <button className={styles.btn}>Cancel</button>
         <button
+          onClick={onApplyHandler}
           className={`${styles.btn} ${styles.primary} ${
             !term.length ? styles.disabled : ""
           }`}

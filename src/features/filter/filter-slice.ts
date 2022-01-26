@@ -6,10 +6,7 @@ import { IFilterApplied, IFilterOptions } from "../../types/index";
 interface FilterState {
   isShown: boolean;
   options: IFilterOptions;
-  current: {
-    term: string;
-    filterType: FilterRadioType;
-  };
+  current: IFilterApplied;
   applied: Array<IFilterApplied>;
 }
 
@@ -18,6 +15,7 @@ const initialState: FilterState = {
   current: {
     term: "",
     filterType: FilterRadioType.Is,
+    option: "city",
   },
   options: {
     gender: [],
@@ -56,6 +54,6 @@ const filterSlice = createSlice({
     });
   },
 });
-export const { setIsShown, setCurrentFilterType, setCurrentTerm } =
+export const { setIsShown, setCurrentFilterType, setCurrentTerm, applyFilter } =
   filterSlice.actions;
 export default filterSlice.reducer;

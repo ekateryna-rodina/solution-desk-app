@@ -24,10 +24,12 @@ const responsiveColsMap = {
 };
 const UsersTable = () => {
   const { page, limit } = useAppSelector((state) => state.usersPagination);
+  const { applied } = useAppSelector((state) => state.filter);
 
   const { data, isLoading } = useGetAllUsersQuery({
     page: page.toString(),
     limit: limit.toString(),
+    filter: encodeURIComponent(JSON.stringify(applied)),
   });
 
   const [noResults, setNoResults] = useState(false);
@@ -46,7 +48,7 @@ const UsersTable = () => {
     const newUsers = paginatedData.map((user) => {
       return Object.keys(user)
         .filter((c) => !fieldsToIgnore.has(c))
-        .reduce((ur, key) => {
+        .reduce((ur: any, key) => {
           ur.name = `${user.first_name} ${user.last_name}`;
           return Object.assign(ur, { [key]: user[key] });
         }, {});
@@ -77,7 +79,7 @@ const UsersTable = () => {
         <tbody className=" divide-y divide-slate-300">
           {getUsers.map((user, i) => (
             <tr key={user.name}>
-              {Object.values(user).map((c, i) => (
+              {Object.values(user).map((c: any, i) => (
                 <td
                   className={`p-4 ${responsiveColsMap[i]}`}
                   key={c.toString()}
