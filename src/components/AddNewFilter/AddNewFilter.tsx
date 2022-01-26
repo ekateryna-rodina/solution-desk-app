@@ -51,6 +51,9 @@ const AddNewFilter = () => {
     ));
   };
   const onShowFilterHandler = () => {
+    if (isShown) {
+      dispatch(setCurrentFilterProperty(null));
+    }
     dispatch(setIsShown(!isShown));
   };
   return (
