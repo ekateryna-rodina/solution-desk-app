@@ -6,13 +6,13 @@ import CaretUp from "../icons/CaretUp";
 import { WordSearchFilter } from "../WordSearchFilter";
 
 const AddNewFilter = () => {
-  const { options, isShown } = useAppSelector((state) => state.filter);
-  const [filterByName, setFilterName] = useState<keyof typeof options | null>(
-    null
-  );
+  const { properties, isShown } = useAppSelector((state) => state.filter);
+  const [filterByName, setFilterName] = useState<
+    keyof typeof properties | null
+  >(null);
   const dispatch = useAppDispatch();
   const renderFilterNames = () => {
-    return Object.keys(options).map((f) => (
+    return Object.keys(properties).map((f) => (
       <li
         role="presentation"
         key={f}
@@ -30,7 +30,7 @@ const AddNewFilter = () => {
           <WordSearchFilter
             tabindex={`${filterByName === f ? "0" : "-1"}`}
             group={f}
-            data={options[f]}
+            data={properties[f]}
           />
         </div>
       </li>

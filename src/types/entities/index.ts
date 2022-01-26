@@ -20,7 +20,7 @@ export interface IUser {
   country: string;
 }
 
-export type IFilterOptions = {
+export type IFilterProperties = {
   gender: [];
   city: [];
   country: [];
@@ -29,7 +29,7 @@ export type IFilterOptions = {
 };
 
 export interface IFilterApplied {
-  option: keyof IFilterOptions;
+  property: keyof IFilterProperties;
   term?: string;
   termSearchFilterType?: TermSearchFilterType;
   level?: CustomerService | ResponseRate;

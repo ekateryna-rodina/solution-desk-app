@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getFilters } from "../../app/solutionDeskApi";
 import { TermSearchFilterType } from "../../constants";
-import { IFilterApplied, IFilterOptions } from "../../types/index";
+import { IFilterApplied, IFilterProperties } from "../../types/index";
 
 interface FilterState {
   isShown: boolean;
-  options: IFilterOptions;
+  properties: IFilterProperties;
   current: IFilterApplied;
   applied: Array<IFilterApplied>;
 }
@@ -15,9 +15,9 @@ const initialState: FilterState = {
   current: {
     term: "",
     termSearchFilterType: TermSearchFilterType.Is,
-    option: "city",
+    property: "city",
   },
-  options: {
+  properties: {
     gender: [],
     city: [],
     country: [],
@@ -43,17 +43,23 @@ const filterSlice = createSlice({
     setCurrentTerm(state, action: PayloadAction<string>) {
       state.current.term = action.payload;
     },
+    setCurrentFilterProperty(
+      state,
+      action: PayloadAction<keyof IFilterProperties>
+    ) {
+      state.current.property = action.payload;
+    },
     applyFilter(state, action: PayloadAction<IFilterApplied>) {
       state.applied.push(action.payload);
     },
   },
   extraReducers: (builder) => {
     builder.addMatcher(getFilters.matchFulfilled, (state, { payload }) => {
-      state.options.gender = payload.gender;
-      state.options.city = payload.city;
-      state.options.country = payload.country;
-      state.options.responseRate = payload.responseRate;
-      state.options.customerService = payload.customerService;
+      state.properties.gender = payload.gender;
+      state.properties.city = payload.city;
+      state.properties.country = payload.country;
+      state.properties.responseRate = payload.responseRate;
+      state.properties.customerService = payload.customerService;
     });
   },
 });

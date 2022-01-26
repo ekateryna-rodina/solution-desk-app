@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "../../../lib/mongodb";
 import { CustomerService, ResponseRate } from "../../../src/constants";
-import { IFilterOptions } from "../../../src/types";
+import { IFilterProperties } from "../../../src/types";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const client = await clientPromise;
@@ -14,7 +14,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       users.distinct("country"),
       users.distinct("city"),
     ]);
-    const filterOptions: IFilterOptions = {
+    const filterProperties: IFilterProperties = {
       gender,
       responseRate: Object.values(ResponseRate).filter(
         (v) => !isNaN(ResponseRate[v])
@@ -25,8 +25,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       city: cities,
       country: countries,
     };
-    console.log(filterOptions);
-    res.status(200).json(filterOptions);
+
+    res.status(200).json(filterProperties);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
