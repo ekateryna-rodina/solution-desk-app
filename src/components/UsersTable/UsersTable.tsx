@@ -25,7 +25,6 @@ const responsiveColsMap = {
 const UsersTable = () => {
   const { page, limit } = useAppSelector((state) => state.usersPagination);
   const { applied } = useAppSelector((state) => state.filter);
-
   const { data, isLoading } = useGetAllUsersQuery({
     page: page.toString(),
     limit: limit.toString(),
@@ -56,7 +55,7 @@ const UsersTable = () => {
         }, {});
     });
     return newUsers;
-  }, [data, applied]);
+  }, [data]);
 
   useEffect(() => {
     if (!data || !data.data) return;
@@ -79,7 +78,7 @@ const UsersTable = () => {
           </tr>
         </thead>
         <tbody className=" divide-y divide-slate-300">
-          {getUsers.map((user, i) => (
+          {getUsers?.map((user, i) => (
             <tr key={user.name}>
               {Object.values(user).map((c: any, i) => (
                 <td

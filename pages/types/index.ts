@@ -13,18 +13,12 @@ export type IFilteredResult = {
   appliedFilters: Array<IFilterApplied> | null | [];
 };
 
-// export interface NextApiResponseWithPagination<T> extends NextApiResponse {
-//   paginatedResult: IPaginatedResult;
-// }
 export interface IWithPagination {
   paginatedResult: IPaginatedResult;
 }
 export interface IWithFilter {
   filteredResult?: IFilteredResult;
 }
-// export interface NextApiResponseWithFilter extends NextApiResponse {
-//   filteredResult?: IFilteredResult;
-// }
 
 export interface NextApiResponseFilteredPaginated
   extends NextApiResponse,
