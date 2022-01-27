@@ -54,6 +54,17 @@ const filterSlice = createSlice({
     applyFilter(state, action: PayloadAction<IFilterApplied>) {
       state.applied.push(action.payload);
     },
+    removeFilter(state, action: PayloadAction<IFilterApplied>) {
+      state.applied = state.applied.filter(
+        (f) =>
+          !(
+            f.property == action.payload.property &&
+            f.termSearchFilterType == action.payload.termSearchFilterType &&
+            f.term == action.payload.term &&
+            f.level == action.payload.level
+          )
+      );
+    },
     clearCurrentFilter(state) {
       state.current.term = "";
       state.current.termSearchFilterType = TermSearchFilterType.Is;
@@ -77,5 +88,6 @@ export const {
   applyFilter,
   setCurrentFilterProperty,
   clearCurrentFilter,
+  removeFilter,
 } = filterSlice.actions;
 export default filterSlice.reducer;

@@ -12,6 +12,7 @@ const TermSearchFilter = ({ group }: { group: string }) => {
   const onTermSearchFilterTypeRadioChecked = (type: TermSearchFilterType) => {
     dispatch(setCurrentTermSearchFilterType(type));
   };
+
   return (
     <div className="mt-[2.5rem]">
       {Object.keys(TermSearchFilterType)

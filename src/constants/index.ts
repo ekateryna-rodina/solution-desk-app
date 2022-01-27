@@ -27,3 +27,9 @@ export const LevelPropertiesMap = {
     high: [76, 100],
   },
 };
+
+export const TermSearchFilterStringsMap = {
+  [TermSearchFilterType.Is]: "is",
+  [TermSearchFilterType.Not]: "is not",
+  [TermSearchFilterType.Contains]: "includes",
+};

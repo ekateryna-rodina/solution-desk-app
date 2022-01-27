@@ -60,7 +60,7 @@ const AddNewFilter = () => {
     <div className="relative">
       <button
         onClick={onShowFilterHandler}
-        className={`bg-white p-2 flex flex-row justify-between items-center rounded  hover:shadow-md ${
+        className={`bg-white p-2 flex flex-row justify-between items-center rounded border-[1px] border-white  hover:shadow-md ${
           isShown ? "shadow-md" : ""
         }`}
       >

@@ -11,6 +11,7 @@ export const solutionDeskApi = createApi({
     }
   },
   tagTypes: [],
+  refetchOnMountOrArgChange: true,
   endpoints: (builder) => ({
     getUserById: builder.query<any, string>({
       query: (id) => `users/${id}`,
@@ -19,8 +20,10 @@ export const solutionDeskApi = createApi({
       any,
       { page: string; limit: string; filter: string }
     >({
-      query: ({ page, limit, filter }) =>
-        `users?page=${page}&limit=${limit}&filter=${filter}`,
+      query: ({ page, limit, filter }) => {
+        return `users?page=${page}&limit=${limit}&filter=${filter}`;
+      },
+
       // keepUnusedDataFor: 240,
     }),
     getFilters: builder.query({

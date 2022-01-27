@@ -31,6 +31,6 @@ export type IFilterProperties = {
 export interface IFilterApplied {
   property: keyof IFilterProperties;
   term?: string;
-  termSearchFilterType?: TermSearchFilterType;
-  level?: CustomerService | ResponseRate;
+  termSearchFilterType?: TermSearchFilterType | number;
+  level?: "low" | "medium" | "high";
 }
