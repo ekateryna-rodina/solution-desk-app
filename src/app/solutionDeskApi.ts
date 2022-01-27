@@ -21,6 +21,7 @@ export const solutionDeskApi = createApi({
     >({
       query: ({ page, limit, filter }) =>
         `users?page=${page}&limit=${limit}&filter=${filter}`,
+      keepUnusedDataFor: 240,
     }),
     getFilters: builder.query({
       query: () => `filters`,

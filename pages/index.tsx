@@ -23,7 +23,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       getAllUsers.initiate({
         page: "1",
         limit: "7",
-        filter: JSON.stringify([]),
+        filter: encodeURIComponent(JSON.stringify([])),
       })
     );
     await store.dispatch(getFilters.initiate({}));

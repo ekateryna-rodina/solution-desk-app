@@ -40,6 +40,7 @@ const UsersTable = () => {
     const result = Object.keys(paginatedData[0]).filter(
       (c) => !fieldsToIgnore.has(c)
     );
+    // add column name - move it to api
     result.splice(0, 0, "name");
     return result;
   }, [data]);
