@@ -14,25 +14,25 @@ const paginated = (handler: any, collectionName: string) => {
   return async (req: NextApiRequest, res: NextApiResponseFilteredPaginated) => {
     let { page, limit } = req.query as { page: string; limit: string };
     const startIndex = (+page - 1) * +limit;
-    let current;
-    let total;
+    let currentData;
+    let total: number;
+    let data;
     if (res.filteredResult) {
-      current = paginate(res.filteredResult.data, limit, startIndex);
-      total = ((await res.filteredResult.data!) as any).count();
+      data = res.filteredResult.data;
     } else {
       const client = await clientPromise;
       const db = await client.db();
 
       try {
-        const users = await db.collection(collectionName).find({});
-        total = await users.count();
-        current = await paginate(users, limit, startIndex);
+        data = await db.collection(collectionName).find({});
       } catch (error: any) {
         res.status(500).json({ message: error.message });
       }
     }
+    total = await (data as any).count();
+    currentData = await paginate(data, limit, startIndex);
     const paginatedResult: IPaginatedResult = {
-      data: current,
+      data: currentData,
       page,
       limit,
       totalPages: Math.ceil(total / +limit).toString(),
