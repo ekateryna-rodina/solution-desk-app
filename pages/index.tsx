@@ -19,7 +19,13 @@ const Home = ({ initialReduxState }: any) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async () => {
-    await store.dispatch(getAllUsers.initiate({ page: "1", limit: "7" }));
+    await store.dispatch(
+      getAllUsers.initiate({
+        page: "1",
+        limit: "7",
+        filter: JSON.stringify([]),
+      })
+    );
     await store.dispatch(getFilters.initiate({}));
     await Promise.all(solutionDeskApi.util.getRunningOperationPromises());
     return {

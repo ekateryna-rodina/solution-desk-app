@@ -35,7 +35,8 @@ const UsersTable = () => {
   const [noResults, setNoResults] = useState(false);
   const getColumnNames = React.useMemo(() => {
     if (!data) return;
-    const paginatedData = data.data;
+    const paginatedData = data.data || [];
+    if (!paginatedData.length) return;
     const result = Object.keys(paginatedData[0]).filter(
       (c) => !fieldsToIgnore.has(c)
     );
@@ -43,8 +44,8 @@ const UsersTable = () => {
     return result;
   }, [data]);
   const getUsers = React.useMemo(() => {
-    if (!data) return;
-    const paginatedData = data.data;
+    const paginatedData = data?.data;
+    if (!paginatedData || !paginatedData.length) return;
     const newUsers = paginatedData.map((user) => {
       return Object.keys(user)
         .filter((c) => !fieldsToIgnore.has(c))
@@ -54,7 +55,7 @@ const UsersTable = () => {
         }, {});
     });
     return newUsers;
-  }, [data]);
+  }, [data, applied]);
 
   useEffect(() => {
     if (!data || !data.data) return;

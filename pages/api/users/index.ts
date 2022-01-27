@@ -1,14 +1,14 @@
 import { NextApiRequest } from "next";
-import { IUser } from "../../../src/types";
+import filtered from "../../middlewares/filteredResult";
 import paginated from "../../middlewares/paginatedResult";
-import { NextApiResponseWithPagination } from "../../types";
+import { NextApiResponseFilteredPaginated } from "../../types";
 
-function handler(
-  req: NextApiRequest,
-  res: NextApiResponseWithPagination<IUser>
-) {
-  const result = { ...res.paginatedResult };
+function handler(req: NextApiRequest, res: NextApiResponseFilteredPaginated) {
+  const result = {
+    ...res.paginatedResult,
+    appliedFilters: res.filteredResult?.appliedFilters || [],
+  };
   res.status(200).json(result);
 }
 
-export default paginated<IUser>(handler, "users");
+export default filtered(paginated(handler, "users"), "users");
