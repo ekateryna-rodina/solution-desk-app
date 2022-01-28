@@ -94,14 +94,18 @@ const UsersTable = () => {
         <tbody className=" divide-y divide-slate-300">
           {getUsers?.map((user, i) => (
             <tr key={user.name}>
-              {Object.values(user).map((c: any, i) => (
-                <td
-                  className={`p-4 ${responsiveColsMap[i]}`}
-                  key={c.toString()}
-                >
-                  {c.toString()}
-                </td>
-              ))}
+              {current && current.id == user["_id"] ? (
+                <td className="h-28 shadow-2xl" colSpan={8}></td>
+              ) : (
+                Object.values(user).map((c: any, i) => (
+                  <td
+                    className={`p-4 ${responsiveColsMap[i]}`}
+                    key={c.toString()}
+                  >
+                    {c.toString()}
+                  </td>
+                ))
+              )}
               <td className="bg-slate-400 w-8 ">
                 <button
                   className="w-full h-12 flex justify-center items-center"

@@ -55,7 +55,6 @@ const filtered = (handler: any, collectionName: string) => {
       try {
         const parsed = parsedFilter(filtersList);
         const users = await db.collection(collectionName).find(parsed);
-
         const filteredResult = {
           data: users,
           appliedFilters: filtersList,
