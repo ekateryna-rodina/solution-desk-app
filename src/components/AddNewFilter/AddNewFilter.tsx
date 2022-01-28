@@ -5,8 +5,8 @@ import {
   setIsShown,
 } from "../../features/filter/filter-slice";
 import { IFilterProperties } from "../../types";
-import CaretDown from "../icons/CaretDown";
-import CaretUp from "../icons/CaretUp";
+import CaretDownIcon from "../icons/CaretDownIcon";
+import CaretUpIcon from "../icons/CaretUpIcon";
 import { WordSearchFilter } from "../WordSearchFilter";
 
 const AddNewFilter = () => {
@@ -68,14 +68,14 @@ const AddNewFilter = () => {
           Add Filter
         </span>
         {isShown ? (
-          <CaretUp fill="fill-slate-600" />
+          <CaretUpIcon fill="fill-slate-600" />
         ) : (
-          <CaretDown fill="fill-slate-600" />
+          <CaretDownIcon fill="fill-slate-600" />
         )}
       </button>
       <div
         className={`absolute z-10 right-0 top-12 bg-white shadow-md rounded ${
-          isShown ? "opacity-100" : "opacity-0"
+          isShown ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
         <ul role="tablist" className="py-2">

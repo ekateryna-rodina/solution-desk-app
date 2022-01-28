@@ -1,7 +1,7 @@
 import React from "react";
 import { IconProps } from "../../types";
 
-const CaretDown = ({ fill }: IconProps) => {
+const CaretDownIcon = ({ fill }: IconProps) => {
   return (
     <svg
       width="10"
@@ -18,4 +18,4 @@ const CaretDown = ({ fill }: IconProps) => {
   );
 };
 
-export default CaretDown;
+export default CaretDownIcon;

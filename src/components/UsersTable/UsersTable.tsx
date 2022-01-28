@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { useGetAllUsersQuery } from "../../app/solutionDeskApi";
+import {
+  closeUserInfo,
+  openUserInfo,
+} from "../../features/userInfo/userInfo-slice";
+import CaretDownIcon from "../icons/CaretDownIcon";
+import CaretUpIcon from "../icons/CaretUpIcon";
 import { Paginator } from "../Paginator";
 
-const fieldsToIgnore = new Set([
-  "avatar",
-  "id",
-  "_id",
-  "first_name",
-  "last_name",
-]);
+const fieldsToIgnore = new Set(["avatar", "id", "first_name", "last_name"]);
 const responsiveColsMap = {
   0: "",
-  1: "",
-  2: "hidden lg:table-cell",
+  1: "hidden",
+  2: "",
   3: "hidden lg:table-cell",
   4: "hidden lg:table-cell",
-  5: "",
+  5: "hidden 2xl:table-cell",
   6: "",
-  7: "hidden 2xl:table-cell",
-  8: "hidden xl:table-cell",
+  7: "",
+  8: "hidden 2xl:table-cell",
   9: "hidden xl:table-cell",
+  10: "hidden xl:table-cell",
 };
 const UsersTable = () => {
   const { page, limit } = useAppSelector((state) => state.usersPagination);
   const { applied } = useAppSelector((state) => state.filter);
+  const { current } = useAppSelector((state) => state.userInfo);
   const { data, isLoading } = useGetAllUsersQuery({
     page: page.toString(),
     limit: limit.toString(),
@@ -32,6 +34,7 @@ const UsersTable = () => {
   });
 
   const [noResults, setNoResults] = useState(false);
+  const dispatch = useAppDispatch();
   const getColumnNames = React.useMemo(() => {
     if (!data) return;
     const paginatedData = data.data || [];
@@ -57,6 +60,16 @@ const UsersTable = () => {
     return newUsers;
   }, [data]);
 
+  const onToggleUserInfo = (userId: string) => {
+    console.log(userId);
+    console.log(current);
+    const isOpened = current && current.id === userId;
+    if (isOpened) {
+      dispatch(closeUserInfo());
+    } else {
+      dispatch(openUserInfo(userId));
+    }
+  };
   useEffect(() => {
     if (!data || !data.data) return;
     setNoResults(!data.data.length);
@@ -75,6 +88,7 @@ const UsersTable = () => {
                 </td>
               );
             })}
+            <td></td>
           </tr>
         </thead>
         <tbody className=" divide-y divide-slate-300">
@@ -88,6 +102,18 @@ const UsersTable = () => {
                   {c.toString()}
                 </td>
               ))}
+              <td className="bg-slate-400 w-8 ">
+                <button
+                  className="w-full h-12 flex justify-center items-center"
+                  onClick={() => onToggleUserInfo(user["_id"])}
+                >
+                  {current && current.id === user["_id"] ? (
+                    <CaretUpIcon fill={"fill-slate-600"} />
+                  ) : (
+                    <CaretDownIcon fill={"fill-slate-600"} />
+                  )}
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
