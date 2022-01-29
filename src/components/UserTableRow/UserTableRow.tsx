@@ -1,6 +1,7 @@
 import React from "react";
+import { ResponsiveColsMap } from "../../../pages/constants";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { ResponsiveColsMap } from "../../constants";
+// import { ResponsiveColsMap } from "../../constants";
 import {
   closeUserInfo,
   openUserInfo,
@@ -8,6 +9,7 @@ import {
 import { IUser } from "../../types";
 import CaretDownIcon from "../icons/CaretDownIcon";
 import CaretUpIcon from "../icons/CaretUpIcon";
+import { UserInfo } from "../UserInfo";
 
 type UserTableRowProps = {
   user: IUser & { name: string };
@@ -20,13 +22,16 @@ const UserTableRow = ({ user }: UserTableRowProps) => {
     if (isOpened) {
       dispatch(closeUserInfo());
     } else {
+      dispatch(closeUserInfo());
       dispatch(openUserInfo(userId));
     }
   };
   return (
     <tr key={user.name}>
       {current && current.id == user["_id"] ? (
-        <td className="h-28 shadow-2xl" colSpan={8}></td>
+        <td className="h-28 shadow-2xl" colSpan={8}>
+          <UserInfo />
+        </td>
       ) : (
         Object.values(user).map((c: any, i) => (
           <td className={`p-4 ${ResponsiveColsMap[i]}`} key={c.toString()}>

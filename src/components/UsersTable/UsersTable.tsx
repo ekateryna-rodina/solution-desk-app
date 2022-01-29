@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { FieldsToIgnore, ResponsiveColsMap } from "../../../pages/constants";
 import { useAppSelector } from "../../app/hooks";
 import { useGetAllUsersQuery } from "../../app/solutionDeskApi";
-import { FieldsToIgnore, ResponsiveColsMap } from "../../constants";
+// import { FieldsToIgnore, ResponsiveColsMap } from "../../constants";
 import { Paginator } from "../Paginator";
 import UserTableRow from "../UserTableRow/UserTableRow";
 
@@ -64,7 +65,7 @@ const UsersTable = () => {
         </thead>
         <tbody className=" divide-y divide-slate-300">
           {getUsers?.map((user) => (
-            <UserTableRow user={user} />
+            <UserTableRow user={user} key={user["_id"]} />
           ))}
         </tbody>
       </table>
