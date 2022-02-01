@@ -55,7 +55,7 @@ const UsersTable = () => {
           <tr>
             {getColumnNames?.map((c, i) => {
               return (
-                <td className={`p-4 ${ResponsiveColsMap[i]}`} key={c}>
+                <td className={`p-4 ${ResponsiveColsMap[i]}`} key={i}>
                   {c}
                 </td>
               );

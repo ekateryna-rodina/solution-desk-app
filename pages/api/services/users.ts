@@ -71,7 +71,7 @@ export async function processDelete(req: NextApiRequest, res: NextApiResponse) {
 
 export function processGet(
   req: NextApiRequest,
-  res: NextApiResponseFilteredPaginated
+  res: NextApiResponseFilteredPaginated<IUser>
 ) {
   const result = {
     ...res.paginatedResult,

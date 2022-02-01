@@ -6,6 +6,7 @@ import {
 
 export interface IUser {
   id: number;
+  name: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -30,6 +31,7 @@ export interface IUser {
 export type IUserPost = Omit<
   IUser,
   | "id"
+  | "name"
   | "customerService"
   | "responseRate"
   | "average"

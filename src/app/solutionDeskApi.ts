@@ -1,6 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { HYDRATE } from "next-redux-wrapper";
+import { IFilterApplied, IUser } from "../types";
 
+type UsersResponse = {
+  appliedFilters: IFilterApplied[];
+  data: IUser[];
+  page: string;
+  limit: string;
+  totalPages: string;
+};
 export const solutionDeskApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3000/api/",
@@ -23,6 +31,16 @@ export const solutionDeskApi = createApi({
         return `users?page=${page}&limit=${limit}&filter=${filter}`;
       },
       keepUnusedDataFor: 6000,
+      transformResponse: (response: UsersResponse, meta, arg) => {
+        const data = response.data.map((u) => ({
+          ...u,
+          name: `${u.firstName} ${u.lastName}`,
+        }));
+        return {
+          ...response,
+          data,
+        };
+      },
     }),
     getFilters: builder.query({
       query: () => `filters`,

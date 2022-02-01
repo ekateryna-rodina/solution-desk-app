@@ -10,8 +10,11 @@ const paginate = async (data: any, limit, startIndex) => {
   return paginated;
 };
 
-const paginated = (handler: any, collectionName: string) => {
-  return async (req: NextApiRequest, res: NextApiResponseFilteredPaginated) => {
+const paginated = <T>(handler: any, collectionName: string) => {
+  return async (
+    req: NextApiRequest,
+    res: NextApiResponseFilteredPaginated<T>
+  ) => {
     if (req.method !== "GET") return handler(req, res);
     let { page, limit } = req.query as { page: string; limit: string };
     const startIndex = (+page - 1) * +limit;
@@ -32,7 +35,7 @@ const paginated = (handler: any, collectionName: string) => {
     }
     total = await (data as any).count();
     currentData = await paginate(data, limit, startIndex);
-    const paginatedResult: IPaginatedResult = {
+    const paginatedResult: IPaginatedResult<T> = {
       data: currentData,
       page,
       limit,
