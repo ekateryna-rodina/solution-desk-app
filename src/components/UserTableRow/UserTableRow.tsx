@@ -1,7 +1,6 @@
 import React from "react";
 import { ResponsiveColsMap } from "../../../pages/constants";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-// import { ResponsiveColsMap } from "../../constants";
 import {
   closeUserInfo,
   openUserInfo,
@@ -12,7 +11,7 @@ import CaretUpIcon from "../icons/CaretUpIcon";
 import { UserInfo } from "../UserInfo";
 
 type UserTableRowProps = {
-  user: IUser & { name: string };
+  user: IUser;
 };
 const UserTableRow = ({ user }: UserTableRowProps) => {
   const { current } = useAppSelector((state) => state.userInfo);
@@ -29,13 +28,16 @@ const UserTableRow = ({ user }: UserTableRowProps) => {
   return (
     <tr key={user.name}>
       {current && current.id == user["_id"] ? (
-        <td className="h-28 shadow-2xl" colSpan={8}>
+        <td className="h-28 shadow-2xl" colSpan={10}>
           <UserInfo />
         </td>
       ) : (
-        Object.values(user).map((c: any, i) => (
-          <td className={`p-4 ${ResponsiveColsMap[i]}`} key={c.toString()}>
-            {c.toString()}
+        Object.keys(user).map((property: string) => (
+          <td
+            className={`p-4 ${ResponsiveColsMap[property]}`}
+            key={user[property].toString()}
+          >
+            {user[property].toString()}
           </td>
         ))
       )}

@@ -5,6 +5,7 @@ import {
 } from "../../constants";
 
 export interface IUser {
+  _id: string;
   id: number;
   name: string;
   firstName: string;
@@ -31,6 +32,7 @@ export interface IUser {
 export type IUserPost = Omit<
   IUser,
   | "id"
+  | "_id"
   | "name"
   | "customerService"
   | "responseRate"

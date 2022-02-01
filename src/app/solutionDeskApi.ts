@@ -33,8 +33,11 @@ export const solutionDeskApi = createApi({
       keepUnusedDataFor: 6000,
       transformResponse: (response: UsersResponse, meta, arg) => {
         const data = response.data.map((u) => ({
-          ...u,
+          // @ts-expect-error
           name: `${u.firstName} ${u.lastName}`,
+          // @ts-expect-error
+          department: u.department,
+          ...u,
         }));
         return {
           ...response,

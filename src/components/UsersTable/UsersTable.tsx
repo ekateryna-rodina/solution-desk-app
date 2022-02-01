@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { FieldsToIgnore, ResponsiveColsMap } from "../../../pages/constants";
+import { ResponsiveColsMap } from "../../../pages/constants";
 import { useAppSelector } from "../../app/hooks";
 import { useGetAllUsersQuery } from "../../app/solutionDeskApi";
-// import { FieldsToIgnore, ResponsiveColsMap } from "../../constants";
 import { Paginator } from "../Paginator";
 import UserTableRow from "../UserTableRow/UserTableRow";
 
@@ -22,25 +21,12 @@ const UsersTable = () => {
     if (!data) return;
     const paginatedData = data.data || [];
     if (!paginatedData.length) return;
-    const result = Object.keys(paginatedData[0]).filter(
-      (c) => !FieldsToIgnore.has(c)
-    );
-    // add column name - move it to api
-    result.splice(0, 0, "name");
-    return result;
+    return Object.keys(paginatedData[0]);
   }, [data]);
   const getUsers = React.useMemo(() => {
     const paginatedData = data?.data;
     if (!paginatedData || !paginatedData.length) return;
-    const newUsers = paginatedData.map((user) => {
-      return Object.keys(user)
-        .filter((c) => !FieldsToIgnore.has(c))
-        .reduce((ur: any, key) => {
-          ur.name = `${user.first_name} ${user.last_name}`;
-          return Object.assign(ur, { [key]: user[key] });
-        }, {});
-    });
-    return newUsers;
+    return paginatedData;
   }, [data]);
   useEffect(() => {
     if (!data || !data.data) return;
@@ -55,7 +41,7 @@ const UsersTable = () => {
           <tr>
             {getColumnNames?.map((c, i) => {
               return (
-                <td className={`p-4 ${ResponsiveColsMap[i]}`} key={i}>
+                <td className={`p-4 ${ResponsiveColsMap[c]}`} key={i}>
                   {c}
                 </td>
               );
