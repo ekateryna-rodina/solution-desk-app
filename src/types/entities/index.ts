@@ -6,11 +6,11 @@ import {
 
 export interface IUser {
   id: number;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   gender: string;
-  ip_address: string;
+  ipAddress: string;
   avatar: string;
   username: string;
   customerService: number;
@@ -18,7 +18,26 @@ export interface IUser {
   address: string;
   city: string;
   country: string;
+  characteristic: string;
+  department: string;
+  dob: Date;
+  medals: number;
+  customerServiceDynamic: string;
+  inProgress: number;
+  responseRateDynamic: string;
 }
+
+export type IUserPost = Omit<
+  IUser,
+  | "id"
+  | "customerService"
+  | "responseRate"
+  | "average"
+  | "medals"
+  | "customerServiceDynamic"
+  | "inProgress"
+  | "responseRateDynamic"
+>;
 
 export type IFilterProperties = {
   gender: [];

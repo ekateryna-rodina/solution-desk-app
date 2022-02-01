@@ -47,8 +47,9 @@ const parsedFilter = (filtersList: IFilterApplied[]) => {
 };
 const filtered = (handler: any, collectionName: string) => {
   return async (req: NextApiRequest, res: NextApiResponseFilteredPaginated) => {
+    if (req.method !== "GET") return handler(req, res);
     let { filter } = req.query as { filter: string };
-    const filtersList = JSON.parse(filter);
+    const filtersList = filter ? JSON.parse(filter) : [];
     if (filtersList.length) {
       const client = await clientPromise;
       const db = await client.db();

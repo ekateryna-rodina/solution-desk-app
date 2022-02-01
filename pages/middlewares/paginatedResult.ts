@@ -12,6 +12,7 @@ const paginate = async (data: any, limit, startIndex) => {
 
 const paginated = (handler: any, collectionName: string) => {
   return async (req: NextApiRequest, res: NextApiResponseFilteredPaginated) => {
+    if (req.method !== "GET") return handler(req, res);
     let { page, limit } = req.query as { page: string; limit: string };
     const startIndex = (+page - 1) * +limit;
     let currentData;
