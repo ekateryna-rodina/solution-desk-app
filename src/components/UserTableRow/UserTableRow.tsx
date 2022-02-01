@@ -28,9 +28,32 @@ const UserTableRow = ({ user }: UserTableRowProps) => {
   return (
     <tr key={user.name}>
       {current && current.id == user["_id"] ? (
-        <td className="h-28 shadow-2xl" colSpan={10}>
-          <UserInfo />
-        </td>
+        <>
+          <td className="h-28 shadow-2xl md:hidden " colSpan={3}>
+            <UserInfo />
+          </td>
+          <td
+            className="h-28 shadow-2xl hidden md:table-cell lg:hidden"
+            colSpan={5}
+          >
+            <UserInfo />
+          </td>
+          <td
+            className="h-28 shadow-2xl hidden lg:table-cell xl:hidden"
+            colSpan={7}
+          >
+            <UserInfo />
+          </td>
+          <td
+            className="h-28 shadow-2xl hidden xl:table-cell 2xl:hidden"
+            colSpan={10}
+          >
+            <UserInfo />
+          </td>
+          <td className="h-28 shadow-2xl hidden 2xl:table-cell" colSpan={17}>
+            <UserInfo />
+          </td>
+        </>
       ) : (
         Object.keys(user).map((property: string) => (
           <td

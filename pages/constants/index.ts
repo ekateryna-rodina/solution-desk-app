@@ -17,10 +17,12 @@ export const ResponsiveColsMap: Record<keyof IUser, string> = {
   city: "hidden xl:table-cell",
   country: "hidden xl:table-cell",
   characteristic: "hidden 2xl:table-cell",
-  department: "hidden md:table-cell",
+  department: "hidden lg:table-cell",
   dob: "hidden 2xl:table-cell",
   medals: "hidden 2xl:table-cell",
   customerServiceDynamic: "hidden",
   inProgress: "hidden md:table-cell",
   responseRateDynamic: "hidden",
+  average: "hidden md:table-cell",
+  experience: "hidden lg:table-cell",
 };

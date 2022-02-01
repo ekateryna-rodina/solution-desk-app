@@ -27,6 +27,8 @@ export interface IUser {
   customerServiceDynamic: string;
   inProgress: number;
   responseRateDynamic: string;
+  average: number;
+  experience: number;
 }
 
 export type IUserPost = Omit<
