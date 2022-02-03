@@ -10,6 +10,7 @@ import { User } from "../../types";
 import { formatDate, formatTitle } from "../../utils/string";
 import { DynamicProperty } from "../DynamicProperty";
 import SendMailIcon from "../icons/SendMailIcon";
+import { Rewards } from "../Rewards";
 import { UserInfoRow } from "../UserInfoRow";
 
 const UserInfo = () => {
@@ -56,6 +57,8 @@ const UserInfo = () => {
       attr == "customerServiceWithDynamic"
     ) {
       return <DynamicProperty value={propertyValue} />;
+    } else if (attr == "medals") {
+      return <Rewards count={+propertyValue} />;
     } else {
       return <span className="text-slate-800">{propertyValue}</span>;
     }
