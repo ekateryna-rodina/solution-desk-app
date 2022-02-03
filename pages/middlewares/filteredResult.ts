@@ -2,7 +2,7 @@ import { NextApiRequest } from "next";
 import clientPromise from "../../lib/mongodb";
 import { LevelPropertiesMap, TermSearchFilterType } from "../../src/constants";
 import { IFilterApplied } from "../../src/types";
-import { NextApiResponseFilteredPaginated } from "../types";
+import { NextApiResponseFilteredSortedPaginated } from "../types";
 
 const QueryMap = {
   [TermSearchFilterType.Is]: "$eq",
@@ -48,7 +48,7 @@ const parsedFilter = (filtersList: IFilterApplied[]) => {
 const filtered = <T>(handler: any, collectionName: string) => {
   return async (
     req: NextApiRequest,
-    res: NextApiResponseFilteredPaginated<T>
+    res: NextApiResponseFilteredSortedPaginated<T>
   ) => {
     if (req.method !== "GET") return handler(req, res);
     let { filter } = req.query as { filter: string };

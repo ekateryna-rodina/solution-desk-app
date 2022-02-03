@@ -19,6 +19,7 @@ const UserInfo = () => {
   } = useAppSelector((state) => state.userInfo);
   const { page, limit } = useAppSelector((state) => state.usersPagination);
   const { applied } = useAppSelector((state) => state.filter);
+  const { order, column } = useAppSelector((state) => state.usersSorting);
 
   const { user, isLoading }: { user: User; isLoading: boolean } =
     useGetAllUsersQuery(
@@ -26,6 +27,8 @@ const UserInfo = () => {
         page: page.toString(),
         limit: limit.toString(),
         filter: encodeURIComponent(JSON.stringify(applied)),
+        order: order.toString(),
+        column: column.toString(),
       },
       {
         selectFromResult: ({ data, error, isLoading }) => ({

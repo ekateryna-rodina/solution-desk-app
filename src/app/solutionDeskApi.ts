@@ -25,10 +25,16 @@ export const solutionDeskApi = createApi({
     }),
     getAllUsers: builder.query<
       any,
-      { page: string; limit: string; filter: string }
+      {
+        page: string;
+        limit: string;
+        filter: string;
+        order: string;
+        column: string;
+      }
     >({
-      query: ({ page, limit, filter }) => {
-        return `users?page=${page}&limit=${limit}&filter=${filter}`;
+      query: ({ page, limit, filter, order, column }) => {
+        return `users?page=${page}&limit=${limit}&filter=${filter}&order=${order}&column=${column}`;
       },
       keepUnusedDataFor: 6000,
       transformResponse: (response: UsersResponse, meta, arg) => {

@@ -5,7 +5,6 @@ type RewardsProps = {
   count: number;
 };
 const Rewards = ({ count = 0 }: RewardsProps) => {
-  console.log(count);
   return (
     <div className="flex justify-between items-center gap-2">
       {Array(4)

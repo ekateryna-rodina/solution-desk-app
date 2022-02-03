@@ -11,12 +11,14 @@ import filterReducer from "../features/filter/filter-slice";
 import layoutReducer from "../features/layout/layout-slice";
 import userInfoReducer from "../features/userInfo/userInfo-slice";
 import usersPaginationReducer from "../features/usersPagination/usersPagination-slice";
+import usersSortingReducer from "../features/usersSorting/usersSorting-slice";
 import { solutionDeskApi } from "./solutionDeskApi";
 
 let store: CombinedState<any>;
 const combinedReducer = combineReducers({
   layout: layoutReducer,
   usersPagination: usersPaginationReducer,
+  usersSorting: usersSortingReducer,
   filter: filterReducer,
   userInfo: userInfoReducer,
   [solutionDeskApi.reducerPath]: solutionDeskApi.reducer,

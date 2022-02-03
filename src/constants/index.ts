@@ -15,10 +15,37 @@ export enum TermSearchFilterType {
   Contains,
 }
 
-export enum DynamicDirection {
+export enum Direction {
   Up,
   Down,
 }
+
+export enum Order {
+  Ascending = 1,
+  Descending = -1,
+}
+
+export enum Column {
+  Name = "name",
+  Email = "email",
+  CustomerService = "CustomerService",
+  ResponseRate = "responseRate",
+  City = "city",
+  Country = "country",
+  Department = "department",
+  Dob = "dob",
+  Medals = "medals",
+  CustomerServiceDynamic = "customerServiceDynamic",
+  InProgress = "inProgress",
+  ResponseRateDynamic = "responseRateDynamic",
+  Average = "average",
+  Experience = "experience",
+  CustomerServiceWithDynamic = "customerServiceWithDynamic",
+  ResponseRateWithDynamic = "responseRateWithDynamic",
+  Employed = "employed",
+}
+
+export type StringAsColumn = keyof typeof Column;
 
 export const LevelPropertiesMap = {
   customerService: {

@@ -2,7 +2,7 @@ import { NextApiRequest } from "next";
 import { User } from "../../../src/types";
 import filtered from "../../middlewares/filteredResult";
 import paginated from "../../middlewares/paginatedResult";
-import { NextApiResponseFilteredPaginated } from "../../types";
+import { NextApiResponseFilteredSortedPaginated } from "../../types";
 import {
   processDelete,
   processGet,
@@ -12,7 +12,7 @@ import {
 
 function handler(
   req: NextApiRequest,
-  res: NextApiResponseFilteredPaginated<User>
+  res: NextApiResponseFilteredSortedPaginated<User>
 ) {
   switch (req.method) {
     case "POST":

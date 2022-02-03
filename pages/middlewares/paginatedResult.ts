@@ -1,6 +1,9 @@
 import { NextApiRequest } from "next";
 import clientPromise from "../../lib/mongodb";
-import { IPaginatedResult, NextApiResponseFilteredPaginated } from "../types";
+import {
+  IPaginatedResult,
+  NextApiResponseFilteredSortedPaginated,
+} from "../types";
 
 const paginate = async (data: any, limit, startIndex) => {
   const paginated = await data
@@ -13,7 +16,7 @@ const paginate = async (data: any, limit, startIndex) => {
 const paginated = <T>(handler: any, collectionName: string) => {
   return async (
     req: NextApiRequest,
-    res: NextApiResponseFilteredPaginated<T>
+    res: NextApiResponseFilteredSortedPaginated<T>
   ) => {
     if (req.method !== "GET") return handler(req, res);
     let { page, limit } = req.query as { page: string; limit: string };

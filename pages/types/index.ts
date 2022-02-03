@@ -1,4 +1,5 @@
 import { NextApiResponse } from "next";
+import { Column, Order } from "../../src/constants";
 import { IFilterApplied } from "../../src/types";
 
 export type IPaginatedResult<T> = {
@@ -6,6 +7,12 @@ export type IPaginatedResult<T> = {
   page?: string;
   limit?: string;
   totalPages: string;
+};
+
+export type ISortedResult<T> = {
+  data: T[] | undefined;
+  order: Order;
+  column: Column;
 };
 
 export type IFilteredResult<T> = {
@@ -19,8 +26,12 @@ export interface IWithPagination<T> {
 export interface IWithFilter<T> {
   filteredResult?: IFilteredResult<T>;
 }
+export interface IWithSorting<T> {
+  sortedResult?: ISortedResult<T>;
+}
 
-export interface NextApiResponseFilteredPaginated<T>
+export interface NextApiResponseFilteredSortedPaginated<T>
   extends NextApiResponse,
     IWithPagination<T>,
+    IWithSorting<T>,
     IWithFilter<T> {}
