@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "../../../lib/mongodb";
-import { IUser, IUserPost } from "../../../src/types";
+import { User, UserPost } from "../../../src/types";
 import { NextApiResponseFilteredPaginated } from "../../types";
 
 export async function processPost(req: NextApiRequest, res: NextApiResponse) {
@@ -9,8 +9,8 @@ export async function processPost(req: NextApiRequest, res: NextApiResponse) {
   const db = await client.db();
 
   try {
-    const data: Record<keyof IUser, string> = req.body;
-    const user: IUserPost = {
+    const data: Record<keyof User, string> = req.body;
+    const user: UserPost = {
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
@@ -24,6 +24,8 @@ export async function processPost(req: NextApiRequest, res: NextApiResponse) {
       characteristic: data.characteristic,
       department: data.department,
       dob: new Date(data.dob),
+      employed: new Date(),
+      phone: data.phone,
     };
     const result: { insertedId: ObjectId; acknowledged: boolean } = await db
       .collection("users")
@@ -42,7 +44,7 @@ export async function processPut(req: NextApiRequest, res: NextApiResponse) {
   const client = await clientPromise;
   const db = await client.db();
 
-  const data: Record<keyof Partial<IUser>, string> = req.body;
+  const data: Record<keyof Partial<User>, string> = req.body;
   try {
     await db
       .collection("users")
@@ -71,7 +73,7 @@ export async function processDelete(req: NextApiRequest, res: NextApiResponse) {
 
 export function processGet(
   req: NextApiRequest,
-  res: NextApiResponseFilteredPaginated<IUser>
+  res: NextApiResponseFilteredPaginated<User>
 ) {
   const result = {
     ...res.paginatedResult,

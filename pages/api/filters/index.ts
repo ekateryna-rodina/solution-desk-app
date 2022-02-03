@@ -15,15 +15,15 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       users.distinct("city"),
     ]);
     const filterProperties: IFilterProperties = {
-      gender,
+      gender: gender.filter((e) => e != null),
       responseRate: Object.values(ResponseRate).filter(
         (v) => !isNaN(ResponseRate[v])
       ) as Array<keyof typeof ResponseRate>,
       customerService: Object.values(CustomerService).filter(
         (v) => !isNaN(CustomerService[v])
       ) as Array<keyof typeof CustomerService>,
-      city: cities,
-      country: countries,
+      city: cities.filter((e) => e != null),
+      country: countries.filter((e) => e != null),
     };
 
     res.status(200).json(filterProperties);

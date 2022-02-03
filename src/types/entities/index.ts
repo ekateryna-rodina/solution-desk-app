@@ -4,7 +4,7 @@ import {
   TermSearchFilterType,
 } from "../../constants";
 
-export interface IUser {
+export type User = {
   _id: string;
   id: number;
   name: string;
@@ -29,10 +29,14 @@ export interface IUser {
   responseRateDynamic: string;
   average: number;
   experience: number;
-}
+  customerServiceWithDynamic: string;
+  responseRateWithDynamic: string;
+  employed: Date;
+  phone: string;
+};
 
-export type IUserPost = Omit<
-  IUser,
+export type UserPost = Omit<
+  User,
   | "id"
   | "_id"
   | "name"
@@ -43,6 +47,9 @@ export type IUserPost = Omit<
   | "customerServiceDynamic"
   | "inProgress"
   | "responseRateDynamic"
+  | "experience"
+  | "customerServiceWithDynamic"
+  | "responseRateWithDynamic"
 >;
 
 export type IFilterProperties = {

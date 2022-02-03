@@ -5,15 +5,17 @@ import {
   closeUserInfo,
   openUserInfo,
 } from "../../features/userInfo/userInfo-slice";
-import { IUser } from "../../types";
+import { User } from "../../types";
+import { DynamicProperty } from "../DynamicProperty";
 import CaretDownIcon from "../icons/CaretDownIcon";
 import CaretUpIcon from "../icons/CaretUpIcon";
 import { UserInfo } from "../UserInfo";
 
 type UserTableRowProps = {
-  user: IUser;
+  user: User;
 };
 const UserTableRow = ({ user }: UserTableRowProps) => {
+  console.log(user);
   const { current } = useAppSelector((state) => state.userInfo);
   const dispatch = useAppDispatch();
   const onToggleUserInfo = (userId: string) => {
@@ -25,6 +27,7 @@ const UserTableRow = ({ user }: UserTableRowProps) => {
       dispatch(openUserInfo(userId));
     }
   };
+  if (!user.email) return <></>;
   return (
     <tr key={user.name}>
       {current && current.id == user["_id"] ? (
@@ -40,30 +43,35 @@ const UserTableRow = ({ user }: UserTableRowProps) => {
           </td>
           <td
             className="h-28 shadow-2xl hidden lg:table-cell xl:hidden"
-            colSpan={7}
+            colSpan={6}
           >
             <UserInfo />
           </td>
           <td
             className="h-28 shadow-2xl hidden xl:table-cell 2xl:hidden"
-            colSpan={10}
+            colSpan={8}
           >
             <UserInfo />
           </td>
-          <td className="h-28 shadow-2xl hidden 2xl:table-cell" colSpan={17}>
+          <td className="h-28 shadow-2xl hidden 2xl:table-cell" colSpan={16}>
             <UserInfo />
           </td>
         </>
       ) : (
-        Object.keys(user).map((property: string) => (
+        Object.keys(user).map((property: string, i) => (
           <td
-            className={`p-4 ${ResponsiveColsMap[property]}`}
-            key={user[property].toString()}
+            className={`p-4 text-center ${ResponsiveColsMap[property]}`}
+            key={`${user["name"]}${property}`}
           >
-            {user[property].toString()}
+            {property.endsWith("WithDynamic") ? (
+              <DynamicProperty value={user[property]} />
+            ) : (
+              user[property].toString()
+            )}
           </td>
         ))
       )}
+
       <td className="bg-slate-400 w-8 ">
         <button
           className="w-full h-12 flex justify-center items-center"
@@ -80,4 +88,4 @@ const UserTableRow = ({ user }: UserTableRowProps) => {
   );
 };
 
-export default UserTableRow;
+export default React.memo(UserTableRow);

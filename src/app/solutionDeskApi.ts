@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { HYDRATE } from "next-redux-wrapper";
-import { IFilterApplied, IUser } from "../types";
+import { IFilterApplied, User } from "../types";
 
 type UsersResponse = {
   appliedFilters: IFilterApplied[];
-  data: IUser[];
+  data: User[];
   page: string;
   limit: string;
   totalPages: string;
@@ -38,6 +38,10 @@ export const solutionDeskApi = createApi({
           // @ts-expect-error
           department: u.department,
           ...u,
+          employed: u.employed ?? new Date().toUTCString(),
+          customerServiceWithDynamic: `${u.customerService}_${u.customerServiceDynamic}`,
+          responseRateWithDynamic: `${u.responseRate}_${u.responseRateDynamic}`,
+          phone: "+2(800)345 3555",
         }));
         return {
           ...response,

@@ -1,5 +1,5 @@
 import { NextApiRequest } from "next";
-import { IUser } from "../../../src/types";
+import { User } from "../../../src/types";
 import filtered from "../../middlewares/filteredResult";
 import paginated from "../../middlewares/paginatedResult";
 import { NextApiResponseFilteredPaginated } from "../../types";
@@ -12,7 +12,7 @@ import {
 
 function handler(
   req: NextApiRequest,
-  res: NextApiResponseFilteredPaginated<IUser>
+  res: NextApiResponseFilteredPaginated<User>
 ) {
   switch (req.method) {
     case "POST":

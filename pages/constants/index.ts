@@ -1,6 +1,6 @@
-import { IUser } from "../../src/types";
+import { User } from "../../src/types";
 
-export const ResponsiveColsMap: Record<keyof IUser, string> = {
+export const ResponsiveColsMap: Record<keyof User, string> = {
   _id: "hidden",
   id: "hidden",
   name: "",
@@ -10,9 +10,9 @@ export const ResponsiveColsMap: Record<keyof IUser, string> = {
   gender: "hidden 2xl:table-cell",
   ipAddress: "hidden 2xl:table-cell",
   avatar: "hidden",
-  username: "hidden xl:table-cell",
-  customerService: "",
-  responseRate: "",
+  username: "hidden 2xl:table-cell",
+  customerService: "hidden",
+  responseRate: "hidden",
   address: "hidden 2xl:table-cell",
   city: "hidden xl:table-cell",
   country: "hidden xl:table-cell",
@@ -24,5 +24,9 @@ export const ResponsiveColsMap: Record<keyof IUser, string> = {
   inProgress: "hidden md:table-cell",
   responseRateDynamic: "hidden",
   average: "hidden md:table-cell",
-  experience: "hidden lg:table-cell",
+  experience: "hidden",
+  customerServiceWithDynamic: "w-32",
+  responseRateWithDynamic: "w-32",
+  phone: "hidden",
+  employed: "hidden",
 };

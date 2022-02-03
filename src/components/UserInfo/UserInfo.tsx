@@ -2,7 +2,15 @@ import Image from "next/image";
 import React from "react";
 import { useAppSelector } from "../../app/hooks";
 import { useGetAllUsersQuery } from "../../app/solutionDeskApi";
-import { IUser } from "../../types";
+import {
+  DateAttributes,
+  PersonalInformationStructure,
+} from "../../constants/index";
+import { User } from "../../types";
+import { formatDate, formatTitle } from "../../utils/string";
+import { DynamicProperty } from "../DynamicProperty";
+import SendMailIcon from "../icons/SendMailIcon";
+import { UserInfoRow } from "../UserInfoRow";
 
 const UserInfo = () => {
   const {
@@ -11,7 +19,7 @@ const UserInfo = () => {
   const { page, limit } = useAppSelector((state) => state.usersPagination);
   const { applied } = useAppSelector((state) => state.filter);
 
-  const { user, isLoading }: { user: IUser; isLoading: boolean } =
+  const { user, isLoading }: { user: User; isLoading: boolean } =
     useGetAllUsersQuery(
       {
         page: page.toString(),
@@ -27,6 +35,31 @@ const UserInfo = () => {
       }
     );
 
+  const children = (attr: keyof User, propertyValue: string) => {
+    console.log(attr, propertyValue);
+    if (DateAttributes.includes(attr)) {
+      return (
+        <span className="text-slate-800">{formatDate(propertyValue)}</span>
+      );
+    } else if (attr == "email") {
+      // TODO: fix magic strings -> enum or discriminant?
+      return (
+        <a
+          href={`mailto:${propertyValue}?subject=Important!&body=Hi.`}
+          target="_blank"
+        >
+          <SendMailIcon fill={"fill-blueExtend/50"} />
+        </a>
+      );
+    } else if (
+      attr == "responseRateWithDynamic" ||
+      attr == "customerServiceWithDynamic"
+    ) {
+      return <DynamicProperty value={propertyValue} />;
+    } else {
+      return <span className="text-slate-800">{propertyValue}</span>;
+    }
+  };
   if (isLoading || !user) return <h1>Loading</h1>;
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-2 justify-center items-center">
@@ -40,80 +73,27 @@ const UserInfo = () => {
           />
         </div>
         <div className="flex flex-col justify-center items-center">
-          <span className="">Name</span>
-          <span className="">Role</span>
-          <span className="">department</span>
+          <span className="font-bold">{user.name}</span>
+          <span className="text-slate-400 text-sm">{user.characteristic}</span>
+          <span className="text-slate-400 text-sm">
+            {user.department} Department
+          </span>
         </div>
       </div>
-      <div className="grid grid-rows-6 gap-2 px-4">
-        <div className="row-span-2">Personal Information</div>
-        <div className="flex justify-between">
-          <span>Nickname</span>
-          <span>nick</span>
+      {Object.keys(PersonalInformationStructure).map((title) => (
+        <div className="grid grid-rows-6 gap-2 px-4 py-8" key={title}>
+          <div className=" font-bold text-slate-400">{formatTitle(title)}</div>
+          {PersonalInformationStructure[title].map((attr: keyof User) => (
+            <UserInfoRow
+              propertyName={attr}
+              propertyValue={user[attr]}
+              key={attr}
+            >
+              {children(attr, user[attr] as string)}
+            </UserInfoRow>
+          ))}
         </div>
-        <div className="flex justify-between">
-          <span>DOB</span>
-          <span>13.03.1987</span>
-        </div>
-        <div className="flex justify-between">
-          <span>Gender</span>
-          <span>Male</span>
-        </div>
-        <div className="flex justify-between">
-          <span>Employed</span>
-          <span>13.03.1987</span>
-        </div>
-        <div className="flex justify-between">
-          <span>Experience</span>
-          <span>5 years</span>
-        </div>
-      </div>
-      <div className="grid grid-rows-6 gap-2 px-4">
-        <div className="row-span-2">Productivity</div>
-        <div className="flex justify-between">
-          <span>Response rate</span>
-          <span>96%</span>
-        </div>
-        <div className="flex justify-between">
-          <span>Customer support</span>
-          <span>5.0</span>
-        </div>
-        <div className="flex justify-between">
-          <span>Tickets in progress</span>
-          <span>500(overhelmed)</span>
-        </div>
-        <div className="flex justify-between">
-          <span>Average processing p/months</span>
-          <span>398</span>
-        </div>
-        <div className="flex justify-between">
-          <span>Medals</span>
-          <span>7</span>
-        </div>
-      </div>
-      <div className="grid grid-rows-6 gap-2 px-4">
-        <div className="row-span-2">Contacts</div>
-        <div className="flex justify-between">
-          <span>Phone</span>
-          <span>+198767908689</span>
-        </div>
-        <div className="flex justify-between">
-          <span>Email</span>
-          <span>Icon</span>
-        </div>
-        <div className="flex justify-between">
-          <span>IP address</span>
-          <span>255.255.255.255</span>
-        </div>
-        <div className="flex justify-between">
-          <span>Country</span>
-          <span>Estonia</span>
-        </div>
-        <div className="flex justify-between">
-          <span>City</span>
-          <span>Pettgok</span>
-        </div>
-      </div>
+      ))}
     </div>
   );
 };

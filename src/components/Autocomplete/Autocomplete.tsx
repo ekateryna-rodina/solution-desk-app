@@ -7,6 +7,7 @@ type AutocompleteProps = {
   tabindex: string | number;
 };
 const Autocomplete = ({ data, tabindex }: AutocompleteProps) => {
+  console.log(data);
   const {
     current: { term },
   } = useAppSelector((state) => state.filter);

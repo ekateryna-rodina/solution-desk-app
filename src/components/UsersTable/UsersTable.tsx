@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ResponsiveColsMap } from "../../../pages/constants";
 import { useAppSelector } from "../../app/hooks";
 import { useGetAllUsersQuery } from "../../app/solutionDeskApi";
+import { formatTitle } from "../../utils/string";
 import { Paginator } from "../Paginator";
 import UserTableRow from "../UserTableRow/UserTableRow";
 
@@ -41,8 +42,11 @@ const UsersTable = () => {
           <tr>
             {getColumnNames?.map((c, i) => {
               return (
-                <td className={`p-4 ${ResponsiveColsMap[c]}`} key={i}>
-                  {c}
+                <td
+                  className={`p-4 text-center ${ResponsiveColsMap[c]}`}
+                  key={i}
+                >
+                  {formatTitle(c)}
                 </td>
               );
             })}
@@ -51,7 +55,7 @@ const UsersTable = () => {
         </thead>
         <tbody className=" divide-y divide-slate-300">
           {getUsers?.map((user) => (
-            <UserTableRow user={user} key={user["_id"]} />
+            <UserTableRow user={user} key={user["name"]} />
           ))}
         </tbody>
       </table>

@@ -15,6 +15,11 @@ export enum TermSearchFilterType {
   Contains,
 }
 
+export enum DynamicDirection {
+  Up,
+  Down,
+}
+
 export const LevelPropertiesMap = {
   customerService: {
     low: [0, 1.7],
@@ -33,3 +38,17 @@ export const TermSearchFilterStringsMap = {
   [TermSearchFilterType.Not]: "is not",
   [TermSearchFilterType.Contains]: "includes",
 };
+
+export const PersonalInformationStructure = {
+  PersonalInformation: ["username", "dob", "gender", "employed", "experience"],
+  Productivity: [
+    "responseRateWithDynamic",
+    "customerServiceWithDynamic",
+    "inProgress",
+    "average",
+    "medals",
+  ],
+  Contacts: ["phone", "email", "ipAddress", "country", "city"],
+};
+
+export const DateAttributes = ["dob", "employed"];

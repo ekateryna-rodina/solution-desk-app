@@ -1,10 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "../../../lib/mongodb";
-import { IUser } from "../../../src/types";
+import { User } from "../../../src/types";
 
 type Data = {
-  data: IUser | null;
+  data: User | null;
 };
 
 export default async function handler(
