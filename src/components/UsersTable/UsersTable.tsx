@@ -12,6 +12,7 @@ const UsersTable = () => {
   const { page, limit } = useAppSelector((state) => state.usersPagination);
   const { applied } = useAppSelector((state) => state.filter);
   const { order, column } = useAppSelector((state) => state.usersSorting);
+  const { search } = useAppSelector((state) => state.usersSearch);
 
   const { data, isLoading } = useGetAllUsersQuery({
     page: page.toString(),
@@ -19,6 +20,7 @@ const UsersTable = () => {
     filter: encodeURIComponent(JSON.stringify(applied)),
     order,
     column: SortingColumns[column] ?? column, // handle case with column name known by ui only
+    search,
   });
 
   const [noResults, setNoResults] = useState(false);

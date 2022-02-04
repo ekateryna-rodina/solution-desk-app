@@ -31,10 +31,11 @@ export const solutionDeskApi = createApi({
         filter: string;
         order: string;
         column: string;
+        search: string;
       }
     >({
-      query: ({ page, limit, filter, order, column }) => {
-        return `users?page=${page}&limit=${limit}&filter=${filter}&order=${order}&column=${column}`;
+      query: ({ page, limit, filter, order, column, search }) => {
+        return `users?page=${page}&limit=${limit}&filter=${filter}&order=${order}&column=${column}&search=${"Philippines"}`;
       },
       keepUnusedDataFor: 6000,
       transformResponse: (response: UsersResponse, meta, arg) => {

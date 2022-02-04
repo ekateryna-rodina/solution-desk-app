@@ -11,6 +11,7 @@ import filterReducer from "../features/filter/filter-slice";
 import layoutReducer from "../features/layout/layout-slice";
 import userInfoReducer from "../features/userInfo/userInfo-slice";
 import usersPaginationReducer from "../features/usersPagination/usersPagination-slice";
+import usersSearchReducer from "../features/usersSearch/usersSearch-slice";
 import usersSortingReducer from "../features/usersSorting/usersSorting-slice";
 import { solutionDeskApi } from "./solutionDeskApi";
 
@@ -19,6 +20,7 @@ const combinedReducer = combineReducers({
   layout: layoutReducer,
   usersPagination: usersPaginationReducer,
   usersSorting: usersSortingReducer,
+  usersSearch: usersSearchReducer,
   filter: filterReducer,
   userInfo: userInfoReducer,
   [solutionDeskApi.reducerPath]: solutionDeskApi.reducer,

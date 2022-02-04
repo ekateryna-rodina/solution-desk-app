@@ -9,7 +9,32 @@ const QueryMap = {
   [TermSearchFilterType.Not]: "$ne",
 };
 
-const parsedFilter = (filtersList: IFilterApplied[]) => {
+const handleSearchQuery = (filter: Record<string, any>, query: string) => {
+  if (!query) return;
+  const newFilter = JSON.parse(JSON.stringify(filter));
+  let searchQueryObj = {};
+  const searchColumns = [
+    "_id",
+    "firstName",
+    "lastName",
+    "username",
+    "email",
+    "department",
+    "country",
+    "city",
+    "department",
+    "gender",
+  ];
+  const orSearch = searchColumns.reduce((acc: {}[], curr) => {
+    acc.push({ [curr]: new RegExp(query, "i") });
+    return acc;
+  }, []);
+  return {
+    ...newFilter,
+    $or: orSearch,
+  };
+};
+const parsedFilter = (filtersList: IFilterApplied[], search: string) => {
   let filter = filtersList.reduce(
     (accumulator: Record<string, any>, current: IFilterApplied) => {
       const propertyName = current["property"];
@@ -42,8 +67,9 @@ const parsedFilter = (filtersList: IFilterApplied[]) => {
     },
     {}
   );
-
-  return filter;
+  // handle search query
+  const filterWithSeachConditions = handleSearchQuery(filter, search);
+  return filterWithSeachConditions;
 };
 const filtered = <T>(handler: any, collectionName: string) => {
   return async (
@@ -51,13 +77,13 @@ const filtered = <T>(handler: any, collectionName: string) => {
     res: NextApiResponseFilteredSortedPaginated<T>
   ) => {
     if (req.method !== "GET") return handler(req, res);
-    let { filter } = req.query as { filter: string };
+    let { filter, search } = req.query as { filter: string; search: string };
     const filtersList = filter ? JSON.parse(filter) : [];
-    if (filtersList.length) {
+    if (filtersList.length || search) {
       const client = await clientPromise;
       const db = await client.db();
       try {
-        const parsed = parsedFilter(filtersList);
+        const parsed = parsedFilter(filtersList, search);
         const users = await db.collection(collectionName).find(parsed);
         const filteredResult = {
           data: users,

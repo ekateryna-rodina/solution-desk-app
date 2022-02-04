@@ -26,6 +26,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         filter: encodeURIComponent(JSON.stringify([])),
         order: "1",
         column: "lastName",
+        search: "",
       })
     );
     await store.dispatch(getFilters.initiate({}));
