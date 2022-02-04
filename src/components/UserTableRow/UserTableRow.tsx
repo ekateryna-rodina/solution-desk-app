@@ -15,7 +15,6 @@ type UserTableRowProps = {
   user: User;
 };
 const UserTableRow = ({ user }: UserTableRowProps) => {
-  console.log(user);
   const { current } = useAppSelector((state) => state.userInfo);
   const dispatch = useAppDispatch();
   const onToggleUserInfo = (userId: string) => {

@@ -41,7 +41,6 @@ const UserInfo = () => {
     );
 
   const children = (attr: keyof User, propertyValue: string) => {
-    console.log(attr, propertyValue);
     if (DateAttributes.includes(attr)) {
       return (
         <span className="text-slate-800">{formatDate(propertyValue)}</span>

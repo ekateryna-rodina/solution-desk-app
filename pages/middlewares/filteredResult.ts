@@ -56,8 +56,9 @@ const parsedFilter = (filtersList: IFilterApplied[], search: string) => {
     {}
   );
   // handle search query
-  const filterWithSeachConditions = handleSearchQuery(filter, search);
-  return filterWithSeachConditions;
+  const filterWithSeachConditions: Record<string, object | []> | undefined =
+    handleSearchQuery(filter, search);
+  return filterWithSeachConditions ?? filter;
 };
 const filtered = <T>(handler: any, collectionName: string) => {
   return async (
