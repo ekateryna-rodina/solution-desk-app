@@ -1,14 +1,12 @@
 import { NextApiRequest } from "next";
 import clientPromise from "../../lib/mongodb";
-import { Column, Order } from "../../src/constants";
 import {
   ISortedResult,
   NextApiResponseFilteredSortedPaginated,
 } from "../types";
 
 const sort = async (data: any, column: string, order: string) => {
-  const sorted = await data.sort({ column: order });
-  // .toArray();
+  const sorted = await data.sort({ [column]: parseInt(order) });
   return sorted;
 };
 
@@ -38,8 +36,8 @@ const sorted = <T>(handler: any, collectionName: string) => {
     sortedData = await sort(data, column, order);
     const sortedResult: ISortedResult<T> = {
       data: sortedData,
-      order: Order[order],
-      column: Column[column],
+      order,
+      column,
     };
     res.sortedResult = sortedResult;
     return handler(req, res);

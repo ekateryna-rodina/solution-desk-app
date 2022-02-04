@@ -79,3 +79,7 @@ export const PersonalInformationStructure = {
 };
 
 export const DateAttributes = ["dob", "employed"];
+
+export const SortingColumns = {
+  name: "lastName",
+};

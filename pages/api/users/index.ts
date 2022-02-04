@@ -2,6 +2,7 @@ import { NextApiRequest } from "next";
 import { User } from "../../../src/types";
 import filtered from "../../middlewares/filteredResult";
 import paginated from "../../middlewares/paginatedResult";
+import sorted from "../../middlewares/sortedResult";
 import { NextApiResponseFilteredSortedPaginated } from "../../types";
 import {
   processDelete,
@@ -29,4 +30,6 @@ function handler(
   }
 }
 
-export default filtered(paginated(handler, "users"), "users");
+export default filtered(sorted(paginated(handler, "users"), "users"), "users");
+
+// export default filtered(paginated(handler, "users"), "users");

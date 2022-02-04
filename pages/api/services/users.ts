@@ -2,7 +2,7 @@ import { ObjectId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "../../../lib/mongodb";
 import { User, UserPost } from "../../../src/types";
-import { NextApiResponseFilteredPaginated } from "../../types";
+import { NextApiResponseFilteredSortedPaginated } from "../../types";
 
 export async function processPost(req: NextApiRequest, res: NextApiResponse) {
   const client = await clientPromise;
@@ -73,7 +73,7 @@ export async function processDelete(req: NextApiRequest, res: NextApiResponse) {
 
 export function processGet(
   req: NextApiRequest,
-  res: NextApiResponseFilteredPaginated<User>
+  res: NextApiResponseFilteredSortedPaginated<User>
 ) {
   const result = {
     ...res.paginatedResult,

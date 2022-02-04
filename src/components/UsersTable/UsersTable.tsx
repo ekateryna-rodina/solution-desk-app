@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ResponsiveColsMap } from "../../../pages/constants";
 import { useAppSelector } from "../../app/hooks";
 import { useGetAllUsersQuery } from "../../app/solutionDeskApi";
-import { Column } from "../../constants";
+import { Column, SortingColumns } from "../../constants";
 import { formatTitle } from "../../utils/string";
 import { Paginator } from "../Paginator";
 import { SortingArrow } from "../SortingArrow";
@@ -18,7 +18,7 @@ const UsersTable = () => {
     limit: limit.toString(),
     filter: encodeURIComponent(JSON.stringify(applied)),
     order,
-    column,
+    column: SortingColumns[column] ?? column, // handle case with column name known by ui only
   });
 
   const [noResults, setNoResults] = useState(false);

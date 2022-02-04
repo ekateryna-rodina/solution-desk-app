@@ -1,5 +1,4 @@
 import { NextApiRequest } from "next";
-import clientPromise from "../../lib/mongodb";
 import {
   IPaginatedResult,
   NextApiResponseFilteredSortedPaginated,
@@ -23,19 +22,7 @@ const paginated = <T>(handler: any, collectionName: string) => {
     const startIndex = (+page - 1) * +limit;
     let currentData;
     let total: number;
-    let data;
-    if (res.filteredResult) {
-      data = res.filteredResult.data;
-    } else {
-      const client = await clientPromise;
-      const db = await client.db();
-
-      try {
-        data = await db.collection(collectionName).find({});
-      } catch (error: any) {
-        res.status(500).json({ message: error.message });
-      }
-    }
+    let data = res.sortedResult?.data;
     total = await (data as any).count();
     currentData = await paginate(data, limit, startIndex);
     const paginatedResult: IPaginatedResult<T> = {

@@ -1,5 +1,4 @@
 import { NextApiResponse } from "next";
-import { Column, Order } from "../../src/constants";
 import { IFilterApplied } from "../../src/types";
 
 export type IPaginatedResult<T> = {
@@ -11,8 +10,8 @@ export type IPaginatedResult<T> = {
 
 export type ISortedResult<T> = {
   data: T[] | undefined;
-  order: Order;
-  column: Column;
+  order: string;
+  column: string;
 };
 
 export type IFilteredResult<T> = {
