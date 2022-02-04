@@ -5,7 +5,7 @@ import LogoIcon from "../icons/LogoIcon";
 const Logo = () => {
   const { isNavigating } = useAppSelector((state) => state.layout);
   return (
-    <div className="flex justify-between items-center">
+    <div className="relative flex justify-between items-center z-30">
       <div>
         <LogoIcon fill={isNavigating ? "fill-white" : "fill-blueExtend"} />
       </div>

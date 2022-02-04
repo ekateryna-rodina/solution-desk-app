@@ -7,6 +7,7 @@ import {
   ThunkAction,
 } from "@reduxjs/toolkit";
 import { createWrapper, HYDRATE } from "next-redux-wrapper";
+import addNewUserReducer from "../features/addNewUser/addNewUser-slice";
 import filterReducer from "../features/filter/filter-slice";
 import layoutReducer from "../features/layout/layout-slice";
 import userInfoReducer from "../features/userInfo/userInfo-slice";
@@ -23,6 +24,7 @@ const combinedReducer = combineReducers({
   usersSearch: usersSearchReducer,
   filter: filterReducer,
   userInfo: userInfoReducer,
+  addNewUser: addNewUserReducer,
   [solutionDeskApi.reducerPath]: solutionDeskApi.reducer,
 });
 
