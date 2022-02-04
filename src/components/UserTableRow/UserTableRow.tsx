@@ -16,6 +16,7 @@ type UserTableRowProps = {
 };
 const UserTableRow = ({ user }: UserTableRowProps) => {
   const { current } = useAppSelector((state) => state.userInfo);
+  const { search } = useAppSelector((state) => state.usersSearch);
   const dispatch = useAppDispatch();
   const onToggleUserInfo = (userId: string) => {
     const isOpened = current && current.id === userId;
@@ -25,6 +26,21 @@ const UserTableRow = ({ user }: UserTableRowProps) => {
       dispatch(closeUserInfo());
       dispatch(openUserInfo(userId));
     }
+  };
+  const highlightText = (text: string) => {
+    if (!search) return text;
+    const parts = text.split(new RegExp(`(${search})`, "gi"));
+    return (
+      <span>
+        {parts.map((part) =>
+          part.toLowerCase() === search.toLowerCase() ? (
+            <span className="bg-blueExtend/50 text-white">{part}</span>
+          ) : (
+            part
+          )
+        )}
+      </span>
+    );
   };
   if (!user.email) return <></>;
   return (
@@ -65,7 +81,7 @@ const UserTableRow = ({ user }: UserTableRowProps) => {
             {property.endsWith("WithDynamic") ? (
               <DynamicProperty value={user[property]} />
             ) : (
-              user[property].toString()
+              highlightText(user[property].toString())
             )}
           </td>
         ))
