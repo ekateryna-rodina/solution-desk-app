@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { getAllUsers } from "../../app/solutionDeskApi";
 
 interface UsersSearchState {
   search: string;
@@ -17,8 +18,9 @@ const usersSearchSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // builder.addMatcher(getAllUsers.matchFulfilled, (state, { payload }) => {
-    // });
+    builder.addMatcher(getAllUsers.matchFulfilled, (state, { payload }) => {
+      state.search = payload.search;
+    });
   },
 });
 

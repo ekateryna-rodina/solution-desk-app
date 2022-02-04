@@ -35,7 +35,7 @@ export const solutionDeskApi = createApi({
       }
     >({
       query: ({ page, limit, filter, order, column, search }) => {
-        return `users?page=${page}&limit=${limit}&filter=${filter}&order=${order}&column=${column}&search=${"Philippines"}`;
+        return `users?page=${page}&limit=${limit}&filter=${filter}&order=${order}&column=${column}&search=${search}`;
       },
       keepUnusedDataFor: 6000,
       transformResponse: (response: UsersResponse, meta, arg) => {

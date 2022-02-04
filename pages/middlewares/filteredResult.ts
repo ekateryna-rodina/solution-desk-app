@@ -2,6 +2,7 @@ import { NextApiRequest } from "next";
 import clientPromise from "../../lib/mongodb";
 import { LevelPropertiesMap, TermSearchFilterType } from "../../src/constants";
 import { IFilterApplied } from "../../src/types";
+import { SearchColumns } from "../constants";
 import { NextApiResponseFilteredSortedPaginated } from "../types";
 
 const QueryMap = {
@@ -12,20 +13,7 @@ const QueryMap = {
 const handleSearchQuery = (filter: Record<string, any>, query: string) => {
   if (!query) return;
   const newFilter = JSON.parse(JSON.stringify(filter));
-  let searchQueryObj = {};
-  const searchColumns = [
-    "_id",
-    "firstName",
-    "lastName",
-    "username",
-    "email",
-    "department",
-    "country",
-    "city",
-    "department",
-    "gender",
-  ];
-  const orSearch = searchColumns.reduce((acc: {}[], curr) => {
+  const orSearch = SearchColumns.reduce((acc: {}[], curr) => {
     acc.push({ [curr]: new RegExp(query, "i") });
     return acc;
   }, []);

@@ -78,6 +78,9 @@ export function processGet(
   const result = {
     ...res.paginatedResult,
     appliedFilters: res.filteredResult?.appliedFilters || [],
+    search: req.query.search,
+    order: res.sortedResult?.order,
+    column: res.sortedResult?.column,
   };
   res.status(200).json(result);
 }

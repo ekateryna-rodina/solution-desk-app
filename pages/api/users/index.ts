@@ -29,7 +29,8 @@ function handler(
       processGet(req, res);
   }
 }
-
-export default filtered(sorted(paginated(handler, "users"), "users"), "users");
-
-// export default filtered(paginated(handler, "users"), "users");
+const collectionName = "users";
+export default filtered(
+  sorted(paginated(handler, collectionName), collectionName),
+  collectionName
+);

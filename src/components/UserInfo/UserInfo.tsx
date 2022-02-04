@@ -21,7 +21,6 @@ const UserInfo = () => {
   const { applied } = useAppSelector((state) => state.filter);
   const { order, column } = useAppSelector((state) => state.usersSorting);
   const { search } = useAppSelector((state) => state.usersSearch);
-
   const { user, isLoading }: { user: User; isLoading: boolean } =
     useGetAllUsersQuery(
       {

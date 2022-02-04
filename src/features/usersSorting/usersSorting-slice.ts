@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { getAllUsers } from "../../app/solutionDeskApi";
 import { Column, Order } from "../../constants";
 
 interface UsersSortingState {
@@ -21,9 +22,10 @@ const usersSortingSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // builder.addMatcher(getAllUsers.matchFulfilled, (state, { payload }) => {
-    //   state.totalPages = +payload.totalPages;
-    // });
+    builder.addMatcher(getAllUsers.matchFulfilled, (state, { payload }) => {
+      state.order = payload.order;
+      state.column = payload.column;
+    });
   },
 });
 

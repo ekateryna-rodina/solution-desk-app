@@ -3,6 +3,7 @@ import { ResponsiveColsMap } from "../../../pages/constants";
 import { useAppSelector } from "../../app/hooks";
 import { useGetAllUsersQuery } from "../../app/solutionDeskApi";
 import { Column, SortingColumns } from "../../constants";
+import useDebounce from "../../hooks/useDebounce";
 import { formatTitle } from "../../utils/string";
 import { Paginator } from "../Paginator";
 import { SortingArrow } from "../SortingArrow";
@@ -13,14 +14,14 @@ const UsersTable = () => {
   const { applied } = useAppSelector((state) => state.filter);
   const { order, column } = useAppSelector((state) => state.usersSorting);
   const { search } = useAppSelector((state) => state.usersSearch);
-
+  const debouncedSeach = useDebounce(search, 500);
   const { data, isLoading } = useGetAllUsersQuery({
     page: page.toString(),
     limit: limit.toString(),
     filter: encodeURIComponent(JSON.stringify(applied)),
     order,
     column: SortingColumns[column] ?? column, // handle case with column name known by ui only
-    search,
+    search: debouncedSeach as string,
   });
 
   const [noResults, setNoResults] = useState(false);

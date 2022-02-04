@@ -30,3 +30,16 @@ export const ResponsiveColsMap: Record<keyof User, string> = {
   phone: "hidden",
   employed: "hidden",
 };
+
+export const SearchColumns = [
+  "_id",
+  "firstName",
+  "lastName",
+  "username",
+  "email",
+  "department",
+  "country",
+  "city",
+  "department",
+  "gender",
+];
