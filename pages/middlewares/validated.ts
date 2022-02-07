@@ -9,8 +9,9 @@ export default function validated(
       try {
         // return all existing errors by abort early
         req.body = await schema.validate(req.body, { abortEarly: false });
-      } catch (error) {
-        return res.status(400).json(error);
+      } catch (result) {
+        const errors = (result as { errors: [] }).errors;
+        return res.status(400).json({ errors });
       }
     }
 

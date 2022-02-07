@@ -13,6 +13,7 @@ export async function processPost(req: NextApiRequest, res: NextApiResponse) {
       .collection("users")
       .insertOne(req.body);
     res.status(200).json({ _id: new ObjectId(result.insertedId).valueOf() });
+    // client.close();
   } catch (error) {
     res.status(500).json({ error });
   }

@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import { useAppSelector } from "../../app/hooks";
 import { useCreateUserMutation } from "../../app/solutionDeskApi";
@@ -9,6 +9,7 @@ const AddNewUser = () => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm();
   const {
@@ -71,7 +72,6 @@ const AddNewUser = () => {
       onSubmit={handleSubmit(onAddUserHandler)}
     >
       <h1 className="text-slate-700 text-lg font-bold">Add New User</h1>
-      {error ?? <div>{"jiio"}</div>}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
         <label htmlFor="firstName">
           <span className="block">First Name</span>
@@ -126,12 +126,41 @@ const AddNewUser = () => {
 
         <label htmlFor="department">
           <span>Department</span>
-
-          <Select styles={customStyles} options={departmentOptions} />
+          <Controller
+            control={control}
+            name="department"
+            render={({ field: { onChange, onBlur } }) => (
+              <Select
+                onChange={(obj) =>
+                  onChange((obj as Record<"value" | "label", string>).value)
+                }
+                onBlur={onBlur}
+                options={departmentOptions}
+                styles={customStyles}
+                id="departmentIdSelect"
+                instanceId="departmentInstanceSelect"
+              />
+            )}
+          />
         </label>
         <label htmlFor="gender">
           <span>Gender</span>
-          <Select options={genderOptions} />
+          <Controller
+            control={control}
+            name="gender"
+            render={({ field: { onChange, onBlur } }) => (
+              <Select
+                onChange={(obj) =>
+                  onChange((obj as Record<"value" | "label", string>).value)
+                }
+                onBlur={onBlur}
+                options={genderOptions}
+                styles={customStyles}
+                id="genderIdSelect"
+                instanceId="genderInstanceSelect"
+              />
+            )}
+          />
         </label>
         <label htmlFor="dob">
           <span className="block">Date of birth</span>
@@ -225,11 +254,41 @@ const AddNewUser = () => {
 
         <label htmlFor="country">
           <span>Country</span>
-          <Select options={countryOptions} />
+          <Controller
+            control={control}
+            name="country"
+            render={({ field: { onChange, onBlur } }) => (
+              <Select
+                onChange={(obj) =>
+                  onChange((obj as Record<"value" | "label", string>).value)
+                }
+                onBlur={onBlur}
+                options={countryOptions}
+                styles={customStyles}
+                id="countryIdSelect"
+                instanceId="countryInstanceSelect"
+              />
+            )}
+          />
         </label>
         <label htmlFor="city">
           <span>City</span>
-          <Select options={cityOptions} />
+          <Controller
+            control={control}
+            name="city"
+            render={({ field: { onChange, onBlur } }) => (
+              <Select
+                onChange={(obj) =>
+                  onChange((obj as Record<"value" | "label", string>).value)
+                }
+                onBlur={onBlur}
+                options={cityOptions}
+                styles={customStyles}
+                id="cityIdSelect"
+                instanceId="cityInstanceSelect"
+              />
+            )}
+          />
         </label>
         <div className="col-span-full flex justify-end gap-2">
           <button className={`${styles.btn} ${styles.btnSecondary}`}>

@@ -39,8 +39,8 @@ export const solutionDeskApi = createApi({
         return `users?page=${page}&limit=${limit}&filter=${filter}&order=${order}&column=${column}&search=${search}`;
       },
       keepUnusedDataFor: 6000,
-      providesTags: (result) =>
-        result ? result.map(({ id }) => ({ type: "User", id })) : [],
+      // providesTags: (result) =>
+      //   result ? result.map(({ id }) => ({ type: "User", id })) : [],
       transformResponse: (response: UsersResponse, meta, arg) => {
         const data = response.data.map((u) => ({
           // @ts-expect-error
@@ -66,7 +66,7 @@ export const solutionDeskApi = createApi({
       query: (body) => {
         debugger;
         return {
-          url: `post`,
+          url: "users",
           method: "POST",
           body,
         };
