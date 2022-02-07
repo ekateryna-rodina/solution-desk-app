@@ -2,6 +2,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
 import { useAppSelector } from "../../app/hooks";
+import { useCreateUserMutation } from "../../app/solutionDeskApi";
+import { User } from "../../types";
 import styles from "./AddNewUser.module.css";
 const AddNewUser = () => {
   const {
@@ -12,11 +14,14 @@ const AddNewUser = () => {
   const {
     properties: { city, country, gender, department },
   } = useAppSelector((state) => state.filter);
+  const [addUser, { status, error, data }] = useCreateUserMutation();
   const cityOptions = city.map((c) => ({ value: c, label: c }));
   const countryOptions = country.map((c) => ({ value: c, label: c }));
   const genderOptions = gender.map((c) => ({ value: c, label: c }));
   const departmentOptions = department.map((c) => ({ value: c, label: c }));
-  const onAddUserHandler = (userData) => console.log(userData);
+  const onAddUserHandler = (userData: Partial<User>) => {
+    addUser(userData);
+  };
   const customStyles = {
     option: (provided: any, state: any) => ({
       ...provided,
@@ -66,6 +71,7 @@ const AddNewUser = () => {
       onSubmit={handleSubmit(onAddUserHandler)}
     >
       <h1 className="text-slate-700 text-lg font-bold">Add New User</h1>
+      {error ?? <div>{"jiio"}</div>}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
         <label htmlFor="firstName">
           <span className="block">First Name</span>

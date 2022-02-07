@@ -19,6 +19,7 @@ export const solutionDeskApi = createApi({
     }
   },
   refetchOnMountOrArgChange: true,
+  tagTypes: ["User"],
   endpoints: (builder) => ({
     getUserById: builder.query<any, string>({
       query: (id) => `users/${id}`,
@@ -38,6 +39,8 @@ export const solutionDeskApi = createApi({
         return `users?page=${page}&limit=${limit}&filter=${filter}&order=${order}&column=${column}&search=${search}`;
       },
       keepUnusedDataFor: 6000,
+      providesTags: (result) =>
+        result ? result.map(({ id }) => ({ type: "User", id })) : [],
       transformResponse: (response: UsersResponse, meta, arg) => {
         const data = response.data.map((u) => ({
           // @ts-expect-error
@@ -59,6 +62,17 @@ export const solutionDeskApi = createApi({
     getFilters: builder.query({
       query: () => `filters`,
     }),
+    createUser: builder.mutation<Partial<User>, Partial<User>>({
+      query: (body) => {
+        debugger;
+        return {
+          url: `post`,
+          method: "POST",
+          body,
+        };
+      },
+      invalidatesTags: [{ type: "User", id: "LIST" }],
+    }),
   }),
 });
 
@@ -66,6 +80,7 @@ export const solutionDeskApi = createApi({
 export const {
   useGetUserByIdQuery,
   useGetAllUsersQuery,
+  useCreateUserMutation,
   util: { getRunningOperationPromises },
 } = solutionDeskApi;
 

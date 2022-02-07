@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "../../../lib/mongodb";
-import { User, UserPost } from "../../../src/types";
+import { User } from "../../../src/types";
 import { NextApiResponseFilteredSortedPaginated } from "../../types";
 
 export async function processPost(req: NextApiRequest, res: NextApiResponse) {
@@ -9,27 +9,9 @@ export async function processPost(req: NextApiRequest, res: NextApiResponse) {
   const db = await client.db();
 
   try {
-    const data: Record<keyof User, string> = req.body;
-    const user: UserPost = {
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      gender: data.gender,
-      ipAddress: data.ipAddress,
-      avatar: data.avatar,
-      username: data.username,
-      address: data.address,
-      city: data.city,
-      country: data.country,
-      characteristic: data.characteristic,
-      department: data.department,
-      dob: new Date(data.dob),
-      employed: new Date(),
-      phone: data.phone,
-    };
     const result: { insertedId: ObjectId; acknowledged: boolean } = await db
       .collection("users")
-      .insertOne(user);
+      .insertOne(req.body);
     res.status(200).json({ _id: new ObjectId(result.insertedId).valueOf() });
   } catch (error) {
     res.status(500).json({ error });

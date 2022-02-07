@@ -35,23 +35,6 @@ export type User = {
   phone: string;
 };
 
-export type UserPost = Omit<
-  User,
-  | "id"
-  | "_id"
-  | "name"
-  | "customerService"
-  | "responseRate"
-  | "average"
-  | "medals"
-  | "customerServiceDynamic"
-  | "inProgress"
-  | "responseRateDynamic"
-  | "experience"
-  | "customerServiceWithDynamic"
-  | "responseRateWithDynamic"
->;
-
 export type IFilterProperties = {
   gender: [];
   city: [];

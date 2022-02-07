@@ -1,4 +1,4 @@
-import { NextApiRequest } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "../../lib/mongodb";
 import { LevelPropertiesMap, TermSearchFilterType } from "../../src/constants";
 import { IFilterApplied } from "../../src/types";
@@ -65,7 +65,7 @@ const filtered = <T>(handler: any, collectionName: string) => {
     req: NextApiRequest,
     res: NextApiResponseFilteredSortedPaginated<T>
   ) => {
-    if (req.method !== "GET") return handler(req, res);
+    if (req.method !== "GET") return handler(req, res as NextApiResponse);
     let { filter, search } = req.query as { filter: string; search: string };
     const filtersList = filter ? JSON.parse(filter) : [];
     if (filtersList.length || search) {

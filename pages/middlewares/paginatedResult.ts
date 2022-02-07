@@ -1,4 +1,4 @@
-import { NextApiRequest } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 import {
   IPaginatedResult,
   NextApiResponseFilteredSortedPaginated,
@@ -17,7 +17,7 @@ const paginated = <T>(handler: any, collectionName: string) => {
     req: NextApiRequest,
     res: NextApiResponseFilteredSortedPaginated<T>
   ) => {
-    if (req.method !== "GET") return handler(req, res);
+    if (req.method !== "GET") return handler(req, res as NextApiResponse);
     let { page, limit } = req.query as { page: string; limit: string };
     const startIndex = (+page - 1) * +limit;
     let currentData;
