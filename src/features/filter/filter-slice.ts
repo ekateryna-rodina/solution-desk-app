@@ -25,6 +25,7 @@ const initialState: FilterState = {
     country: [],
     responseRate: [],
     customerService: [],
+    department: [],
   },
   applied: [],
 };
@@ -76,6 +77,7 @@ const filterSlice = createSlice({
       state.properties.gender = payload.gender;
       state.properties.city = payload.city;
       state.properties.country = payload.country;
+      state.properties.department = payload.department;
       state.properties.responseRate = payload.responseRate;
       state.properties.customerService = payload.customerService;
     });

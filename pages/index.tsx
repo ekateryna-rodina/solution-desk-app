@@ -5,11 +5,13 @@ import {
   solutionDeskApi,
 } from "../src/app/solutionDeskApi";
 import { wrapper } from "../src/app/store";
+import { AddNewUser } from "../src/components/AddNewUser";
 import { Layout } from "../src/components/Layout";
 import { SearchUsers } from "../src/components/SearchUsers";
 
 const Home = ({ initialReduxState }: any) => {
   const { isNavigating } = useAppSelector((state) => state.layout);
+  const { isAddNewShown } = useAppSelector((state) => state.addNewUser);
   return (
     <>
       <Layout>
@@ -18,11 +20,17 @@ const Home = ({ initialReduxState }: any) => {
       {/* Overlay */}
       <div
         className={`absolute inset-0 bg-slate-400 transition ease-in-out ${
-          isNavigating ? "opacity-50 z-0" : "opacity-0 -z-10"
-        }`}
+          isNavigating || isAddNewShown ? "opacity-50" : "opacity-0 -z-10"
+        } ${isAddNewShown ? "z-20" : ""}`}
       ></div>
       {/* Add New Popup */}
-      {/* <div className="absolute right-0 top-0 bottom-0 top-15 bg-white shadow w-full md:w-6/12"></div> */}
+      <div
+        className={`absolute inset-8 lg:left-[50%] lg:inset-y-0 lg:right-0 lg:w-6/12 bg-white shadow z-30 transition ease-in-out ${
+          isAddNewShown ? "translate-0" : "translate-x-full"
+        }`}
+      >
+        <AddNewUser />
+      </div>
     </>
   );
 };

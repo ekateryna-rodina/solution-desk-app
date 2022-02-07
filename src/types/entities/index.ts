@@ -56,6 +56,7 @@ export type IFilterProperties = {
   gender: [];
   city: [];
   country: [];
+  department: [];
   responseRate: Array<keyof typeof ResponseRate>;
   customerService: Array<keyof typeof CustomerService>;
 };

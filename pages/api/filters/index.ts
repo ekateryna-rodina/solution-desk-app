@@ -9,11 +9,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   try {
     const users = await db.collection("users");
-    const [gender, countries, cities] = await Promise.all([
+    const [gender, countries, cities, departments] = await Promise.all([
       users.distinct("gender"),
       users.distinct("country"),
       users.distinct("city"),
+      users.distinct("department"),
     ]);
+    // TODO: change those names to plural
     const filterProperties: IFilterProperties = {
       gender: gender.filter((e) => e != null),
       responseRate: Object.values(ResponseRate).filter(
@@ -24,6 +26,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       ) as Array<keyof typeof CustomerService>,
       city: cities.filter((e) => e != null),
       country: countries.filter((e) => e != null),
+      department: departments,
     };
 
     res.status(200).json(filterProperties);
