@@ -1,0 +1,15 @@
+.formInput{
+    @apply border-[1px] border-slate-300 rounded p-2 w-full focus:outline-blueExtend
+}
+.btn{
+    @apply py-1 px-2 rounded border-[1px] border-blueExtend bg-blueExtend transition ease-out shadow-md cursor-pointer focus:outline-none focus:shadow-xl
+}
+.btnPrimary{
+    @apply bg-blueExtend text-white hover:bg-blueExtend/80 
+}
+.btnSecondary{
+    @apply bg-white text-blueExtend 
+}
+.validationError{
+    @apply text-sm text-red-800
+}
