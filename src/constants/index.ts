@@ -18,6 +18,7 @@ export enum TermSearchFilterType {
 export enum Direction {
   Up,
   Down,
+  Undefined,
 }
 
 export enum Order {

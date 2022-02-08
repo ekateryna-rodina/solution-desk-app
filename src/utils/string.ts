@@ -9,3 +9,16 @@ export const formatTitle = (title) =>
 
 export const formatDate = (date: string | Date) =>
   moment(date).format("MM/DD/YYYY");
+
+export const formatDynamicValues = (
+  value: string | number,
+  dynamic: string
+) => {
+  if (value && dynamic) {
+    return `${value}_${dynamic}`;
+  } else if ((!value && !dynamic) || !value) {
+    return "n/a_n/a";
+  } else {
+    return `${value}_n/a`;
+  }
+};

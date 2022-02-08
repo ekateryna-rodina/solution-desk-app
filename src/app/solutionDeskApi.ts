@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { HYDRATE } from "next-redux-wrapper";
 import { IFilterApplied, User } from "../types";
+import { formatDynamicValues } from "../utils/string";
 
 type UsersResponse = {
   appliedFilters: IFilterApplied[];
@@ -49,9 +50,19 @@ export const solutionDeskApi = createApi({
           department: u.department,
           ...u,
           employed: u.employed ?? new Date().toUTCString(),
-          customerServiceWithDynamic: `${u.customerService}_${u.customerServiceDynamic}`,
-          responseRateWithDynamic: `${u.responseRate}_${u.responseRateDynamic}`,
-          phone: "+2(800)345 3555",
+          average: u.average ?? 0,
+          inProgress: u.inProgress ?? 0,
+          username: u.username ?? u.email.split("@")[0],
+          responseRateWithDynamic: formatDynamicValues(
+            u.responseRate,
+            u.responseRateDynamic
+          ),
+          customerServiceWithDynamic: formatDynamicValues(
+            u.customerService,
+            u.customerServiceDynamic
+          ),
+          medals: isNaN(u.medals) ? 0 : u.medals,
+          phone: u.phone ?? "+1(800)345 3555",
         }));
         return {
           ...response,
