@@ -1,9 +1,12 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { useCreateUserMutation } from "../../app/solutionDeskApi";
+import { toggleAddNewUser } from "../../features/addNewUser/addNewUser-slice";
 import { User } from "../../types";
+import { FileUploader } from "../FileUploader";
 import styles from "./AddNewUser.module.css";
 const AddNewUser = () => {
   const {
@@ -16,12 +19,53 @@ const AddNewUser = () => {
     properties: { city, country, gender, department },
   } = useAppSelector((state) => state.filter);
   const [addUser, { status, error, data }] = useCreateUserMutation();
+  const [file, setFile] = useState<File | null>(null);
+  const [noFileError, setNoFileError] = useState(false);
   const cityOptions = city.map((c) => ({ value: c, label: c }));
   const countryOptions = country.map((c) => ({ value: c, label: c }));
   const genderOptions = gender.map((c) => ({ value: c, label: c }));
   const departmentOptions = department.map((c) => ({ value: c, label: c }));
-  const onAddUserHandler = (userData: Partial<User>) => {
-    addUser(userData);
+  const dispatch = useAppDispatch();
+  const dropFileHandler = (file: File | null) => {
+    setFile(file);
+  };
+  const submitFileToStorage = async () => {
+    if (file?.name) {
+      const [cloudName, uploadPreset] = [
+        process.env.CLOUD_NAME ?? "",
+        process.env.UPLOAD_PRESET ?? "",
+      ];
+      if (!cloudName || !uploadPreset) return;
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", uploadPreset);
+      try {
+        const response = await axios.post(
+          `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+          formData
+        );
+        return response.data.public_id;
+      } catch (error) {
+        console.log(error);
+        return null;
+      }
+    }
+  };
+  const onAddUserHandler = async (userData: Partial<User>) => {
+    if (!file) {
+      setNoFileError(true);
+      return;
+    }
+
+    const imageId = await submitFileToStorage();
+    if (!imageId) {
+      setNoFileError(true);
+    }
+    addUser({ ...userData, avatar: imageId });
+  };
+  const closeAddNewUser = (e) => {
+    e.preventDefault();
+    dispatch(toggleAddNewUser());
   };
   const customStyles = {
     option: (provided: any, state: any) => ({
@@ -66,6 +110,11 @@ const AddNewUser = () => {
       return { ...provided, display };
     },
   };
+  useEffect(() => {
+    if (file) {
+      setNoFileError(false);
+    }
+  }, [file]);
   return (
     <form
       className="p-8 h-full overflow-auto"
@@ -90,7 +139,7 @@ const AddNewUser = () => {
           )}
         </label>
 
-        <label htmlFor="firstName">
+        <label htmlFor="lastName">
           <span className="block">Last Name</span>
           <input
             className={styles.formInput}
@@ -106,6 +155,13 @@ const AddNewUser = () => {
             </p>
           )}
         </label>
+        <div className="col-span-full">
+          <FileUploader
+            setFile={dropFileHandler}
+            file={file}
+            error={noFileError}
+          />
+        </div>
 
         <label className="col-span-full" htmlFor="characteristic">
           <span className="block">Characteristic (role)</span>
@@ -291,7 +347,10 @@ const AddNewUser = () => {
           />
         </label>
         <div className="col-span-full flex justify-end gap-2">
-          <button className={`${styles.btn} ${styles.btnSecondary}`}>
+          <button
+            onClick={closeAddNewUser}
+            className={`${styles.btn} ${styles.btnSecondary}`}
+          >
             Cancel
           </button>
           <input

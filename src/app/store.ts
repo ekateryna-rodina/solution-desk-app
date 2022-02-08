@@ -48,7 +48,9 @@ export const makeStore = () =>
   configureStore({
     reducer,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(solutionDeskApi.middleware),
+      getDefaultMiddleware({ serializableCheck: false }).concat(
+        solutionDeskApi.middleware
+      ),
   });
 
 type Store = ReturnType<typeof makeStore>;

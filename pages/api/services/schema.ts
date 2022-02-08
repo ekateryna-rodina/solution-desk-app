@@ -25,7 +25,7 @@ export const postSchema = object({
   ipAddress: string()
     .required()
     .matches(ipAddressRexExp, "Ip address is not valid"),
-  avatar: string().optional().url(),
+  avatar: string().required().min(3),
   username: string().optional(),
   address: string().optional(),
   city: string().required().min(2),

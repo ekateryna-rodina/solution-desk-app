@@ -64,7 +64,6 @@ export const solutionDeskApi = createApi({
     }),
     createUser: builder.mutation<Partial<User>, Partial<User>>({
       query: (body) => {
-        debugger;
         return {
           url: "users",
           method: "POST",
