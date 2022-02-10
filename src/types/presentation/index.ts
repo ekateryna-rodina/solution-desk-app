@@ -1,3 +1,4 @@
 export type IconProps = {
-  fill: string;
+  fill?: string;
+  stroke?: string;
 };

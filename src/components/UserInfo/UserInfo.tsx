@@ -8,6 +8,8 @@ import {
 import { User } from "../../types";
 import { formatDate, formatTitle } from "../../utils/string";
 import { DynamicProperty } from "../DynamicProperty";
+import DeleteIcon from "../icons/DeleteIcon";
+import EditIcon from "../icons/EditIcon";
 import SendMailIcon from "../icons/SendMailIcon";
 import { Rewards } from "../Rewards";
 import { UserInfoImage } from "../UserInfoImage";
@@ -68,8 +70,18 @@ const UserInfo = () => {
   };
   if (isLoading || !user) return <h1>Loading</h1>;
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-2 justify-center items-center">
-      <div className="grid grid-cols-1 grid-rows-3 justify-center items-center py-4">
+    <div className="relative grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-2 justify-center items-center">
+      <div className="grid grid-cols-1 grid-rows-3 justify-center items-center py-2">
+        <div className="absolute top-4 left-0">
+          <div className="flex flex-row justify-start items-center gap-2 px-4">
+            <button>
+              <EditIcon stroke={"stroke-blueExtend/50"} />
+            </button>
+            <button>
+              <DeleteIcon fill={"fill-blueExtend/50"} />
+            </button>
+          </div>
+        </div>
         <UserInfoImage avatar={user.avatar} />
 
         <div className="flex flex-col justify-center items-center">
