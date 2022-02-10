@@ -1,9 +1,10 @@
 import React from "react";
+import { DateType } from "../../types";
 import { formatTitle } from "../../utils/string";
 
 type UserInfoRowProps = {
   propertyName: string;
-  propertyValue: string | number | Date;
+  propertyValue: string | number | DateType;
   additionalValue?: string;
   children: React.ReactNode;
 };

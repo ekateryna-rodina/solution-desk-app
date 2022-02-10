@@ -6,7 +6,6 @@ import {
 
 export type User = {
   _id: string;
-  id: number;
   name: string;
   firstName: string;
   lastName: string;
@@ -31,8 +30,13 @@ export type User = {
   experience: number;
   customerServiceWithDynamic: string;
   responseRateWithDynamic: string;
-  employed: Date;
+  employed: DateType;
   phone: string;
+};
+
+export type DateType = {
+  __typename: "date";
+  value: Date;
 };
 
 export type IFilterProperties = {

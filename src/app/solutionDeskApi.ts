@@ -61,6 +61,7 @@ export const solutionDeskApi = createApi({
             u.customerService,
             u.customerServiceDynamic
           ),
+          dob: { __typename: "date", value: u.dob },
           medals: isNaN(u.medals) ? 0 : u.medals,
           phone: u.phone ?? "+1(800)345 3555",
         }));

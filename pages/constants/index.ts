@@ -2,7 +2,6 @@ import { User } from "../../src/types";
 
 export const ResponsiveColsMap: Record<keyof User, string> = {
   _id: "hidden",
-  id: "hidden",
   name: "",
   firstName: "hidden",
   lastName: "hidden",

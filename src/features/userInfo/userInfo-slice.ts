@@ -4,10 +4,12 @@ interface UserInfoState {
   current: {
     id: string;
   } | null;
+  isEditMode: boolean;
 }
 
 const initialState: UserInfoState = {
   current: null,
+  isEditMode: false,
 };
 
 const userInfoSlice = createSlice({
@@ -20,9 +22,13 @@ const userInfoSlice = createSlice({
     closeUserInfo(state) {
       state.current = null;
     },
+    enableEditMode(state) {
+      state.isEditMode = true;
+    },
   },
 });
 
-export const { openUserInfo, closeUserInfo } = userInfoSlice.actions;
+export const { openUserInfo, closeUserInfo, enableEditMode } =
+  userInfoSlice.actions;
 
 export default userInfoSlice.reducer;
