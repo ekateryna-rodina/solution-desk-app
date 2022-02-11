@@ -2,6 +2,7 @@ import React from "react";
 import { useAppSelector } from "../../app/hooks";
 import { useGetAllUsersQuery } from "../../app/solutionDeskApi";
 import { TypeWithDiscriminator, User } from "../../types";
+import { UserInfoActions } from "../UserInfoActions";
 import { UserInfoEdit } from "../UserInfoEdit";
 import { UserInfoView } from "../UserInfoView";
 
@@ -41,10 +42,11 @@ const UserInfo = () => {
     );
 
   if (isLoading || !user) return <h1>Loading</h1>;
-  return isEditMode ? (
-    <UserInfoEdit user={user} />
-  ) : (
-    <UserInfoView user={user} />
+  return (
+    <div className="relative grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-2 justify-center items-center">
+      {isEditMode ? <UserInfoEdit user={user} /> : <UserInfoView user={user} />}
+      <UserInfoActions />
+    </div>
   );
 };
 
