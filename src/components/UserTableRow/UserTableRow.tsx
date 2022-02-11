@@ -27,14 +27,17 @@ const UserTableRow = ({ user }: UserTableRowProps) => {
       dispatch(openUserInfo(userId));
     }
   };
-  const highlightText = (text: string) => {
+  const highlightText = (text: string, property: string) => {
     if (!search) return text;
     const parts = text.split(new RegExp(`(${search})`, "gi"));
     return (
       <span>
-        {parts.map((part) =>
+        {parts.map((part, i) =>
           part.toLowerCase() === search.toLowerCase() ? (
-            <span key={part} className="bg-blueExtend/50 text-white">
+            <span
+              key={`${i}_${property}_${user._id.value}`}
+              className="bg-blueExtend/50 text-white"
+            >
               {part}
             </span>
           ) : (
@@ -47,7 +50,7 @@ const UserTableRow = ({ user }: UserTableRowProps) => {
   if (!user.email) return <></>;
   return (
     <tr key={user["name"].value as string}>
-      {current && current.id == user["_id"] ? (
+      {current && current.id == user["_id"].value ? (
         <>
           <td className="h-28 shadow-2xl md:hidden " colSpan={3}>
             <UserInfo />
@@ -75,21 +78,41 @@ const UserTableRow = ({ user }: UserTableRowProps) => {
           </td>
         </>
       ) : (
-        Object.keys(user).map((property: string, i) => {
+        Object.keys(ResponsiveColsMap).map((property: string, i) => {
           const key = `${user._id.value}_${property}`;
           return (
             <td
               className={`p-4 text-center ${ResponsiveColsMap[property]}`}
               key={key}
             >
-              {user[property].__typename == "dynamic" ? (
-                <DynamicProperty value={user[property].value} />
+              {property in user ? (
+                user[property].__typename == "dynamic" ? (
+                  <DynamicProperty value={user[property].value} />
+                ) : (
+                  highlightText(user[property].value.toString(), property)
+                )
               ) : (
-                highlightText(user[property].value.toString())
+                <></>
               )}
             </td>
           );
         })
+        // ResponsiveColsMap
+        // Object.keys(user).map((property: string, i) => {
+        //   const key = `${user._id.value}_${property}`;
+        //   return (
+        //     <td
+        //       className={`p-4 text-center ${ResponsiveColsMap[property]}`}
+        //       key={key}
+        //     >
+        //       {user[property].__typename == "dynamic" ? (
+        //         <DynamicProperty value={user[property].value} />
+        //       ) : (
+        //         highlightText(user[property].value.toString())
+        //       )}
+        //     </td>
+        //   );
+        // })
       )}
 
       <td className="bg-slate-400 w-8 ">

@@ -11,6 +11,10 @@ export function toTypeWithDiscriminant(entity: User) {
   ) as TypeWithDiscriminator<User>;
   return {
     ...mapped,
+    id: {
+      __typename: "string",
+      value: `${entity._id.slice(0, 3)} ${entity._id.slice(-3)}`,
+    },
     name: {
       __typename: "string",
       value: `${entity.firstName} ${entity.lastName}`,

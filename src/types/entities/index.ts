@@ -6,6 +6,7 @@ import {
 
 export type User = {
   _id: string;
+  id: string;
   name: string;
   firstName: string;
   lastName: string;

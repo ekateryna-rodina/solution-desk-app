@@ -31,7 +31,7 @@ const UsersTable = () => {
     if (!data) return;
     const paginatedData = data.data || [];
     if (!paginatedData.length) return;
-    return Object.keys(paginatedData[0]);
+    return Object.keys(ResponsiveColsMap);
   }, [data]);
   const getUsers = React.useMemo(() => {
     const paginatedData = data?.data;
