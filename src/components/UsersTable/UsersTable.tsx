@@ -4,6 +4,7 @@ import { useAppSelector } from "../../app/hooks";
 import { useGetAllUsersQuery } from "../../app/solutionDeskApi";
 import { Column, SortingColumns } from "../../constants";
 import useDebounce from "../../hooks/useDebounce";
+import { TypeWithDiscriminator, User } from "../../types";
 import { formatTitle } from "../../utils/string";
 import { Paginator } from "../Paginator";
 import { SortingArrow } from "../SortingArrow";
@@ -62,8 +63,8 @@ const UsersTable = () => {
           </tr>
         </thead>
         <tbody className=" divide-y divide-slate-300">
-          {getUsers?.map((user) => (
-            <UserTableRow user={user} key={user["name"]} />
+          {getUsers?.map((user: TypeWithDiscriminator<User>) => (
+            <UserTableRow user={user} key={user["name"].value as string} />
           ))}
         </tbody>
       </table>

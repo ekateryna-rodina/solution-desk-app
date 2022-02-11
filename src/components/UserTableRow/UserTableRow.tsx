@@ -76,7 +76,7 @@ const UserTableRow = ({ user }: UserTableRowProps) => {
         </>
       ) : (
         Object.keys(user).map((property: string, i) => {
-          const key = `${user._id.value}_${property}_${+new Date()}`;
+          const key = `${user._id.value}_${property}`;
           return (
             <td
               className={`p-4 text-center ${ResponsiveColsMap[property]}`}
