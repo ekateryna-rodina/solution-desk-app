@@ -79,8 +79,6 @@ export const PersonalInformationStructure = {
   Contacts: ["phone", "email", "ipAddress", "country", "city"],
 };
 
-export const DateAttributes = ["dob", "employed"];
-
 export const SortingColumns = {
   name: "lastName",
 };

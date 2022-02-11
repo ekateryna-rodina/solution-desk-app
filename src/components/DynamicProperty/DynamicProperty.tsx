@@ -1,5 +1,4 @@
 import React from "react";
-import { DynamicLabel } from "../DynamicLabel";
 
 type DynamicPropertyProps = {
   value: string;
@@ -7,8 +6,8 @@ type DynamicPropertyProps = {
 const DynamicProperty = ({ value }: DynamicPropertyProps) => {
   return (
     <div className="flex justify-between  items-center gap-4">
-      <DynamicLabel value={value.split("_")[1]} />
-      <span className="text-slate-800">{value.split("_")[0]}</span>
+      {/* <DynamicLabel value={value.split("_")[1]} />
+      <span className="text-slate-800">{value.split("_")[0]}</span> */}
     </div>
   );
 };

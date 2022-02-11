@@ -1,8 +1,8 @@
 import React from "react";
-import { User } from "../../types";
+import { TypeWithDiscriminator, User } from "../../types";
 
 type UserInfoEditProps = {
-  user: User;
+  user: TypeWithDiscriminator<User>;
 };
 const UserInfoEdit = ({ user }: UserInfoEditProps) => {
   return <form></form>;

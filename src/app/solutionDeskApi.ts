@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { HYDRATE } from "next-redux-wrapper";
 import { IFilterApplied, User } from "../types";
-import { formatDynamicValues } from "../utils/string";
+import { toTypeWithDiscriminant } from "../utils/object";
 
 type UsersResponse = {
   appliedFilters: IFilterApplied[];
@@ -40,31 +40,14 @@ export const solutionDeskApi = createApi({
         return `users?page=${page}&limit=${limit}&filter=${filter}&order=${order}&column=${column}&search=${search}`;
       },
       keepUnusedDataFor: 6000,
-      // providesTags: (result) =>
-      //   result ? result.map(({ id }) => ({ type: "User", id })) : [],
+      // providesTags: (result) => {
+      //   return result
+      //     ? result.data.map(({ _id }) => ({ type: "User", _id }))
+      //     : [];
+      // },
       transformResponse: (response: UsersResponse, meta, arg) => {
-        const data = response.data.map((u) => ({
-          // @ts-expect-error
-          name: `${u.firstName} ${u.lastName}`,
-          // @ts-expect-error
-          department: u.department,
-          ...u,
-          employed: u.employed ?? new Date().toUTCString(),
-          average: u.average ?? 0,
-          inProgress: u.inProgress ?? 0,
-          username: u.username ?? u.email.split("@")[0],
-          responseRateWithDynamic: formatDynamicValues(
-            u.responseRate,
-            u.responseRateDynamic
-          ),
-          customerServiceWithDynamic: formatDynamicValues(
-            u.customerService,
-            u.customerServiceDynamic
-          ),
-          dob: { __typename: "date", value: u.dob },
-          medals: isNaN(u.medals) ? 0 : u.medals,
-          phone: u.phone ?? "+1(800)345 3555",
-        }));
+        console.log(response.data);
+        const data = response.data.map((u) => toTypeWithDiscriminant(u));
         return {
           ...response,
           data,

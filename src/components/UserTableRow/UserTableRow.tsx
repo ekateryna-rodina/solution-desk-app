@@ -5,14 +5,14 @@ import {
   closeUserInfo,
   openUserInfo,
 } from "../../features/userInfo/userInfo-slice";
-import { User } from "../../types";
+import { TypeWithDiscriminator, User } from "../../types";
 import { DynamicProperty } from "../DynamicProperty";
 import CaretDownIcon from "../icons/CaretDownIcon";
 import CaretUpIcon from "../icons/CaretUpIcon";
 import { UserInfo } from "../UserInfo";
 
 type UserTableRowProps = {
-  user: User;
+  user: TypeWithDiscriminator<User>;
 };
 const UserTableRow = ({ user }: UserTableRowProps) => {
   const { current } = useAppSelector((state) => state.userInfo);
@@ -34,7 +34,9 @@ const UserTableRow = ({ user }: UserTableRowProps) => {
       <span>
         {parts.map((part) =>
           part.toLowerCase() === search.toLowerCase() ? (
-            <span className="bg-blueExtend/50 text-white">{part}</span>
+            <span key={part} className="bg-blueExtend/50 text-white">
+              {part}
+            </span>
           ) : (
             part
           )
@@ -44,7 +46,7 @@ const UserTableRow = ({ user }: UserTableRowProps) => {
   };
   if (!user.email) return <></>;
   return (
-    <tr key={user.name}>
+    <tr key={user["name"].value as string}>
       {current && current.id == user["_id"] ? (
         <>
           <td className="h-28 shadow-2xl md:hidden " colSpan={3}>
@@ -73,26 +75,29 @@ const UserTableRow = ({ user }: UserTableRowProps) => {
           </td>
         </>
       ) : (
-        Object.keys(user).map((property: string, i) => (
-          <td
-            className={`p-4 text-center ${ResponsiveColsMap[property]}`}
-            key={`${user["name"]}${property}`}
-          >
-            {property.endsWith("WithDynamic") ? (
-              <DynamicProperty value={user[property]} />
-            ) : (
-              highlightText(user[property].toString())
-            )}
-          </td>
-        ))
+        Object.keys(user).map((property: string, i) => {
+          const key = `${user._id.value}_${property}_${+new Date()}`;
+          return (
+            <td
+              className={`p-4 text-center ${ResponsiveColsMap[property]}`}
+              key={key}
+            >
+              {user[property].__typename == "dynamic" ? (
+                <DynamicProperty value={user[property].value} />
+              ) : (
+                highlightText(user[property].value.toString())
+              )}
+            </td>
+          );
+        })
       )}
 
       <td className="bg-slate-400 w-8 ">
         <button
           className="w-full h-12 flex justify-center items-center"
-          onClick={() => onToggleUserInfo(user["_id"])}
+          onClick={() => onToggleUserInfo(user["_id"].value as string)}
         >
-          {current && current.id === user["_id"] ? (
+          {current && current.id === user["_id"].value ? (
             <CaretUpIcon fill={"fill-slate-600"} />
           ) : (
             <CaretDownIcon fill={"fill-slate-600"} />

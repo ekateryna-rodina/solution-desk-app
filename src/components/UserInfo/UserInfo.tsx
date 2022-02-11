@@ -1,7 +1,7 @@
 import React from "react";
 import { useAppSelector } from "../../app/hooks";
 import { useGetAllUsersQuery } from "../../app/solutionDeskApi";
-import { User } from "../../types";
+import { TypeWithDiscriminator, User } from "../../types";
 import { UserInfoEdit } from "../UserInfoEdit";
 import { UserInfoView } from "../UserInfoView";
 
@@ -15,7 +15,10 @@ const UserInfo = () => {
   const { search } = useAppSelector((state) => state.usersSearch);
   const { isEditMode } = useAppSelector((state) => state.userInfo);
 
-  const { user, isLoading }: { user: User; isLoading: boolean } =
+  const {
+    user,
+    isLoading,
+  }: { user: TypeWithDiscriminator<User>; isLoading: boolean } =
     useGetAllUsersQuery(
       {
         page: page.toString(),

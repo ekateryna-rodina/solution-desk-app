@@ -30,13 +30,8 @@ export type User = {
   experience: number;
   customerServiceWithDynamic: string;
   responseRateWithDynamic: string;
-  employed: DateType;
+  employed: Date;
   phone: string;
-};
-
-export type DateType = {
-  __typename: "date";
-  value: Date;
 };
 
 export type IFilterProperties = {
@@ -54,3 +49,7 @@ export interface IFilterApplied {
   termSearchFilterType?: TermSearchFilterType | number;
   level?: "low" | "medium" | "high";
 }
+
+export type TypeWithDiscriminator<T> = {
+  [K in keyof T]: { __typename: string; value: number | string | Date };
+};

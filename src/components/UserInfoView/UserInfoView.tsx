@@ -1,8 +1,8 @@
 import React from "react";
 import { useAppDispatch } from "../../app/hooks";
-import { DateAttributes, PersonalInformationStructure } from "../../constants";
+import { PersonalInformationStructure } from "../../constants";
 import { enableEditMode } from "../../features/userInfo/userInfo-slice";
-import { User } from "../../types";
+import { TypeWithDiscriminator, User } from "../../types";
 import { formatDate, formatTitle } from "../../utils/string";
 import { DynamicProperty } from "../DynamicProperty";
 import DeleteIcon from "../icons/DeleteIcon";
@@ -13,35 +13,32 @@ import { UserInfoImage } from "../UserInfoImage";
 import { UserInfoRow } from "../UserInfoRow";
 
 type UserInfoViewProps = {
-  user: User;
+  user: TypeWithDiscriminator<User>;
 };
+
 const UserInfoView = ({ user }: UserInfoViewProps) => {
   const dispatch = useAppDispatch();
-  const children = (attr: keyof User, propertyValue: string) => {
-    if (DateAttributes.includes(attr)) {
-      return (
-        <span className="text-slate-800">{formatDate(propertyValue)}</span>
-      );
-    } else if (attr == "email") {
-      // TODO: fix magic strings -> enum or discriminant?
-      return (
-        <a
-          href={`mailto:${propertyValue}?subject=Important!&body=Hi.`}
-          target="_blank"
-        >
+  const renderChildDataTypeWise = (propertyValue: {
+    __typename: string;
+    value: string | number | Date;
+  }) => {
+    let { value } = propertyValue;
+    const dataTypeMap = {
+      date: () => (
+        <span className="text-slate-800">
+          {formatDate(value as string | Date)}
+        </span>
+      ),
+      email: () => (
+        <a href={`mailto:${value}?subject=Important!&body=Hi.`} target="_blank">
           <SendMailIcon fill={"fill-blueExtend/50"} />
         </a>
-      );
-    } else if (
-      attr == "responseRateWithDynamic" ||
-      attr == "customerServiceWithDynamic"
-    ) {
-      return <DynamicProperty value={propertyValue} />;
-    } else if (attr == "medals") {
-      return <Rewards count={+propertyValue} />;
-    } else {
-      return <span className="text-slate-800">{propertyValue}</span>;
-    }
+      ),
+      dynamic: () => <DynamicProperty value={value as string} />,
+      multipleIcons: () => <Rewards count={+value} />,
+      string: () => <span className="text-slate-800">{value}</span>,
+    };
+    return dataTypeMap[propertyValue.__typename];
   };
   const onEditModeHandler = () => {
     dispatch(enableEditMode());
@@ -59,7 +56,7 @@ const UserInfoView = ({ user }: UserInfoViewProps) => {
             </button>
           </div>
         </div>
-        <UserInfoImage avatar={user.avatar} />
+        <UserInfoImage avatar={user.avatar["value"] as string} />
 
         <div className="flex flex-col justify-center items-center">
           <span className="font-bold">{user.name}</span>
@@ -78,7 +75,7 @@ const UserInfoView = ({ user }: UserInfoViewProps) => {
               propertyValue={user[attr]}
               key={attr}
             >
-              {children(attr, user[attr] as string)}
+              {renderChildDataTypeWise(user[attr])}
             </UserInfoRow>
           ))}
         </div>
