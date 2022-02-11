@@ -29,11 +29,14 @@ const UserInfo = () => {
         search,
       },
       {
-        selectFromResult: ({ data, error, isLoading }) => ({
-          user: data?.data.filter((u) => u["_id"] === id)[0],
-          error,
-          isLoading,
-        }),
+        selectFromResult: ({ data, error, isLoading }) => {
+          // const
+          return {
+            user: data?.data.filter((u) => u["_id"].value === id)[0],
+            error,
+            isLoading,
+          };
+        },
       }
     );
 

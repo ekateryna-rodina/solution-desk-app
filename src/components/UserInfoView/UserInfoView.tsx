@@ -37,8 +37,9 @@ const UserInfoView = ({ user }: UserInfoViewProps) => {
       dynamic: () => <DynamicProperty value={value as string} />,
       multipleIcons: () => <Rewards count={+value} />,
       string: () => <span className="text-slate-800">{value}</span>,
+      number: () => <span className="text-slate-800">{value}</span>,
     };
-    return dataTypeMap[propertyValue.__typename];
+    return dataTypeMap[propertyValue.__typename]();
   };
   const onEditModeHandler = () => {
     dispatch(enableEditMode());
@@ -56,13 +57,15 @@ const UserInfoView = ({ user }: UserInfoViewProps) => {
             </button>
           </div>
         </div>
-        <UserInfoImage avatar={user.avatar["value"] as string} />
+        <UserInfoImage avatar={user.avatar.value as string} />
 
         <div className="flex flex-col justify-center items-center">
-          <span className="font-bold">{user.name}</span>
-          <span className="text-slate-400 text-sm">{user.characteristic}</span>
+          <span className="font-bold">{user.name.value}</span>
           <span className="text-slate-400 text-sm">
-            {user.department} Department
+            {user.characteristic.value}
+          </span>
+          <span className="text-slate-400 text-sm">
+            {user.department.value} Department
           </span>
         </div>
       </div>
@@ -72,7 +75,7 @@ const UserInfoView = ({ user }: UserInfoViewProps) => {
           {PersonalInformationStructure[title].map((attr: keyof User) => (
             <UserInfoRow
               propertyName={attr}
-              propertyValue={user[attr]}
+              // propertyValue={user[attr]}
               key={attr}
             >
               {renderChildDataTypeWise(user[attr])}

@@ -49,8 +49,9 @@ const UserTableRow = ({ user }: UserTableRowProps) => {
   };
   if (!user.email) return <></>;
   return (
-    <tr key={user["name"].value as string}>
-      {current && current.id == user["_id"].value ? (
+    <tr key={user.name.value as string}>
+      {/* TODO: find a better solution to change colspan dynamically or replace with css grid */}
+      {current && current.id == user._id.value ? (
         <>
           <td className="h-28 shadow-2xl md:hidden " colSpan={3}>
             <UserInfo />
@@ -97,22 +98,6 @@ const UserTableRow = ({ user }: UserTableRowProps) => {
             </td>
           );
         })
-        // ResponsiveColsMap
-        // Object.keys(user).map((property: string, i) => {
-        //   const key = `${user._id.value}_${property}`;
-        //   return (
-        //     <td
-        //       className={`p-4 text-center ${ResponsiveColsMap[property]}`}
-        //       key={key}
-        //     >
-        //       {user[property].__typename == "dynamic" ? (
-        //         <DynamicProperty value={user[property].value} />
-        //       ) : (
-        //         highlightText(user[property].value.toString())
-        //       )}
-        //     </td>
-        //   );
-        // })
       )}
 
       <td className="bg-slate-400 w-8 ">

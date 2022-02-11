@@ -3,7 +3,7 @@ import { formatTitle } from "../../utils/string";
 
 type UserInfoRowProps = {
   propertyName: string;
-  propertyValue: { __typename: string; value: string | number | Date };
+  // propertyValue: { __typename: string; value: string | number | Date };
   additionalValue?: string;
   children: React.ReactNode;
 };

@@ -26,6 +26,7 @@ export const solutionDeskApi = createApi({
       query: (id) => `users/${id}`,
     }),
     getAllUsers: builder.query<
+      // TypeWithDiscriminator<User>,
       any,
       {
         page: string;
@@ -46,7 +47,6 @@ export const solutionDeskApi = createApi({
       //     : [];
       // },
       transformResponse: (response: UsersResponse, meta, arg) => {
-        console.log(response.data);
         const data = response.data.map((u) => toTypeWithDiscriminant(u));
         return {
           ...response,

@@ -46,7 +46,6 @@ const AddNewUser = () => {
         );
         return response.data.public_id;
       } catch (error) {
-        console.log(error);
         return null;
       }
     }
