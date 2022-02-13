@@ -1,12 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import Select from "react-select";
+import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { useCreateUserMutation } from "../../app/solutionDeskApi";
 import { toggleAddNewUser } from "../../features/addNewUser/addNewUser-slice";
 import { User } from "../../types";
 import { FileUploader } from "../FileUploader";
+import { SelectFormInput } from "../SelectFormInput";
 import styles from "./AddNewUser.module.css";
 const AddNewUser = () => {
   const {
@@ -66,49 +66,7 @@ const AddNewUser = () => {
     e.preventDefault();
     dispatch(toggleAddNewUser());
   };
-  const customStyles = {
-    option: (provided: any, state: any) => ({
-      ...provided,
-      color: state.isSelected ? "white" : "rgb(30 41 59)",
-      background: state.isSelected
-        ? "#020D92"
-        : state.isFocused
-        ? "#020D9237"
-        : "white",
-    }),
-    control: (provided: any, state: any) => {
-      const borderRadius = ".3rem";
-      const fontSize = "1rem";
-      const borderColor = "rgb(203 213 225)";
-      return {
-        ...provided,
-        borderRadius,
-        fontSize,
-        color: borderColor,
-        borderColor,
-      };
-    },
-    noOptionsMessage: (provided: any, state: any) => {
-      const color = "rgb(30 41 59)";
-      return { ...provided, color };
-    },
-    singleValue: (provided: any, state: any) => {
-      const opacity = state.isDisabled ? 0.5 : 1;
-      const transition = "opacity 300ms";
-      const color = "rgb(30 41 59)";
 
-      return { ...provided, opacity, transition, color };
-    },
-    dropdownIndicator: (provided: any, state: any) => {
-      const color = "rgb(203 213 225)";
-      const zIndex = 2000;
-      return { ...provided, color, zIndex };
-    },
-    indicatorSeparator: (provided: any, state: any) => {
-      const display = "none";
-      return { ...provided, display };
-    },
-  };
   useEffect(() => {
     if (file) {
       setNoFileError(false);
@@ -181,41 +139,11 @@ const AddNewUser = () => {
 
         <label htmlFor="department">
           <span>Department</span>
-          <Controller
-            control={control}
-            name="department"
-            render={({ field: { onChange, onBlur } }) => (
-              <Select
-                onChange={(obj) =>
-                  onChange((obj as Record<"value" | "label", string>).value)
-                }
-                onBlur={onBlur}
-                options={departmentOptions}
-                styles={customStyles}
-                id="departmentIdSelect"
-                instanceId="departmentInstanceSelect"
-              />
-            )}
-          />
+          <SelectFormInput name="department" control={control} />
         </label>
         <label htmlFor="gender">
           <span>Gender</span>
-          <Controller
-            control={control}
-            name="gender"
-            render={({ field: { onChange, onBlur } }) => (
-              <Select
-                onChange={(obj) =>
-                  onChange((obj as Record<"value" | "label", string>).value)
-                }
-                onBlur={onBlur}
-                options={genderOptions}
-                styles={customStyles}
-                id="genderIdSelect"
-                instanceId="genderInstanceSelect"
-              />
-            )}
-          />
+          <SelectFormInput name="gender" control={control} />
         </label>
         <label htmlFor="dob">
           <span className="block">Date of birth</span>
@@ -309,41 +237,11 @@ const AddNewUser = () => {
 
         <label htmlFor="country">
           <span>Country</span>
-          <Controller
-            control={control}
-            name="country"
-            render={({ field: { onChange, onBlur } }) => (
-              <Select
-                onChange={(obj) =>
-                  onChange((obj as Record<"value" | "label", string>).value)
-                }
-                onBlur={onBlur}
-                options={countryOptions}
-                styles={customStyles}
-                id="countryIdSelect"
-                instanceId="countryInstanceSelect"
-              />
-            )}
-          />
+          <SelectFormInput name="country" control={control} />
         </label>
         <label htmlFor="city">
           <span>City</span>
-          <Controller
-            control={control}
-            name="city"
-            render={({ field: { onChange, onBlur } }) => (
-              <Select
-                onChange={(obj) =>
-                  onChange((obj as Record<"value" | "label", string>).value)
-                }
-                onBlur={onBlur}
-                options={cityOptions}
-                styles={customStyles}
-                id="cityIdSelect"
-                instanceId="cityInstanceSelect"
-              />
-            )}
-          />
+          <SelectFormInput name="city" control={control} />
         </label>
         <div className="col-span-full flex justify-end gap-2">
           <button
