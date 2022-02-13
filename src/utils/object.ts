@@ -75,5 +75,8 @@ export function toTypeWithDiscriminant(
       value: entity.phone ?? "+1(800)345 3555",
     },
     email: { __typename: "email", isEditable: true, value: entity.email },
+    city: { __typename: "select", isEditable: true, value: entity.city },
+    country: { __typename: "select", isEditable: true, value: entity.country },
+    gender: { __typename: "select", isEditable: true, value: entity.gender },
   };
 }

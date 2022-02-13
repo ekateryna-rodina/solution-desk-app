@@ -24,7 +24,7 @@ const UserInfoEdit = () => {
         </div>
       </div>
       {Object.keys(PersonalInformationStructure).map((title) => (
-        <div className="grid grid-rows-6 gap-2 px-4 py-8" key={title}>
+        <div className="h-full grid grid-rows-6 gap-2 px-4 py-8" key={title}>
           <div className=" font-bold text-slate-400">{formatTitle(title)}</div>
           {PersonalInformationStructure[title].map((attr: keyof User) => (
             <UserInfoRow

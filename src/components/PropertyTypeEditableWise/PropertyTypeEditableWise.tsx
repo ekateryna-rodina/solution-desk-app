@@ -1,8 +1,10 @@
 import moment from "moment";
 import React from "react";
+import { Controller, useForm } from "react-hook-form";
+import Select from "react-select";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { editUserInfo } from "../../features/userInfo/userInfo-slice";
-import { User } from "../../types";
+import { PropertyTypes, User } from "../../types";
 import { formatDate } from "../../utils/string";
 import { DynamicProperty } from "../DynamicProperty";
 import SendMailIcon from "../icons/SendMailIcon";
@@ -18,17 +20,72 @@ type PropertyTypeEditableWiseProps = {
   };
 };
 
+const customStyles = {
+  option: (provided: any, state: any) => ({
+    ...provided,
+    color: state.isSelected ? "white" : "rgb(30 41 59)",
+    background: state.isSelected
+      ? "#020D92"
+      : state.isFocused
+      ? "#020D9237"
+      : "white",
+  }),
+  control: (provided: any, state: any) => {
+    const borderRadius = ".3rem";
+    const fontSize = "1rem";
+    const borderColor = "rgb(203 213 225)";
+    return {
+      ...provided,
+      borderRadius,
+      fontSize,
+      color: borderColor,
+      borderColor,
+    };
+  },
+  noOptionsMessage: (provided: any, state: any) => {
+    const color = "rgb(30 41 59)";
+    return { ...provided, color };
+  },
+  singleValue: (provided: any, state: any) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = "opacity 300ms";
+    const color = "rgb(30 41 59)";
+
+    return { ...provided, opacity, transition, color };
+  },
+  dropdownIndicator: (provided: any, state: any) => {
+    const color = "rgb(203 213 225)";
+    const zIndex = 2000;
+    return { ...provided, color, zIndex };
+  },
+  indicatorSeparator: (provided: any, state: any) => {
+    const display = "none";
+    return { ...provided, display };
+  },
+};
+
 const PropertyTypeEditableWise = ({
   property,
 }: PropertyTypeEditableWiseProps) => {
   const { value, name } = property;
   const { isEditMode } = useAppSelector((state) => state.userInfo);
   const dispatch = useAppDispatch();
+  const {
+    properties: { city, country, gender, department },
+  } = useAppSelector((state) => state.filter);
+  const genderOptions = gender.map((c) => ({ value: c, label: c }));
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
   const onEditHandler = (value: number | string | Date) => {
     dispatch(editUserInfo({ name, value }));
   };
+
   const render = () => {
-    const dataTypeMap = {
+    const dataTypeMap: Record<PropertyTypes, any> = {
       date: () => {
         return isEditMode && property.isEditable ? (
           <input
@@ -92,6 +149,28 @@ const PropertyTypeEditableWise = ({
             className={styles.formInput}
             value={value as string}
             onChange={(e) => onEditHandler(e.currentTarget.value)}
+          />
+        ) : (
+          <span className="text-slate-800">{value}</span>
+        );
+      },
+      select: () => {
+        return isEditMode && property.isEditable ? (
+          <Controller
+            control={control}
+            name="gender"
+            render={({ field: { onChange, onBlur } }) => (
+              <Select
+                onChange={(obj) =>
+                  onChange((obj as Record<"value" | "label", string>).value)
+                }
+                onBlur={onBlur}
+                options={genderOptions}
+                styles={customStyles}
+                id="genderIdSelect"
+                instanceId="genderInstanceSelect"
+              />
+            )}
           />
         ) : (
           <span className="text-slate-800">{value}</span>

@@ -16,7 +16,7 @@ const UserInfoRow: React.FC<UserInfoRowProps> = ({
 }) => {
   const { isEditMode } = useAppSelector((state) => state.userInfo);
   return (
-    <div className="flex justify-between py-2">
+    <div className="flex justify-between items-center py-2">
       <span
         className={
           !isEditMode || isEditable ? "text-slate-600" : "text-slate-400"

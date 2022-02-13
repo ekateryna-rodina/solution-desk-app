@@ -51,9 +51,17 @@ export interface IFilterApplied {
   level?: "low" | "medium" | "high";
 }
 
+export type PropertyTypes =
+  | "email"
+  | "number"
+  | "string"
+  | "select"
+  | "dynamic"
+  | "date"
+  | "multipleIcons";
 export type TypeWithDiscriminator<T> = {
   [K in keyof T]: {
-    __typename: string;
+    __typename: PropertyTypes;
     isEditable: boolean;
     value: number | string | Date;
   };
