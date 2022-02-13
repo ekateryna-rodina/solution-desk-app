@@ -70,10 +70,7 @@ const PropertyTypeEditableWise = ({
   const { value, name } = property;
   const { isEditMode } = useAppSelector((state) => state.userInfo);
   const dispatch = useAppDispatch();
-  const {
-    properties: { city, country, gender, department },
-  } = useAppSelector((state) => state.filter);
-  const genderOptions = gender.map((c) => ({ value: c, label: c }));
+  const { properties } = useAppSelector((state) => state.filter);
   const {
     register,
     handleSubmit,
@@ -155,20 +152,25 @@ const PropertyTypeEditableWise = ({
         );
       },
       select: () => {
+        const options = properties[name].map((c) => ({ value: c, label: c }));
         return isEditMode && property.isEditable ? (
           <Controller
             control={control}
-            name="gender"
+            name={name}
             render={({ field: { onChange, onBlur } }) => (
               <Select
                 onChange={(obj) =>
                   onChange((obj as Record<"value" | "label", string>).value)
                 }
                 onBlur={onBlur}
-                options={genderOptions}
+                options={options}
+                value={options.filter(
+                  (option: { value: string; label: string }) =>
+                    option.label == value
+                )}
                 styles={customStyles}
-                id="genderIdSelect"
-                instanceId="genderInstanceSelect"
+                id={`${name}IdSelect`}
+                instanceId={`${name}InstanceSelect`}
               />
             )}
           />
