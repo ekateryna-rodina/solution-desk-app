@@ -24,7 +24,7 @@ const UserTableRow = ({ user }: UserTableRowProps) => {
       dispatch(closeUserInfo());
     } else {
       dispatch(closeUserInfo());
-      dispatch(openUserInfo(userId));
+      dispatch(openUserInfo(user));
     }
   };
   const highlightText = (text: string, property: string) => {
@@ -51,7 +51,7 @@ const UserTableRow = ({ user }: UserTableRowProps) => {
   return (
     <tr key={user.name.value as string}>
       {/* TODO: find a better solution to change colspan dynamically or replace with css grid */}
-      {current && current.id == user._id.value ? (
+      {current && current._id.value == user._id.value ? (
         <>
           <td className="h-28 shadow-2xl md:hidden " colSpan={3}>
             <UserInfo />

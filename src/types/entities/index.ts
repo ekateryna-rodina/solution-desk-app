@@ -52,5 +52,9 @@ export interface IFilterApplied {
 }
 
 export type TypeWithDiscriminator<T> = {
-  [K in keyof T]: { __typename: string; value: number | string | Date };
+  [K in keyof T]: {
+    __typename: string;
+    isEditable: boolean;
+    value: number | string | Date;
+  };
 };

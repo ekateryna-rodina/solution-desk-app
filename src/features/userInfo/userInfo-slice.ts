@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { TypeWithDiscriminator, User } from "../../types";
 
 interface UserInfoState {
-  current: {
-    id: string;
-  } | null;
+  current: TypeWithDiscriminator<User> | null;
   isEditMode: boolean;
 }
 
@@ -16,8 +15,8 @@ const userInfoSlice = createSlice({
   name: "userInfo",
   initialState,
   reducers: {
-    openUserInfo(state, action: PayloadAction<string>) {
-      if (!state.current) state.current = { id: action.payload };
+    openUserInfo(state, action: PayloadAction<TypeWithDiscriminator<User>>) {
+      if (!state.current) state.current = action.payload;
     },
     closeUserInfo(state) {
       state.current = null;
@@ -25,10 +24,14 @@ const userInfoSlice = createSlice({
     enableEditMode(state) {
       state.isEditMode = true;
     },
+    editUserInfo(
+      state,
+      action: PayloadAction<{ name: keyof User; value: string | number | Date }>
+    ) {},
   },
 });
 
-export const { openUserInfo, closeUserInfo, enableEditMode } =
+export const { openUserInfo, closeUserInfo, enableEditMode, editUserInfo } =
   userInfoSlice.actions;
 
 export default userInfoSlice.reducer;
