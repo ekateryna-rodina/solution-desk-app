@@ -27,7 +27,10 @@ const userInfoSlice = createSlice({
     editUserInfo(
       state,
       action: PayloadAction<{ name: keyof User; value: string | number | Date }>
-    ) {},
+    ) {
+      if (!state.current) return;
+      state.current![action.payload.name].value = action.payload.value;
+    },
   },
 });
 

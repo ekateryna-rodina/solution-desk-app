@@ -159,9 +159,16 @@ const PropertyTypeEditableWise = ({
             name={name}
             render={({ field: { onChange, onBlur } }) => (
               <Select
-                onChange={(obj) =>
-                  onChange((obj as Record<"value" | "label", string>).value)
-                }
+                onChange={(obj) => {
+                  // change the state in the store
+                  onEditHandler(
+                    (obj as Record<"value" | "label", string>).value
+                  );
+                  //  change useForm state
+                  return onChange(
+                    (obj as Record<"value" | "label", string>).value
+                  );
+                }}
                 onBlur={onBlur}
                 options={options}
                 value={options.filter(
