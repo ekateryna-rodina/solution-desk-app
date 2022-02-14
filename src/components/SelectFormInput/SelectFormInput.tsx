@@ -66,7 +66,7 @@ const SelectFormInput = ({
             if (typeof onChangeHandler == "function") {
               onChangeHandler((obj as Record<"value" | "label", string>).value);
             }
-            onChange((obj as Record<"value" | "label", string>).value);
+            return onChange((obj as Record<"value" | "label", string>).value);
           }}
           onBlur={onBlur}
           options={options}

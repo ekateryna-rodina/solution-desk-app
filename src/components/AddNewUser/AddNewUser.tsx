@@ -6,6 +6,9 @@ import { useCreateUserMutation } from "../../app/solutionDeskApi";
 import { toggleAddNewUser } from "../../features/addNewUser/addNewUser-slice";
 import { User } from "../../types";
 import { FileUploader } from "../FileUploader";
+import { TextFormInput } from "../FormInput";
+import EmailFormInput from "../FormInput/Email/EmailFormInput";
+import NumberFormInput from "../FormInput/Number/NumberFormInput";
 import { SelectFormInput } from "../SelectFormInput";
 import styles from "./AddNewUser.module.css";
 const AddNewUser = () => {
@@ -21,10 +24,6 @@ const AddNewUser = () => {
   const [addUser, { status, error, data }] = useCreateUserMutation();
   const [file, setFile] = useState<File | null>(null);
   const [noFileError, setNoFileError] = useState(false);
-  const cityOptions = city.map((c) => ({ value: c, label: c }));
-  const countryOptions = country.map((c) => ({ value: c, label: c }));
-  const genderOptions = gender.map((c) => ({ value: c, label: c }));
-  const departmentOptions = department.map((c) => ({ value: c, label: c }));
   const dispatch = useAppDispatch();
   const dropFileHandler = (file: File | null) => {
     setFile(file);
@@ -81,14 +80,13 @@ const AddNewUser = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
         <label htmlFor="firstName">
           <span className="block">First Name</span>
-          <input
-            {...register("firstName", { required: true })}
-            className={styles.formInput}
-            type="text"
+          <TextFormInput
             id="firstName"
-            placeholder="First name"
-            aria-label="First Name"
+            label="First Name"
+            required={true}
+            validated={register}
           />
+
           {errors.firstName && (
             <p className={`${styles.validationError}`}>
               Please enter employee's first name.
@@ -98,13 +96,11 @@ const AddNewUser = () => {
 
         <label htmlFor="lastName">
           <span className="block">Last Name</span>
-          <input
-            className={styles.formInput}
-            type="text"
+          <TextFormInput
             id="lastName"
-            {...register("lastName", { required: true })}
-            placeholder="Last name"
-            aria-label="Last Name"
+            label="Last Name"
+            required={true}
+            validated={register}
           />
           {errors.lastName && (
             <p className={`${styles.validationError}`}>
@@ -122,13 +118,11 @@ const AddNewUser = () => {
 
         <label className="col-span-full" htmlFor="characteristic">
           <span className="block">Characteristic (role)</span>
-          <input
-            {...register("characteristic", { required: true })}
-            className={styles.formInput}
-            type="text"
-            id="role"
-            placeholder="Characteristic"
-            aria-label="Characteristic"
+          <TextFormInput
+            id="characteristic"
+            label="Characteristic"
+            required={true}
+            validated={register}
           />
           {errors.characteristic && (
             <p className={`${styles.validationError}`}>
@@ -147,12 +141,12 @@ const AddNewUser = () => {
         </label>
         <label htmlFor="dob">
           <span className="block">Date of birth</span>
-          <input
+          <TextFormInput
             id="dob"
-            className={styles.formInput}
-            {...register("dob", { required: true })}
-            type="date"
-          ></input>
+            label="Date of birth"
+            required={true}
+            validated={register}
+          />
           {errors.email && (
             <p className={`${styles.validationError}`}>
               Please enter employee's date of birth.
@@ -161,12 +155,12 @@ const AddNewUser = () => {
         </label>
         <label htmlFor="employed">
           <span className="block">Date of employment</span>
-          <input
+          <TextFormInput
             id="employed"
-            className={styles.formInput}
-            {...register("employed", { required: true })}
-            type="date"
-          ></input>
+            label="Employment date"
+            required={true}
+            validated={register}
+          />
           {errors.email && (
             <p className={`${styles.validationError}`}>
               Please enter employment date.
@@ -175,13 +169,13 @@ const AddNewUser = () => {
         </label>
         <label htmlFor="experience">
           <span className="block">Experience</span>
-          <input
-            className={styles.formInput}
+          <NumberFormInput
             id="experience"
-            {...register("experience", { required: true })}
-            type="number"
-            min="0"
-          ></input>
+            label="Experience"
+            validated={register}
+            required={true}
+            min={0}
+          />
           {errors.experience && (
             <p className={`${styles.validationError}`}>
               Please enter employee's experience prior to employment in the
@@ -192,11 +186,11 @@ const AddNewUser = () => {
 
         <label htmlFor="phone">
           <span className="block">Phone</span>
-          <input
-            className={styles.formInput}
-            type="text"
-            {...register("phone", { required: true })}
+          <TextFormInput
             id="phone"
+            label="Phone"
+            required={true}
+            validated={register}
           />
           {errors.phone && (
             <p className={`${styles.validationError}`}>
@@ -207,11 +201,11 @@ const AddNewUser = () => {
 
         <label htmlFor="email">
           <span className="block">Email</span>
-          <input
-            className={styles.formInput}
-            type="email"
-            {...register("email", { required: true })}
+          <EmailFormInput
             id="email"
+            label="Email"
+            validated={register}
+            required={true}
           />
           {errors.email && (
             <p className={`${styles.validationError}`}>
@@ -222,11 +216,11 @@ const AddNewUser = () => {
 
         <label htmlFor="ipAddress">
           <span className="block">IP Address</span>
-          <input
-            className={styles.formInput}
-            type="text"
-            {...register("ipAddress", { required: true })}
+          <TextFormInput
             id="ipAddress"
+            label="IP Address"
+            required={true}
+            validated={register}
           />
           {errors.email && (
             <p className={`${styles.validationError}`}>
