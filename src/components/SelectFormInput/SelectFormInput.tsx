@@ -60,6 +60,7 @@ const SelectFormInput = ({
     <Controller
       control={control}
       name={name}
+      rules={{ required: true }}
       render={({ field: { onChange, onBlur } }) => (
         <Select
           onChange={(obj) => {
@@ -70,12 +71,14 @@ const SelectFormInput = ({
           }}
           onBlur={onBlur}
           options={options}
-          value={options.filter(
-            (option: { value: string; label: string }) => option.label == value
-          )}
           styles={customStyles}
           id={`${name}IdSelect`}
           instanceId={`${name}InstanceSelect`}
+          defaultValue={options.filter(
+            (option: { value: string; label: string }) => {
+              return option.label == value;
+            }
+          )}
         />
       )}
     />

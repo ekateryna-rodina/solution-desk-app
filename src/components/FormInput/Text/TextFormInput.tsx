@@ -6,16 +6,21 @@ type TextFormInputProps = {
   id: string;
   label: string;
   required: boolean;
+  pattern?: {
+    value: RegExp;
+    message: string;
+  };
 };
 const TextFormInput = ({
   validated,
   id,
   label,
   required,
+  pattern,
 }: TextFormInputProps) => {
   return (
     <input
-      {...validated(id, { required })}
+      {...validated(id, { required, pattern })}
       className={styles.formInput}
       type="text"
       id={id}
